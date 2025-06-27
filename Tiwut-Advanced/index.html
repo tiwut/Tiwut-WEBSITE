@@ -10,11 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
 <style>
-/* 
-==================================
-    GLOBAL STYLES & SETUP
-==================================
-*/
 :root {
     --bg-dark: #0D0E14;
     --bg-medium: #151820;
@@ -56,7 +51,6 @@ body {
     position: relative;
 }
 
-/* Animated Aurora Background */
 body::before {
     content: '';
     position: fixed;
@@ -84,11 +78,6 @@ a {
 }
 a:hover { color: var(--accent-secondary); }
 
-/*
-==================================
-    HEADER & NAVIGATION (MOBILE-ONLY)
-==================================
-*/
 .main-header {
     position: fixed;
     top: 0;
@@ -115,10 +104,9 @@ a:hover { color: var(--accent-secondary); }
 
 .main-nav { display: flex; align-items: center; }
 
-/* Mobile Navigation Menu is now the default */
 .nav-links {
     position: fixed;
-    top: -110%; /* Hide above screen */
+    top: -110%; 
     left: 0;
     width: 100%;
     height: 100vh;
@@ -128,9 +116,9 @@ a:hover { color: var(--accent-secondary); }
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2.5rem; /* Slightly reduced gap */
+    gap: 2.5rem; 
     transition: top 0.5s ease-in-out;
-    padding-bottom: 5rem; /* Space for the language switcher */
+    padding-bottom: 5rem; 
     z-index: 1000;
 }
 .nav-links.active {
@@ -156,11 +144,10 @@ a:hover { color: var(--accent-secondary); }
 .nav-links a:hover, .nav-links a.active { color: var(--text-light); }
 .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-/* Hamburger Menu is always visible */
 .hamburger {
     display: block;
     cursor: pointer;
-    z-index: 1001; /* Must be on top of the menu */
+    z-index: 1001; 
 }
 .hamburger .bar {
     display: block;
@@ -174,7 +161,6 @@ a:hover { color: var(--accent-secondary); }
 .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-/* Language Dropdown moved to mobile menu */
 .language-switcher { position: relative; }
 .language-switcher .selected-lang {
     background: var(--bg-light);
@@ -189,9 +175,8 @@ a:hover { color: var(--accent-secondary); }
 .language-switcher .lang-dropdown {
     display: none;
     position: absolute;
-    bottom: calc(100% + 10px); /* Position above the selector */
+    bottom: calc(100% + 10px); 
     right: 0;
-    /* ÄNDERUNG: 'width: 100%' entfernt, damit die Breite automatisch an den Inhalt angepasst wird */
     background: var(--bg-medium);
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
@@ -214,9 +199,9 @@ a:hover { color: var(--accent-secondary); }
     display: block;
     padding: 0.75rem 1.5rem;
     color: var(--text-medium);
-    font-size: 1rem; /* Adjust font size for dropdown */
+    font-size: 1rem; 
     text-align: center;
-    white-space: nowrap; /* Verhindert, dass der Text umbricht */
+    white-space: nowrap; 
 }
 .language-switcher .lang-dropdown a:hover {
     background-color: var(--accent-primary);
@@ -225,15 +210,9 @@ a:hover { color: var(--accent-secondary); }
 
 .nav-actions-container {
     position: absolute;
-    bottom: 5%; /* Position at the bottom of the nav menu */
+    bottom: 5%; 
 }
 
-
-/*
-==================================
-    MAIN CONTENT & SECTIONS
-==================================
-*/
 main {
     padding: 0 5%;
     max-width: 1200px;
@@ -242,7 +221,7 @@ main {
 
 section {
     min-height: 100vh;
-    padding: 6rem 0; /* Optimized padding for mobile */
+    padding: 6rem 0; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -260,7 +239,7 @@ section.visible {
     visibility: visible;
 }
 section .section-title {
-    font-size: clamp(2.5rem, 8vw, 3.5rem); /* Slightly increased VW for mobile impact */
+    font-size: clamp(2.5rem, 8vw, 3.5rem); 
     font-weight: 700;
     margin-bottom: 1rem;
     background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
@@ -268,18 +247,17 @@ section .section-title {
     -webkit-text-fill-color: transparent;
 }
 section .section-subtitle {
-    font-size: clamp(1rem, 4vw, 1.2rem); /* Slightly increased VW */
+    font-size: clamp(1rem, 4vw, 1.2rem); 
     color: var(--text-medium);
     max-width: 600px;
     margin-bottom: 3rem;
     line-height: 1.7;
 }
 
-/* Hero Section (#home) */
-#home .section-title { font-size: clamp(3rem, 10vw, 5rem); } /* Increased VW */
+#home .section-title { font-size: clamp(3rem, 10vw, 5rem); } 
 .cta-button {
     font-weight: 600;
-    padding: 0.8rem 1.5rem; /* Larger padding for easier tapping */
+    padding: 0.8rem 1.5rem; 
     border-radius: var(--border-radius);
     border: 1px solid transparent;
     cursor: pointer;
@@ -293,10 +271,9 @@ section .section-subtitle {
     box-shadow: 0 8px 30px rgba(196, 52, 244, 0.4);
 }
 
-/* Feature Grid (Always 1-column) */
 .feature-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Single column layout */
+    grid-template-columns: 1fr; 
     gap: 2rem;
     width: 100%;
 }
@@ -347,13 +324,12 @@ section .section-subtitle {
 
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* Contact Section */
 .contact-info {
     display: flex;
-    flex-direction: column; /* Stack contact items vertically */
-    gap: 1.5rem; /* Adjusted gap */
+    flex-direction: column; 
+    gap: 1.5rem; 
     margin-top: 2rem;
-    align-items: center; /* Center items */
+    align-items: center; 
     justify-content: center;
 }
 .contact-item {
@@ -365,11 +341,6 @@ section .section-subtitle {
     margin-right: 0.5rem;
 }
 
-/*
-==================================
-    FOOTER
-==================================
-*/
 .main-footer {
     text-align: center;
     padding: 2rem 5%;
@@ -387,7 +358,6 @@ section .section-subtitle {
 
     <header class="main-header">
         <a href="#home" class="logo" data-i18n-key="logo">Tiwut<span>-Advanced</span></a>
-        <!-- Hamburger is now the main navigation control -->
         <div class="hamburger">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -395,7 +365,6 @@ section .section-subtitle {
         </div>
     </header>
     
-    <!-- Nav is outside the header to allow full-screen overlay -->
     <nav class="main-nav">
         <ul class="nav-links">
             <li><a href="#home" class="nav-link active" data-i18n-key="nav_home">Home</a></li>
@@ -406,7 +375,6 @@ section .section-subtitle {
             
             <li><a href="https://tiwut.de/" class="nav-link" target="_blank" rel="noopener noreferrer" data-i18n-key="nav_main_page">Main Page</a></li>
             
-            <!-- Language switcher moved inside the mobile menu -->
             <li class="nav-actions-container">
                 <div class="language-switcher">
                     <div class="selected-lang">
@@ -423,14 +391,12 @@ section .section-subtitle {
     </nav>
 
     <main>
-        <!-- HOME SECTION -->
         <section id="home" class="visible">
             <h1 class="section-title" data-i18n-key="home_title">Tiwut-Advanced</h1>
             <p class="section-subtitle" data-i18n-key="home_subtitle">The professional extension for your projects. Experience enhanced features, real-time communication, and a new dimension of interaction.</p>
             <a href="#services" class="cta-button" data-i18n-key="home_cta">Discover Features</a>
         </section>
 
-        <!-- FEATURES SECTION -->
         <section id="services">
             <h2 class="section-title" data-i18n-key="features_title">Core Features</h2>
             <p class="section-subtitle" data-i18n-key="features_subtitle">Explore the building blocks of Tiwut-Advanced, designed to elevate your projects and interactive content to the next level.</p>
@@ -459,7 +425,6 @@ section .section-subtitle {
             </div>
         </section>
 
-        <!-- USE CASES SECTION -->
         <section id="projects">
             <h2 class="section-title" data-i18n-key="use_cases_title">Use Cases & Examples</h2>
             <p class="section-subtitle" data-i18n-key="use_cases_subtitle">See what's possible with Tiwut-Advanced. Get inspired by these examples and start building your own interactive solution.</p>
@@ -488,7 +453,6 @@ section .section-subtitle {
             </div>
         </section>
         
-        <!-- VISION SECTION -->
         <section id="about">
             <h2 class="section-title" data-i18n-key="vision_title">Our Vision</h2>
             <p class="section-subtitle" data-i18n-key="vision_subtitle">Tiwut-Advanced was born from a passion for combining interactive concepts with technology. Our goal is to provide a powerful, flexible platform for creators to bring their most ambitious ideas to life.</p>
@@ -500,7 +464,6 @@ section .section-subtitle {
             </div>
         </section>
 
-        <!-- CONTACT SECTION -->
         <section id="contact">
             <h2 class="section-title" data-i18n-key="contact_title">Start Your Project</h2>
             <p class="section-subtitle" data-i18n-key="contact_subtitle">Ready to build your next-level project or have questions about our features? We're here to help you get started.</p>
@@ -517,9 +480,6 @@ section .section-subtitle {
 
 
 <script type="module">
-// =================================
-//      I18N TRANSLATION SETUP
-// =================================
 const translations = {
     "logo": { "en": "Tiwut<span>-Advanced</span>", "de": "Tiwut<span>-Erweitert</span>", "es": "Tiwut<span>-Avanzado</span>" },
     "nav_home": { "en": "Home", "de": "Start", "es": "Inicio" },
@@ -586,18 +546,13 @@ const setLanguage = (lang) => {
 };
 
 
-// =================================
-//      UI & INTERACTION LOGIC
-// =================================
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Language Initializer ---
     const preferredLang = localStorage.getItem('preferredLanguage');
     const browserLang = navigator.language.split('-')[0];
     const initialLang = preferredLang || (['en', 'de', 'es'].includes(browserLang) ? browserLang : 'en');
     setLanguage(initialLang);
 
-    // --- Language Dropdown Logic ---
     const languageSwitcher = document.querySelector('.language-switcher');
     
     languageSwitcher.querySelector('.selected-lang').addEventListener('click', (e) => {
@@ -609,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.dataset.lang) {
             e.preventDefault();
             setLanguage(e.target.dataset.lang);
-            languageSwitcher.classList.remove('open'); // Close dropdown after selection
+            languageSwitcher.classList.remove('open'); 
         }
     });
 
@@ -620,7 +575,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- SPA Navigation & Scrollspy ---
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('main section');
     const header = document.querySelector('.main-header');
@@ -642,7 +596,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sections.forEach(section => sectionObserver.observe(section));
 
-    // Hamburger menu
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-links');
     
@@ -651,12 +604,10 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.classList.toggle('active');
     });
 
-    // Angepasste Klick-Logik für interne und externe Links
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
 
-            // Nur für interne Links die Standardaktion verhindern und smooth scrollen
             if (href && href.startsWith('#')) {
                 e.preventDefault();
                 const targetSection = document.querySelector(href);
@@ -664,9 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     targetSection.scrollIntoView({ behavior: 'smooth' });
                 }
             }
-            // Bei externen Links wird die Standardaktion (Navigation) nicht verhindert.
-
-            // Menü nach jedem Klick schließen
+            
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
         });
