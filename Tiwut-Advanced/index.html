@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weiterleitung...</title>
+
+    <!-- HIER STARTET DAS WICHTIGE SCRIPT -->
+    <script type="text/javascript">
+        (function() {
+            // Definiere hier die Ziel-URLs
+            var mobileUrl = "https://tiwut.de/Tiwut-Advanced-m/";
+            var desktopUrl = "https://tiwut.de/Tiwut-Advanced-d/";
+
+            // Diese Regular Expression prüft, ob es sich um ein gängiges Mobilgerät handelt.
+            // Es werden typische Kennungen im "User Agent" des Browsers gesucht.
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            // Wenn es ein Mobilgerät ist, leite auf die mobile URL um.
+            if (isMobile) {
+                // window.location.replace() ist besser als .href, da der Nutzer
+                // mit dem "Zurück"-Button nicht wieder auf diese Weiterleitungsseite kommt.
+                window.location.replace(mobileUrl);
+            } 
+            // Ansonsten leite auf die Desktop-URL um.
+            else {
+                window.location.replace(desktopUrl);
+            }
+        })();
+    </script>
+    <!-- HIER ENDET DAS SCRIPT -->
+
+    <!-- Fallback-Inhalt: Dieser Text wird nur angezeigt, wenn JavaScript deaktiviert ist
+         oder die Weiterleitung aus irgendeinem Grund extrem langsam ist. -->
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        a { color: #007bff; }
+    </style>
+</head>
+<body>
+
+    <h1>Sie werden weitergeleitet...</h1>
+    <p>Bitte warten Sie einen Moment.</p>
+
+    <noscript>
+        <hr>
+        <p>JavaScript ist in Ihrem Browser deaktiviert. Bitte wählen Sie manuell Ihre Version:</p>
+        <p>
+            <a href="https://tiwut.de/Tiwut-Advanced-m/">Mobile Version</a>
+        </p>
+        <p>
+            <a href="https://tiwut.de/Tiwut-Advanced-d/">Desktop Version</a>
+        </p>
+    </noscript>
+
+</body>
+</html>
