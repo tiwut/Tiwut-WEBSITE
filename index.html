@@ -177,6 +177,7 @@
             
             <div class="button-wrapper">
                 <a href="/Tools/" class="action-button"><i class="fa-solid fa-screwdriver-wrench"></i>Tools</a>
+                <a href="https://tiwut.de/Tiwut-Chat/" id="chatButton" class="action-button"></a>
                 <a href="/NEWS/" class="action-button"><i class="fa-solid fa-newspaper"></i>NEWS</a>
                 <a href="/AppStore/" class="action-button"><i class="fa-solid fa-store"></i>AppStore</a>
                 <a href="/Guides/" class="action-button"><i class="fa-solid fa-book-open"></i>Guides</a>
@@ -257,6 +258,7 @@
         const searchButton = document.getElementById('searchButton');
         const githubButton = document.getElementById('githubButton');
         const learningButton = document.getElementById('learningButton'); 
+        const chatButton = document.getElementById('chatButton');
         const warningOverlay = document.getElementById('warningOverlay');
         const acceptButton = document.getElementById('acceptWarningButton');
         const warningTitleElement = document.getElementById('warningTitle');
@@ -264,24 +266,25 @@
         const counterLabel = document.getElementById('counterLabel');
 
         const translations = {
-            en: { pageTitle: "Welcome to Tiwut", mainTitle: "Welcome to Tiwut", enterButton: "Enter Site", publisherInfo: "Published by Tiwut", modalTitle: "Important Notice", modalText: "This website is intended for private and family purposes only!!!<br>By accepting, you confirm this.", modalButton: "Accept and Continue", searchButton: "Search", githubButton: "GitHub", counterLabel: "Visitors: ", learningButton: "Learning" }, 
-            de: { pageTitle: "Willkommen bei Tiwut", mainTitle: "Willkommen bei Tiwut", enterButton: "Seite betreten", publisherInfo: "Veröffentlicht von Tiwut", modalTitle: "Wichtiger Hinweis", modalText: "Diese Webseite ist ausschließlich für private und familiäre Zwecke bestimmt!!!<br>Mit der Annahme bestätigen Sie dies.", modalButton: "Akzeptieren und Fortfahren", searchButton: "Suche", githubButton: "GitHub", counterLabel: "Besucher: ", learningButton: "Lernen" }, 
-            es: { pageTitle: "Bienvenido a Tiwut", mainTitle: "Bienvenido a Tiwut", enterButton: "Entrar al sitio", publisherInfo: "Publicado por Tiwut", modalTitle: "Aviso Importante", modalText: "¡¡¡Este sitio web está destinado exclusivamente a fines privados y familiares!!!<br>Al aceptar, usted confirma esto.", modalButton: "Aceptar y Continuar", searchButton: "Buscar", githubButton: "GitHub", counterLabel: "Visitantes: ", learningButton: "Aprender" } 
+            en: { pageTitle: "Welcome to Tiwut", mainTitle: "Welcome to Tiwut", enterButton: "Tiwut-Advanced", publisherInfo: "Published by Tiwut", modalTitle: "Important Notice", modalText: "This website is intended for private and family purposes only!!!<br>By accepting, you confirm this.", modalButton: "Accept and Continue", searchButton: "Search", githubButton: "GitHub", counterLabel: "Visitors: ", learningButton: "Learning", chatButton: "Chat" }, 
+            de: { pageTitle: "Willkommen bei Tiwut", mainTitle: "Willkommen bei Tiwut", enterButton: "Tiwut-Advanced", publisherInfo: "Veröffentlicht von Tiwut", modalTitle: "Wichtiger Hinweis", modalText: "Diese Webseite ist ausschließlich für private und familiäre Zwecke bestimmt!!!<br>Mit der Annahme bestätigen Sie dies.", modalButton: "Akzeptieren und Fortfahren", searchButton: "Suche", githubButton: "GitHub", counterLabel: "Besucher: ", learningButton: "Lernen", chatButton: "Chat" }, 
+            es: { pageTitle: "Bienvenido a Tiwut", mainTitle: "Bienvenido a Tiwut", enterButton: "Tiwut-Advanced", publisherInfo: "Publicado por Tiwut", modalTitle: "Aviso Importante", modalText: "¡¡¡Este sitio web está destinado exclusivamente a fines privados y familiares!!!<br>Al aceptar, usted confirma esto.", modalButton: "Aceptar y Continuar", searchButton: "Buscar", githubButton: "GitHub", counterLabel: "Visitantes: ", learningButton: "Aprender", chatButton: "Chat" } 
         };
         const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-        let langCode = 'en', redirectPath = '/English/';
-        if (userLang.startsWith('de')) { langCode = 'de'; redirectPath = '/Deutsch/'; }
-        else if (userLang.startsWith('es')) { langCode = 'es'; redirectPath = '/Espanol/'; }
+        let langCode = 'en';
+        if (userLang.startsWith('de')) { langCode = 'de'; }
+        else if (userLang.startsWith('es')) { langCode = 'es'; }
 
         const selectedTexts = translations[langCode];
         document.title = selectedTexts.pageTitle;
         mainTitle.textContent = selectedTexts.mainTitle;
         enterButton.textContent = selectedTexts.enterButton;
-        enterButton.href = redirectPath;
+        enterButton.href = 'https://tiwut.de/Tiwut-Advanced/';
         publisherInfo.textContent = selectedTexts.publisherInfo;
         searchButton.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> ${selectedTexts.searchButton}`;
         githubButton.innerHTML = `<i class="fa-brands fa-github"></i> ${selectedTexts.githubButton}`;
         learningButton.innerHTML = `<i class="fa-solid fa-graduation-cap"></i> ${selectedTexts.learningButton}`; 
+        chatButton.innerHTML = `<i class="fa-solid fa-comments"></i> ${selectedTexts.chatButton}`;
         warningTitleElement.innerHTML = selectedTexts.modalTitle;
         warningTextElement.innerHTML = selectedTexts.modalText;
         acceptButton.textContent = selectedTexts.modalButton;
