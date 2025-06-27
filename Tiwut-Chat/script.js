@@ -8,6 +8,7 @@ const translations = {
     
     // UI Elements
     changeLanguage: { en: 'Change language', de: 'Sprache ändern', es: 'Cambiar idioma' },
+    tiwutHomepageLink: { en: 'Tiwut Homepage', de: 'Tiwut Homepage', es: 'Página de Tiwut' },
     tiwutChat: { en: 'Tiwut Chat', de: 'Tiwut Chat', es: 'Tiwut Chat' },
     selectAChat: { en: 'Select a chat to start messaging.', de: 'Wähle einen Chat aus, um zu beginnen.', es: 'Selecciona un chat para empezar a conversar.' },
     loadingChats: { en: 'Loading chat rooms...', de: 'Lade Chaträume...', es: 'Cargando salas de chat...' },
@@ -246,19 +247,21 @@ function updateChatAppUI(user) {
 
     avatarWrapper.innerHTML = `<span class="avatar-initial">${initial}</span>`;
 
+    const tiwutLink = `<a href="https://tiwut.de/" target="_blank" rel="noopener noreferrer" data-translate="tiwutHomepageLink"></a>`;
+
     if (user) {
         document.querySelectorAll('.logged-in').forEach(el => el.style.display = 'block');
         if (loginPrompt) loginPrompt.style.display = 'none';
         if (usernameEl) usernameEl.textContent = name;
         
-        accountDropdown.innerHTML = `<button class="logout-btn" id="logout-button-dropdown" data-translate="logout"></button>`;
+        accountDropdown.innerHTML = `${tiwutLink}<button class="logout-btn" id="logout-button-dropdown" data-translate="logout"></button>`;
         document.getElementById('logout-button-dropdown').addEventListener('click', logoutUser);
     } else {
         document.querySelectorAll('.logged-in').forEach(el => el.style.display = 'none');
         if (loginPrompt) loginPrompt.style.display = 'block';
         if (usernameEl) usernameEl.textContent = name;
 
-        accountDropdown.innerHTML = `<a href="login.html" data-translate="login"></a><a href="register.html" data-translate="register"></a>`;
+        accountDropdown.innerHTML = `${tiwutLink}<a href="login.html" data-translate="login"></a><a href="register.html" data-translate="register"></a>`;
     }
     
     translatePage(); 
