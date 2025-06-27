@@ -6,7 +6,6 @@ Image Editor
 Basic PDF Annotator
 Lagerverwaltungssoftware Deutsch
 Warehouse management software
-What Your Browser (and the Server) Know About You
 Map
 Roadtrip Planer
 Website Builder
