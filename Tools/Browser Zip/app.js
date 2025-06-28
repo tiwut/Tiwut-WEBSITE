@@ -16,11 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateStatus(message, type = 'info', autoHideDelay = 0) {
         statusDiv.textContent = message;
-        statusDiv.className = `status-message ${type}`; // e.g., status-message success
+        statusDiv.className = `status-message ${type}`;
         statusDiv.style.display = 'block';
         console.log(`Status (${type}): ${message}`);
 
-        // Clear any existing timeout
         if (statusDiv.timeoutId) {
             clearTimeout(statusDiv.timeoutId);
         }
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         container.style.display = 'none';
     }
 
-    // --- Create ZIP Logic ---
     createZipButton.addEventListener('click', async () => {
         if (!filesToZipInput.files.length) {
             updateStatus('Please select files to add to the ZIP.', 'error', 5000);
@@ -86,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: "blob",
                 compression: "DEFLATE",
                 compressionOptions: {
-                    level: 6 // Good balance of speed and compression
+                    level: 6
                 },
                 progressCallback: (metadata) => {
                     updateProgress(zipProgress, zipProgressText, metadata.percent,
@@ -103,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             URL.revokeObjectURL(link.href);
 
             updateStatus(`Successfully created and downloaded ${zipFileName}.`, 'success', 7000);
-            filesToZipInput.value = ''; // Clear file input
+            filesToZipInput.value = '';
         } catch (err) {
             updateStatus(`Error creating ZIP: ${err.message}`, 'error');
             console.error(err);
@@ -113,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Extract ZIP Logic ---
     extractZipButton.addEventListener('click', async () => {
         if (!zipToExtractInput.files.length) {
             updateStatus('Please select a ZIP file to extract.', 'error', 5000);
@@ -158,21 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     const overallPercent = (filesProcessed / totalFiles) * 100;
                     updateProgress(extractProgress, extractProgressText, overallPercent, `Extracting: ${zipEntry.name}`);
 
-                    // Allow UI to update
-                    await new Promise(resolve => setTimeout(resolve, 10)); // Small delay
+                    await new Promise(resolve => setTimeout(resolve, 10));
 
                     const fileData = await zipEntry.async("blob");
 
-                    // Create a link and click it to trigger download
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(fileData);
-                    link.download = zipEntry.name; // Use the original file name
-                    document.body.appendChild(link); // Necessary for Firefox
+                    link.download = zipEntry.name;
+                    document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    URL.revokeObjectURL(link.href); // Clean up
+                    URL.revokeObjectURL(link.href);
 
-                    // Small delay between downloads to prevent browser overload/blocking
                     if (filesProcessed < totalFiles) {
                         await new Promise(resolve => setTimeout(resolve, 100));
                     }
@@ -196,6 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         reader.readAsArrayBuffer(file);
-        zipToExtractInput.value = ''; // Clear file input
+        zipToExtractInput.value = '';
     });
 });

@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBar = document.getElementById('search-bar');
     const formatFilter = document.getElementById('format-filter');
 
-    // Modal Elements for Image Preview
     const imageViewerModal = document.getElementById('image-viewer-modal');
     const modalImageTitleElement = document.getElementById('modal-image-title');
     const modalImageElement = document.getElementById('modal-image');
@@ -54,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     id: cleanFolderName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
                     name: title,
                     folderName: cleanFolderName,
-                    imageUrl: `${cleanFolderName}/main.avif`, // Path to main.avif for preview and card
+                    imageUrl: `${cleanFolderName}/main.avif`,
                     availableFormats: availableFormats,
-                    assetFiles: assetFiles, // For ZIP download
+                    assetFiles: assetFiles,
                     downloadFiles: availableFormats.map(format => ({
                         format: format,
                         fileName: `${cleanFolderName}.${format.toLowerCase()}`,
@@ -140,9 +139,8 @@ document.addEventListener('DOMContentLoaded', () => {
         modalImageElement.onerror = function() {
             console.error(`Error loading image '${src}' in modal.`);
             modalImageElement.alt = `Image for ${modelName} could not be loaded.`;
-            // modalImageElement.src = 'path/to/your/error-placeholder.png'; // Optional
         };
-         modalImageElement.onload = function() { // Reset alt text on successful load
+         modalImageElement.onload = function() {
             modalImageElement.alt = `Enlarged preview of ${modelName}`;
         };
 
@@ -153,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeImageModal() {
         imageViewerModal.style.display = "none";
         if (modalImageElement) {
-            modalImageElement.src = ""; // Clear src to free memory
+            modalImageElement.src = "";
             modalImageElement.alt = "";
         }
         document.body.style.overflow = 'auto';
@@ -173,13 +171,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const modelFolderInZip = zip.folder(model.folderName);
 
         try {
-            // 1. Add main.avif
             const imgResponse = await fetch(model.imageUrl);
             if (!imgResponse.ok) throw new Error(`Failed to fetch ${model.imageUrl}: ${imgResponse.statusText}`);
             const imgBlob = await imgResponse.blob();
             modelFolderInZip.file("main.avif", imgBlob);
 
-            // 2. Add defined 3D model files for download
             for (const fileInfo of model.downloadFiles) {
                 const fileResponse = await fetch(fileInfo.url);
                 if (!fileResponse.ok) throw new Error(`Failed to fetch ${fileInfo.url}: ${fileResponse.statusText}`);
@@ -187,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 modelFolderInZip.file(fileInfo.fileName, fileBlob);
             }
 
-            // 3. Add asset files (textures, mtl, etc.)
             for (const assetFileName of model.assetFiles) {
                 const assetUrl = `${model.folderName}/${assetFileName}`;
                 const assetResponse = await fetch(assetUrl);

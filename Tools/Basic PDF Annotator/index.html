@@ -8,36 +8,33 @@
         body {
             font-family: sans-serif;
             margin: 0;
-            padding: 20px; /* Behält den Innenabstand für den Inhalt bei */
-            /* background-color: #f0f0f0; Wird durch ::before überdeckt, dient als Fallback */
-            position: relative; /* Notwendig, damit z-index für ::before funktioniert */
-            overflow-x: hidden; /* Verhindert horizontale Scrollbalken durch Blur-Effekt */
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
             content: "";
-            position: fixed; /* Füllt den gesamten Viewport, unabhängig vom Scrollen */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             background-image: url('main.avif');
-            background-size: cover; /* Stellt sicher, dass das Bild den Bereich füllt */
-            background-position: center center; /* Zentriert das Bild */
+            background-size: cover;
+            background-position: center center;
             background-repeat: no-repeat;
-            filter: blur(0px); /* Hier den gewünschten Blur-Radius einstellen, z.B. 5px */
-            z-index: -1; /* Stellt sicher, dass es hinter dem Inhalt liegt */
-            /* Optional: leicht skalieren, um harte Kanten durch den Blur zu vermeiden */
-            /* transform: scale(1.05); */
+            filter: blur(0px);
+            z-index: -1;
         }
 
         #controls {
             margin-bottom: 20px;
             padding: 10px;
-            background-color: rgba(255, 255, 255, 0.9); /* Leicht transparent, um den Blur durchscheinen zu lassen */
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 5px;
             box-shadow: 0 0 5px rgba(0,0,0,0.1);
-            position: relative; /* Stellt sicher, dass es über dem ::before Element ist */
+            position: relative;
             z-index: 1;
         }
         #controls > * { margin-right: 10px; }
@@ -46,14 +43,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative; /* Stellt sicher, dass es über dem ::before Element ist */
+            position: relative;
             z-index: 1;
         }
         .page-wrapper {
             position: relative;
             margin-bottom: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            background-color: white; /* Damit der PDF-Inhalt nicht transparent ist */
+            background-color: white;
         }
         .page-canvas, .annotation-canvas {
             display: block;
@@ -67,14 +64,13 @@
         #loading-indicator {
             display: none;
             margin-top: 20px;
-            color: #333; /* Sichtbarer Text auf möglicherweise hellem Blur */
+            color: #333;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 10px;
             border-radius: 5px;
-            position: relative; /* Stellt sicher, dass es über dem ::before Element ist */
+            position: relative;
             z-index: 1;
         }
-        /* Stellt sicher, dass der Text auf der Seite lesbar ist */
         #page-container p {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 15px;
@@ -100,7 +96,6 @@
     </div>
     <div id="loading-indicator">Loading PDF...</div>
 
-    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
     <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';</script>
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>

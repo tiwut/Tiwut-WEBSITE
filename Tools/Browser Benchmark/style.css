@@ -1,4 +1,3 @@
-/* 1. CSS Variables for Theming */
 :root {
     --bg-color: #f4f7f9;
     --card-bg: #ffffff;
@@ -26,7 +25,6 @@ html[data-theme='dark'] {
     --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
-/* 2. General Styles & Reset */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -46,7 +44,6 @@ body {
     padding: 20px 0;
 }
 
-/* 3. Header & Controls */
 .main-header {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border-color);
@@ -94,7 +91,6 @@ select:focus, input:focus {
     box-shadow: 0 0 0 2px var(--primary-color-trans);
 }
 
-/* Theme Toggle Switch */
 .theme-switch {
     position: relative;
     display: inline-block;
@@ -135,7 +131,6 @@ input:checked + .slider:before {
     transform: translateX(24px);
 }
 
-/* 4. Main Content Cards */
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -179,7 +174,6 @@ ul {
 #browser-info strong { color: var(--heading-color); }
 #browser-info span { color: var(--text-secondary); text-align: right; word-break: break-all; }
 
-/* 5. Benchmarks & Results */
 .benchmark {
     margin-top: 25px;
     padding-top: 25px;

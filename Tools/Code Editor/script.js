@@ -1,7 +1,5 @@
-// script.js - Kompletter und zusammengeführter Code mit Skript-Presets
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- STATE MANAGEMENT ---
     let editor; let currentTranslations = {}; let activeView = 'files';
     const fileState = { dirHandle: null, fileHandles: new Map(), activeFile: null };
     const searchState = { findController: null };
@@ -18,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'data.json': `{\n    "key": "value",\n    "version": 1.0\n}`
     };
 
-    // --- UI ELEMENTS ---
     const ui = {
         activityBarIcons: document.querySelectorAll('.activity-bar .icon'),
         viewPanels: document.querySelectorAll('.view-panel'),
@@ -34,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- MONACO EDITOR & APP INITIALIZATION ---
     require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs' }});
     require(['vs/editor/editor.main'], () => { initializeEditor(); initializeApp(); });
 
@@ -62,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
     }
     
-    // --- EVENT LISTENER SETUP ---
     function setupEventListeners() {
         ui.activityBarIcons.forEach(icon => icon.addEventListener('click', () => setActiveView(icon.dataset.viewId)));
         if ('showDirectoryPicker' in window) { ui.explorer.openBtn.addEventListener('click', handleOpenFolder); } else { ui.explorer.openBtn.style.display = 'none'; }
@@ -79,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.newFileModal.preset.addEventListener('change', () => ui.newFileModal.customGroup.classList.toggle('hidden', ui.newFileModal.preset.value !== 'custom'));
     }
     
-    // --- VIEW, MODAL, SETTINGS & SEARCH LOGIC ---
     function setActiveView(viewId) {
         activeView = viewId;
         ui.activityBarIcons.forEach(icon => icon.classList.toggle('active', icon.dataset.viewId === viewId));
@@ -104,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function performReplace() { if (searchState.findController) searchState.findController.replace(); }
     function performReplaceAll() { if (searchState.findController) searchState.findController.replaceAll(); }
 
-    // --- FILE SYSTEM LOGIC ---
     async function handleOpenFolder() {
         try {
             fileState.dirHandle = await window.showDirectoryPicker(); fileState.fileHandles.clear();
@@ -174,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeNewFileDialog();
     }
 
-    // --- INTERNATIONALIZATION (i18n) & HELPERS ---
     async function loadLanguage(lang) {
         try {
             const response = await fetch(`locales/${lang}.json`); currentTranslations = await response.json(); applyTranslations();

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. I18N (INTERNATIONALIZATION) SETUP ---
     const translations = {
         en: {
             pageTitle: "Browser Performance & Stats Test",
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadReportTitle: "Download Report",
             downloadReportDesc: "Generates a PDF report with browser info and statistical results.",
             downloadPdfBtn: "Download PDF Report",
-            // Dynamic text
             yes: "Yes",
             no: "No",
             notAvailable: "Not Available",
@@ -37,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
             testFinishedIn: "Finished in {duration} ms",
             statRunning: "Running test {current} of {total}...",
             statResults: "Results after {runs} runs:\nBest (min):   {min} ms\nWorst (max):  {max} ms\nAverage (avg):{avg} ms\nStd. Dev.:    {stdDev} ms",
-            // PDF Text
             pdfTitle: "Browser Performance Report",
             pdfGeneratedOn: "Generated on:",
             pdfBrowserInfo: "Browser Information",
@@ -77,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadReportTitle: "Bericht herunterladen",
             downloadReportDesc: "Erstellt einen PDF-Bericht mit Browser-Infos und statistischen Ergebnissen.",
             downloadPdfBtn: "PDF-Bericht herunterladen",
-            // Dynamic text
             yes: "Ja",
             no: "Nein",
             notAvailable: "Nicht verfügbar",
@@ -85,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             testFinishedIn: "Abgeschlossen in {duration} ms",
             statRunning: "Laufe Test {current} von {total}...",
             statResults: "Ergebnisse nach {runs} Durchläufen:\nBester (min):   {min} ms\nSchlechtester (max):{max} ms\nDurchschnitt (avg): {avg} ms\nStandardabw.:   {stdDev} ms",
-            // PDF Text
             pdfTitle: "Browser-Leistungsbericht",
             pdfGeneratedOn: "Erstellt am:",
             pdfBrowserInfo: "Browser-Informationen",
@@ -125,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadReportTitle: "Descargar Informe",
             downloadReportDesc: "Genera un informe PDF con información del navegador y resultados estadísticos.",
             downloadPdfBtn: "Descargar Informe PDF",
-            // Dynamic text
             yes: "Sí",
             no: "No",
             notAvailable: "No Disponible",
@@ -133,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
             testFinishedIn: "Finalizado en {duration} ms",
             statRunning: "Ejecutando prueba {current} de {total}...",
             statResults: "Resultados después de {runs} ejecuciones:\nMejor (min):   {min} ms\nPeor (max):  {max} ms\nPromedio (avg):{avg} ms\nDesv. Estándar: {stdDev} ms",
-            // PDF Text
             pdfTitle: "Informe de Rendimiento del Navegador",
             pdfGeneratedOn: "Generado el:",
             pdfBrowserInfo: "Información del Navegador",
@@ -164,18 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
             if (t[key]) el.title = t[key];
         });
         
-        // Update dynamic info that depends on language
         displayBrowserInfo();
     }
 
-    // --- 2. THEME SETUP ---
     function setTheme(theme) {
         localStorage.setItem('preferredTheme', theme);
         document.documentElement.setAttribute('data-theme', theme);
         document.getElementById('theme-toggle').checked = (theme === 'dark');
     }
 
-    // --- 3. CORE BENCHMARK LOGIC ---
     const { jsPDF } = window.jspdf;
     const statisticsData = { cpu: null, dom: null, graphics: null };
 
@@ -222,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 4. UI & EVENT HANDLERS ---
     function displayBrowserInfo() {
         const t = translations[currentLang];
         document.getElementById('user-agent').textContent = navigator.userAgent;
@@ -310,8 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
         doc.save('Browser-Performance-Report.pdf');
     }
 
-    // --- 5. INITIALIZATION ---
-    // Language
     const languageSwitcher = document.getElementById('language-switcher');
     const savedLang = localStorage.getItem('preferredLanguage');
     const browserLang = navigator.language.split('-')[0];
@@ -320,14 +307,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setLanguage(initialLang);
     languageSwitcher.addEventListener('change', () => setLanguage(languageSwitcher.value));
 
-    // Theme
     const themeToggle = document.getElementById('theme-toggle');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const savedTheme = localStorage.getItem('preferredTheme');
     setTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
     themeToggle.addEventListener('change', () => setTheme(themeToggle.checked ? 'dark' : 'light'));
 
-    // Test Buttons
     document.getElementById('start-cpu-test').addEventListener('click', e => runSingleTest('cpu', e.target, document.getElementById('cpu-result')));
     document.getElementById('start-dom-test').addEventListener('click', e => runSingleTest('dom', e.target, document.getElementById('dom-result')));
     document.getElementById('start-graphics-test').addEventListener('click', e => runSingleTest('graphics', e.target, document.getElementById('graphics-result')));

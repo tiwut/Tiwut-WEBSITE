@@ -13,7 +13,7 @@
             --danger-color: #dc3545;
             --light-color: #f8f9fa;
             --dark-color: #343a40;
-            --page-fallback-background-color: #eef2f7; /* Renamed for clarity */
+            --page-fallback-background-color: #eef2f7;
             --card-background: #ffffff;
             --text-color: #495057;
             --border-color: #dee2e6;
@@ -26,30 +26,29 @@
             line-height: 1.6;
             margin: 0;
             padding: 20px;
-            /* background-color: var(--page-fallback-background-color); Removed, will be handled by ::before */
             color: var(--text-color);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            position: relative; /* For z-index stacking context of ::before */
-            overflow-x: hidden; /* Prevent potential horizontal scrollbar from blur */
+            position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
             content: '';
-            position: fixed; /* Cover the entire viewport */
+            position: fixed;
             left: 0;
             top: 0;
             width: 100vw;
             height: 100vh;
             background-image: url('main.avif');
-            background-color: var(--page-fallback-background-color); /* Fallback if image fails or for underlay */
+            background-color: var(--page-fallback-background-color);
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            filter: blur(0px); /* Adjust blur radius as needed (e.g., 5px, 8px) */
-            z-index: -1; /* Place it behind the body's content */
+            filter: blur(0px);
+            z-index: -1;
         }
 
         .container {
@@ -60,7 +59,7 @@
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             margin-bottom: 20px;
-            z-index: 1; /* Ensure container is above the ::before pseudo-element */
+            z-index: 1;
         }
 
         h1 {
@@ -113,7 +112,7 @@
             transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
         input[type="file"] {
-            padding: 6px 12px; /* Adjust for file input's native styling */
+            padding: 6px 12px;
         }
 
         input[type="file"]:focus,
@@ -173,18 +172,17 @@
 
         .progress-container {
             margin-top: 15px;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         .progress-container progress {
             width: 100%;
-            height: 10px; /* Slimmer progress bar */
+            height: 10px;
             border-radius: var(--border-radius);
-            overflow: hidden; /* Ensures rounded corners on the value part */
+            overflow: hidden;
             -webkit-appearance: none;
             appearance: none;
         }
-        /* For Chrome/Safari/Edge */
         .progress-container progress::-webkit-progress-bar {
             background-color: #e9ecef;
             border-radius: var(--border-radius);
@@ -194,7 +192,6 @@
             border-radius: var(--border-radius);
             transition: width 0.1s linear;
         }
-        /* For Firefox */
         .progress-container progress::-moz-progress-bar {
             background-color: var(--success-color);
             border-radius: var(--border-radius);
@@ -210,15 +207,12 @@
         }
 
         footer {
-            margin-top: auto; /* Pushes footer to the bottom */
+            margin-top: auto;
             padding: 20px;
             text-align: center;
             font-size: 0.9em;
             color: var(--secondary-color);
-            /* If footer needs its own background to be more readable: */
-            /* background-color: rgba(255, 255, 255, 0.7); */ /* Example: semi-transparent white */
-            /* border-radius: var(--border-radius); */
-            z-index: 1; /* Ensure footer is above the ::before pseudo-element */
+            z-index: 1;
         }
         footer a {
             color: var(--primary-color);
@@ -235,7 +229,6 @@
         <h1>Modern ZIP Tool</h1>
         <p class="subtitle">Client-side ZIP creation and extraction. No uploads, 100% in your browser.</p>
 
-        <!-- Section for Creating ZIP -->
         <div class="section">
             <h2>Create ZIP Archive</h2>
             <label for="filesToZip">Select files to add to ZIP:</label>
@@ -252,7 +245,6 @@
             </div>
         </div>
 
-        <!-- Section for Extracting ZIP -->
         <div class="section">
             <h2>Extract ZIP Archive</h2>
             <label for="zipToExtract">Select a ZIP file to extract:</label>
@@ -264,7 +256,6 @@
                 <progress id="extractProgress" value="0" max="100"></progress>
                 <span id="extractProgressText">0%</span>
             </div>
-            <!-- Removed the extractedFilesList ul -->
         </div>
 
         <div id="status" class="status-message" style="display:none;"></div>
@@ -275,7 +266,6 @@
         All operations are local.
     </footer>
 
-    <!-- JSZip Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="app.js"></script>
 </body>
