@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Der Titel wird durch JavaScript gesetzt -->
+   
     <title>In-Depth C++ Tutorial</title>
     <style>
-        /* CSS-Variablen für Light & Dark Mode */
+        
         :root {
             --bg-color: #f8f9fa;
             --main-content-bg: #ffffff;
             --sidebar-bg: #e9ecef;
             --text-color: #212529;
-            --heading-color: #00599C; /* C++ Blue */
+            --heading-color: #00599C;
             --link-color: #00599C;
             --link-hover-color: #00447A;
             --border-color: #dee2e6;
@@ -37,7 +37,7 @@
                 --main-content-bg: #1e1e1e;
                 --sidebar-bg: #252526;
                 --text-color: #e0e0e0;
-                --heading-color: #68A0CF; /* Helleres Blau für Dark Mode */
+                --heading-color: #68A0CF; 
                 --link-color: #68A0CF;
                 --link-hover-color: #90BADD;
                 --border-color: #3a3a3a;
@@ -57,7 +57,7 @@
             }
         }
 
-        /* Allgemeine Stile */
+       
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.7;
@@ -69,7 +69,7 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Sidebar-Navigation */
+        
         #sidebar {
             width: 300px;
             background-color: var(--sidebar-bg);
@@ -107,7 +107,7 @@
             color: var(--sidebar-active-text);
         }
 
-        /* Sprachumschalter */
+        
         #lang-switcher {
             display: flex;
             justify-content: center;
@@ -134,7 +134,7 @@
             border-color: var(--sidebar-active-bg);
         }
 
-        /* Hauptinhaltsbereich */
+        
         #main-content {
             margin-left: 320px;
             padding: 30px 50px;
@@ -164,7 +164,7 @@
         a { color: var(--link-color); text-decoration: none; }
         a:hover { text-decoration: underline; }
 
-        /* Code-Blöcke */
+        
         code.inline-code {
             background-color: var(--code-bg);
             padding: 3px 6px;
@@ -188,18 +188,18 @@
             font-family: "SF Mono", "Consolas", "Courier New", monospace;
         }
 
-        /* Syntax Highlighting */
-        .cpp-keyword { color: #569cd6; } /* int, if, for, class */
-        .cpp-control { color: #c586c0; } /* return, new, delete */
-        .cpp-type { color: #4ec9b0; } /* std::string, vector, custom types */
-        .cpp-comment { color: #6a9955; font-style: italic; } /* comments */
-        .cpp-string { color: #ce9178; } /* "Hello" */
-        .cpp-preprocessor { color: #c586c0; } /* #include */
-        .cpp-number { color: #b5cea8; } /* 123, 4.5 */
-        .cpp-function { color: #dcdcaa; } /* main, myFunction */
-        .cpp-operator { color: #d4d4d4; } /* +, =, << */
         
-        /* Callout-Boxen */
+        .cpp-keyword { color: #569cd6; } 
+        .cpp-control { color: #c586c0; } 
+        .cpp-type { color: #4ec9b0; } 
+        .cpp-comment { color: #6a9955; font-style: italic; } 
+        .cpp-string { color: #ce9178; } 
+        .cpp-preprocessor { color: #c586c0; } 
+        .cpp-number { color: #b5cea8; } 
+        .cpp-function { color: #dcdcaa; } 
+        .cpp-operator { color: #d4d4d4; } 
+        
+        
         .important, .warning {
             padding: 15px; margin: 20px 0; border-radius: 5px;
         }
@@ -207,7 +207,7 @@
         .important { background-color: var(--important-bg); border-left: 5px solid var(--important-border); color: var(--important-text); }
         .warning { background-color: var(--warning-bg); border-left: 5px solid var(--warning-border); color: var(--warning-text); }
         
-        /* Responsive Design */
+        
         @media (max-width: 950px) {
             body { flex-direction: column; }
             #sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border-color); }
@@ -252,7 +252,7 @@
     <main id="main-content">
         <h1 data-en="In-Depth C++ Tutorial for Beginners and Beyond" data-de="Umfassendes C++ Tutorial für Anfänger und Fortgeschrittene" data-es="Tutorial Detallado de C++ para Principiantes y Más Allá"></h1>
         
-        <!-- SECTION 1: INTRODUCTION -->
+       
         <section id="intro">
             <h2 data-en="1. Introduction to C++" data-de="1. Einführung in C++" data-es="1. Introducción a C++"></h2>
             <p data-en="C++ is a powerful, general-purpose programming language created by Bjarne Stroustrup as an extension of the C language. It is a 'middle-level' language, as it combines features of both high-level languages (like abstractions, object-orientation) and low-level languages (like direct memory manipulation). This makes it an exceptional choice for applications where performance is critical." 
@@ -268,7 +268,7 @@
             <p class="important" data-en="This guide focuses on <strong>Modern C++</strong> (C++11/14/17/20), emphasizing practices that lead to safer, cleaner, and more efficient code." data-de="Dieser Guide konzentriert sich auf <strong>Modernes C++</strong> (C++11/14/17/20) und betont Praktiken, die zu sicherem, sauberem und effizienterem Code führen." data-es="Esta guía se centra en <strong>C++ Moderno</strong> (C++11/14/17/20), enfatizando prácticas que conducen a un código más seguro, limpio y eficiente."></p>
         </section>
         
-        <!-- SECTION 2: SETUP -->
+        
         <section id="setup">
             <h2 data-en="2. Setting up Your Environment" data-de="2. Umgebung einrichten" data-es="2. Configurando tu Entorno"></h2>
             <p data-en="To write, compile, and run C++ code, you need two main components: a <strong>compiler</strong> and a <strong>code editor/IDE</strong>." data-de="Um C++-Code zu schreiben, zu kompilieren und auszuführen, benötigst du zwei Hauptkomponenten: einen <strong>Compiler</strong> und einen <strong>Code-Editor/IDE</strong>." data-es="Para escribir, compilar y ejecutar código C++, necesitas dos componentes principales: un <strong>compilador</strong> y un <strong>editor de código/IDE</strong>."></p>
@@ -287,7 +287,7 @@
             <p data-en="To verify your g++ installation, open a terminal and run <code class='inline-code'>g++ --version</code>. You should see version information." data-de="Um deine g++-Installation zu überprüfen, öffne ein Terminal und führe <code class='inline-code'>g++ --version</code> aus. Du solltest Versionsinformationen sehen." data-es="Para verificar tu instalación de g++, abre una terminal y ejecuta <code class='inline-code'>g++ --version</code>. Deberías ver información de la versión."></p>
         </section>
 
-        <!-- SECTION 3: HELLO WORLD -->
+        
         <section id="hello-world">
             <h2 data-en="3. Your First Program: Hello, C++!" data-de="3. Dein erstes Programm: Hallo, C++!" data-es="3. Tu Primer Programa: ¡Hola, C++!"></h2>
             <p data-en="Let's write a program that prints 'Hello, C++!' to the screen. Create a file named <code class='inline-code'>main.cpp</code>." data-de="Schreiben wir ein Programm, das 'Hallo, C++!' auf dem Bildschirm ausgibt. Erstelle eine Datei namens <code class='inline-code'>main.cpp</code>." data-es="Vamos a escribir un programa que imprima '¡Hola, C++!' en la pantalla. Crea un archivo llamado <code class='inline-code'>main.cpp</code>."></p>
@@ -311,7 +311,7 @@
             </ol>
         </section>
 
-        <!-- SECTION 4: NAMESPACES -->
+        
         <section id="namespaces">
             <h2 data-en="4. Understanding Namespaces" data-de="4. Namensräume verstehen" data-es="4. Entendiendo los Espacios de Nombres"></h2>
             <p data-en="Namespaces are designed to prevent naming conflicts. Imagine you use a library that has a function called <code class='inline-code'>print()</code>, and you also write a function called <code class='inline-code'>print()</code>. A namespace allows you to group your code under a unique name." 
@@ -340,7 +340,7 @@
             </div>
         </section>
 
-        <!-- SECTION 5: VARIABLES -->
+        
         <section id="variables">
             <h2 data-en="5. Variables & Data Types" data-de="5. Variablen & Datentypen" data-es="5. Variables y Tipos de Datos"></h2>
             <p data-en="Variables are named storage locations. C++ is a <strong>statically-typed</strong> language, meaning you must declare the type of a variable before you use it."
@@ -368,9 +368,9 @@
                data-es="<strong>¡Inicializa siempre tus variables!</strong> Usar una variable no inicializada conduce a un comportamiento indefinido, una fuente común de errores."></p>
         </section>
 
-        <!-- AND SO ON FOR ALL SECTIONS... For brevity, I will complete the file up to the new Memory/Pointers section and then write a summary of the remaining sections that would follow the same pattern. -->
         
-        <!-- SECTION 6: OPERATORS -->
+        
+        
         <section id="operators">
             <h2 data-en="6. Operators" data-de="6. Operatoren" data-es="6. Operadores"></h2>
             <p data-en="Operators are special symbols that perform operations on operands (values and variables)." data-de="Operatoren sind spezielle Symbole, die Operationen auf Operanden (Werten und Variablen) ausführen." data-es="Los operadores son símbolos especiales que realizan operaciones sobre operandos (valores y variables)."></p>
@@ -383,7 +383,7 @@
             </ul>
         </section>
 
-        <!-- SECTION 7: CONTROL FLOW -->
+        
         <section id="control-flow">
             <h2 data-en="7. Control Flow" data-de="7. Kontrollstrukturen" data-es="7. Flujo de Control"></h2>
             <p data-en="Control flow statements allow your program to make decisions and repeat actions." data-de="Kontrollstrukturen ermöglichen es deinem Programm, Entscheidungen zu treffen und Aktionen zu wiederholen." data-es="Las sentencias de flujo de control permiten a tu programa tomar decisiones y repetir acciones."></p>
@@ -415,7 +415,7 @@
 </code></pre>
         </section>
 
-        <!-- SECTION 8: FUNCTIONS & LAMBDAS -->
+        
         <section id="functions">
             <h2 data-en="8. Functions & Lambdas" data-de="8. Funktionen & Lambdas" data-es="8. Funciones y Lambdas"></h2>
             <p data-en="Functions are reusable blocks of code. Lambdas are a concise way to create anonymous functions."
@@ -440,7 +440,7 @@
 </code></pre>
         </section>
 
-        <!-- SECTION 9: HEADERS -->
+        
         <section id="headers">
             <h2 data-en="9. Headers & Source Files" data-de="9. Header- & Source-Dateien" data-es="9. Archivos de Cabecera y Fuente"></h2>
             <p data-en="For any non-trivial program, you should split your code into multiple files. This organizes your code, improves compile times, and makes it reusable."
@@ -482,9 +482,9 @@
                data-es="Para compilar esto, debes incluir todos los archivos fuente: <code class='inline-code'>g++ main.cpp math_utils.cpp -o my_app</code>."></p>
         </section>
 
-        <!-- The rest of the sections would follow this detailed, multi-language, and well-styled pattern. I will now create the detailed Pointers & Memory section as requested and then summarize the remaining content. -->
+        
 
-        <!-- SECTION 11: POINTERS & MEMORY -->
+        
         <section id="memory">
             <h2 data-en="11. Pointers & Memory Management" data-de="11. Zeiger & Speicherverwaltung" data-es="11. Punteros y Gestión de Memoria"></h2>
             <p data-en="Pointers are variables that store a memory address. They are one of C++'s most powerful and dangerous features. Modern C++ encourages using them safely via abstractions."
@@ -545,9 +545,7 @@ pNumber <span class="cpp-operator">=</span> <span class="cpp-control">nullptr</s
 </code></pre>
         </section>
         
-        <!-- ===================================================================== -->
-        <!-- SUMMARY OF REMAINING SECTIONS WHICH WOULD BE IMPLEMENTED SIMILARLY -->
-        <!-- ===================================================================== -->
+        
 
         <p class="important" data-en="For brevity, the following sections are summarized. In the full implementation, they would have the same level of detail, multilingual support, and code examples as the sections above." data-de="Der Kürze halber sind die folgenden Abschnitte zusammengefasst. In der vollständigen Implementierung hätten sie den gleichen Detaillierungsgrad, die mehrsprachige Unterstützung und die Codebeispiele wie die obigen Abschnitte." data-es="Para abreviar, las siguientes secciones están resumidas. En la implementación completa, tendrían el mismo nivel de detalle, soporte multilingüe y ejemplos de código que las secciones anteriores."></p>
         
@@ -572,7 +570,7 @@ pNumber <span class="cpp-operator">=</span> <span class="cpp-control">nullptr</s
                data-es="Una inmersión más profunda en los tres pilares de la STL. <strong>Contenedores:</strong> Un desglose de contenedores de secuencia (`vector`, `deque`, `list`), contenedores asociativos (`set`, `map`) y contenedores no ordenados (`unordered_set`, `unordered_map`), explicando el caso de uso de cada uno. <strong>Iteradores:</strong> Un ejemplo práctico del uso de iteradores para recorrer un `std::map` o `std::list`. <strong>Algoritmos:</strong> Mostrando algoritmos más útiles de `<algorithm>` como `std::find`, `std::for_each` (con una lambda) y `std::transform`."></p>
         </section>
 
-        <!-- Other sections like Exceptions, Files, Next Steps would be here... -->
+        
         
     </main>
 
@@ -584,7 +582,7 @@ pNumber <span class="cpp-operator">=</span> <span class="cpp-control">nullptr</s
 
             function setLanguage(lang) {
                 if (!supportedLangs.includes(lang)) {
-                    lang = 'en'; // Fallback
+                    lang = 'en'; 
                 }
                 
                 document.documentElement.lang = lang;
@@ -614,7 +612,7 @@ pNumber <span class="cpp-operator">=</span> <span class="cpp-control">nullptr</s
                 if (savedLang && supportedLangs.includes(savedLang)) return savedLang;
                 const browserLang = navigator.language.split('-')[0];
                 if (supportedLangs.includes(browserLang)) return browserLang;
-                return 'en'; // Default
+                return 'en'; 
             }
 
             const sections = document.querySelectorAll('#main-content section');
@@ -645,7 +643,7 @@ pNumber <span class="cpp-operator">=</span> <span class="cpp-control">nullptr</s
             window.addEventListener('scroll', updateActiveLink);
             
             setLanguage(getInitialLanguage());
-            updateActiveLink(); // Initial call
+            updateActiveLink(); 
         });
     </script>
 

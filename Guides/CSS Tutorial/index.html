@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active */
+            background-color: #5cb85c;
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -99,8 +99,8 @@
             color: #c7254e;
         }
         pre {
-            background-color: #f8f9fa; /* Lighter background for CSS code */
-            color: #212529; /* Darker text for readability */
+            background-color: #f8f9fa; 
+            color: #212529; 
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
@@ -114,15 +114,15 @@
             border-radius: 0;
             color: inherit;
         }
-        /* Basic CSS syntax highlighting */
-        pre code .css-selector { color: #d9480f; font-weight: bold;} /* Selectors (e.g., h1, .class, #id) */
-        pre code .css-property { color: #1c7ed6; } /* Properties (e.g., color, font-size) */
-        pre code .css-value { color: #5c940d; } /* Values (e.g., blue, 16px, #fff) */
-        pre code .css-comment { color: #868e96; font-style: italic; } /* Comments */
-        pre code .css-keyword { color: #e67700; } /* Keywords like !important, @media */
-        pre code .css-string { color: #ae3ec9; } /* Strings in content property, etc. */
-        pre code .css-number { color: #0b7285; } /* Numbers */
-        pre code .css-unit { color: #0b7285; } /* Units like px, em */
+        
+        pre code .css-selector { color: #d9480f; font-weight: bold;} 
+        pre code .css-property { color: #1c7ed6; }
+        pre code .css-value { color: #5c940d; } 
+        pre code .css-comment { color: #868e96; font-style: italic; } 
+        pre code .css-keyword { color: #e67700; } 
+        pre code .css-string { color: #ae3ec9; } 
+        pre code .css-number { color: #0b7285; } 
+        pre code .css-unit { color: #0b7285; } 
 
 
         .warning, .important {
@@ -1004,7 +1004,7 @@ It explains the following rule.
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+       
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -1012,7 +1012,7 @@ It explains the following rule.
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -1024,7 +1024,7 @@ It explains the following rule.
                 }
             });
         };
-        // Activate the first link by default or based on hash
+        
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -1037,11 +1037,11 @@ It explains the following rule.
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active'); 
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink); 
     </script>
 
 </body>

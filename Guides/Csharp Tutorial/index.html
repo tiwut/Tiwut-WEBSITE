@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -99,8 +99,8 @@
             color: #c7254e;
         }
         pre {
-            background-color: #2d2d2d; /* Darker background for C# code */
-            color: #f8f8f2; /* Light text for contrast */
+            background-color: #2d2d2d; 
+            color: #f8f8f2; 
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
@@ -114,17 +114,17 @@
             border-radius: 0;
             color: inherit;
         }
-        /* Basic C# syntax highlighting */
-        pre code .cs-keyword { color: #569cd6; font-weight: bold; } /* using, namespace, class, static, void, if, else, for, etc. */
-        pre code .cs-type { color: #4ec9b0; } /* int, string, bool, double, var, Console, List */
-        pre code .cs-string { color: #d69d85; } /* "string" */
-        pre code .cs-comment { color: #6a9955; } /* // comment or /* comment */ */
-        pre code .cs-number { color: #b5cea8; } /* Numbers */
-        pre code .cs-operator { color: #d4d4d4; } /* +, -, =, ==, etc. */
-        pre code .cs-method { color: #dcdcaa; } /* MethodName() */
-        pre code .cs-preprocessor { color: #9b9b9b; } /* #region, #if */
+         
+        pre code .cs-keyword { color: #569cd6; font-weight: bold; } 
+        pre code .cs-type { color: #4ec9b0; } 
+        pre code .cs-string { color: #d69d85; } 
+        pre code .cs-comment { color: #6a9955; } 
+        pre code .cs-number { color: #b5cea8; } 
+        pre code .cs-operator { color: #d4d4d4; } 
+        pre code .cs-method { color: #dcdcaa; } 
+        pre code .cs-preprocessor { color: #9b9b9b; } 
         pre code .cs-class-name { color: #4ec9b0; font-weight: bold;}
-        pre code .cs-variable { color: #9cdcfe; } /* variableName */
+        pre code .cs-variable { color: #9cdcfe; } 
 
 
         .warning, .important, .tip {
@@ -906,7 +906,7 @@ string."</span>;
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -914,7 +914,7 @@ string."</span>;
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -926,7 +926,7 @@ string."</span>;
                 }
             });
         };
-        // Activate the first link by default or based on hash
+        
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -939,11 +939,11 @@ string."</span>;
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active');
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink);
     </script>
 
 </body>

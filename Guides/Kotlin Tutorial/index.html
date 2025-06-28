@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -99,8 +99,8 @@
             color: #c7254e;
         }
         pre {
-            background-color: #2b2b2b; /* Dark background for Kotlin code */
-            color: #a9b7c6; /* Light text for contrast */
+            background-color: #2b2b2b; 
+            color: #a9b7c6; 
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
@@ -114,16 +114,16 @@
             border-radius: 0;
             color: inherit;
         }
-        /* Basic Kotlin syntax highlighting */
-        pre code .kt-keyword { color: #cc7832; font-weight: bold; } /* fun, val, var, if, else, when, for, class, interface, package, import */
-        pre code .kt-type { color: #ffc66d; } /* Int, String, Boolean, List, Map, Any */
-        pre code .kt-string { color: #6a8759; } /* "string literal", """multi-line string""" */
-        pre code .kt-comment { color: #808080; } /* // comment or /* comment */ */
-        pre code .kt-number { color: #6897bb; } /* Numbers */
-        pre code .kt-operator { color: #a9b7c6; } /* +, -, =, ==, etc. */
-        pre code .kt-function-call { color: #ffc66d; } /* functionName() */
-        pre code .kt-annotation { color: #bbb529; } /* @Annotation */
-        pre code .kt-variable { color: #a9b7c6; } /* variableName */
+        
+        pre code .kt-keyword { color: #cc7832; font-weight: bold; } 
+        pre code .kt-type { color: #ffc66d; } 
+        pre code .kt-string { color: #6a8759; } 
+        pre code .kt-comment { color: #808080; } 
+        pre code .kt-number { color: #6897bb; } 
+        pre code .kt-operator { color: #a9b7c6; } 
+        pre code .kt-function-call { color: #ffc66d; } 
+        pre code .kt-annotation { color: #bbb529; } 
+        pre code .kt-variable { color: #a9b7c6; } 
         pre code .kt-class-name { color: #ffc66d; font-weight: bold; }
 
         .warning, .important, .tip {
@@ -719,7 +719,7 @@
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -727,7 +727,7 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -739,7 +739,7 @@
                 }
             });
         };
-        // Activate the first link by default or based on hash
+        
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -752,11 +752,11 @@
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active'); 
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink); 
     </script>
 
 </body>

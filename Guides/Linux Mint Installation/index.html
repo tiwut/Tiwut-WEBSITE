@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<!-- Initial language set to English, will be updated by JavaScript -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Title will be set by JavaScript based on language -->
+    
     <title>Linux Mint Installation Guide</title>
 
     <style>
-        /* --- Root Variables for Theming --- */
+        
         :root {
-            /* Light Mode Colors (Linux Mint Palette from Reference) */
+            
             --bg-color: #fdfdfd;
             --text-color: #333;
             --sidebar-bg: #383838;
             --sidebar-text: #f0f0f0;
-            --accent-color: #7DBE31; /* Linux Mint Green */
-            --accent-hover: #8DD43A; /* Lighter Mint Green */
-            --accent-active-text: #000; /* Black text for contrast on green */
-            --heading-color: #69A22A; /* Darker Mint Green */
+            --accent-color: #7DBE31; 
+            --accent-hover: #8DD43A; 
+            --accent-active-text: #000; 
+            --heading-color: #69A22A; 
             --code-bg: #e9ecef;
             --code-text: #c7254e;
             --border-color: #e0e0e0;
@@ -35,7 +35,7 @@
             --lang-btn-active-bg: var(--accent-color);
         }
 
-        /* Dark Mode Colors */
+       
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #242424;
@@ -62,7 +62,7 @@
             }
         }
 
-        /* --- Base Styles --- */
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
@@ -74,12 +74,12 @@
             transition: background-color 0.3s, color 0.3s;
         }
         
-        /* --- CORRECTED Language Hiding Logic --- */
+       
         body:not(.show-en) [lang="en"] { display: none; }
         body:not(.show-de) [lang="de"] { display: none; }
         body:not(.show-es) [lang="es"] { display: none; }
         
-        /* --- Sidebar --- */
+        
         #sidebar {
             width: 280px;
             background-color: var(--sidebar-bg);
@@ -115,7 +115,7 @@
             font-weight: bold;
         }
 
-        /* Language Switcher in Sidebar */
+        
         .language-switcher {
             text-align: center;
             margin-bottom: 25px;
@@ -139,7 +139,7 @@
             font-weight: bold;
         }
 
-        /* --- Main Content --- */
+       
         #main-content {
             margin-left: 280px;
             padding: 20px 40px;
@@ -214,7 +214,7 @@
             color: var(--important-text);
         }
         
-        /* --- Responsive Adjustments --- */
+        
         @media (max-width: 800px) {
             body {
                 flex-direction: column;
