@@ -1,12 +1,9 @@
-// --- Translations Object (Vollständig für EN, DE, ES) ---
 const translations = {
-    // Page Titles
     chatPageTitle: { en: 'Tiwut Chat', de: 'Tiwut Chat', es: 'Tiwut Chat' },
     loginPageTitle: { en: 'Login - Tiwut Chat', de: 'Anmelden - Tiwut Chat', es: 'Iniciar Sesión - Tiwut Chat' },
     registerPageTitle: { en: 'Register - Tiwut Chat', de: 'Registrieren - Tiwut Chat', es: 'Registrarse - Tiwut Chat' },
     termsTitle: { en: 'Terms and Conditions', de: 'Allgemeine Geschäftsbedingungen', es: 'Términos y Condiciones' },
     
-    // UI Elements
     changeLanguage: { en: 'Change language', de: 'Sprache ändern', es: 'Cambiar idioma' },
     tiwutHomepageLink: { en: 'Tiwut Homepage', de: 'Tiwut Homepage', es: 'Página de Tiwut' },
     tiwutChat: { en: 'Tiwut Chat', de: 'Tiwut Chat', es: 'Tiwut Chat' },
@@ -22,7 +19,6 @@ const translations = {
     typeMessagePlaceholder: { en: 'Type a message...', de: 'Nachricht eingeben...', es: 'Escribe un mensaje...' },
     loginPromptText: { en: 'See all chats and participate!', de: 'Sieh alle Chats und nimm teil!', es: '¡Mira todos los chats y participa!' },
 
-    // Auth & Account
     loginTitle: { en: 'Login to Tiwut Chat', de: 'Bei Tiwut Chat anmelden', es: 'Iniciar sesión en Tiwut Chat' },
     registerTitle: { en: 'Create an account', de: 'Konto erstellen', es: 'Crear una cuenta' },
     usernameLabel: { en: 'Username:', de: 'Benutzername:', es: 'Nombre de usuario:' },
@@ -43,7 +39,6 @@ const translations = {
     user: { en: 'User', de: 'Benutzer', es: 'Usuario' },
     accountMenuAriaLabel: { en: 'Account Menu', de: 'Konto-Menü', es: 'Menú de Cuenta' },
 
-    // Status & Error Messages
     loggingIn: { en: 'Logging in...', de: 'Melde an...', es: 'Iniciando sesión...' },
     loginError: { en: 'Error: Invalid username or password.', de: 'Fehler: Ungültiger Benutzername oder Passwort.', es: 'Error: Usuario o contraseña incorrectos.' },
     registering: { en: 'Registering...', de: 'Registrierung läuft...', es: 'Registrando...' },
@@ -59,7 +54,6 @@ const translations = {
     createdBy: { en: 'by', de: 'von', es: 'por' },
     unknownUser: { en: 'Unknown', de: 'Unbekannt', es: 'Desconocido' },
 
-    // --- VOLLSTÄNDIGE NUTZUNGSBEDINGUNGEN ---
     termsContent: {
         en: `
             <h3>1. Agreement to Terms</h3>
@@ -124,7 +118,6 @@ const translations = {
     }
 };
 
-// --- Globale Variablen & Firebase Konfiguration ---
 let currentFirebaseUser = null;
 let activeFirebaseListeners = [];
 const DUMMY_EMAIL_DOMAIN = "@tiwut-dummy.internal";
@@ -142,8 +135,6 @@ const firebaseConfig = {
     appId: "1:640105042342:web:e186683b85f367f05dbf67",
     measurementId: "G-880NY6R894"
 };
-
-// --- KERN-INITIALISIERUNGSABLAUF ---
 
 document.addEventListener('DOMContentLoaded', () => {
     currentLang = localStorage.getItem('language') || 'en';
@@ -178,12 +169,10 @@ async function initializeApp() {
     });
 }
 
-// --- Übersetzungs- & Hilfsfunktionen ---
 function t(key) { return translations[key]?.[currentLang] || translations[key]?.['en'] || key; }
 
 function translatePage() {
     document.querySelectorAll('[data-translate]').forEach(el => {
-        // Use innerHTML for terms to render the HTML tags
         if (el.id === 'terms-content') {
             el.innerHTML = t(el.dataset.translate);
         } else {
@@ -215,7 +204,6 @@ function showStatusMessage(message, type = 'info', elementId = 'form-status') {
 
 function cleanupFirebaseListeners() { activeFirebaseListeners.forEach(unsub => unsub?.()); activeFirebaseListeners = []; }
 
-// --- Firebase-Funktionen ---
 async function initializeFirebase() {
     if (firebaseApp) return true;
     try {
@@ -231,7 +219,6 @@ async function initializeFirebase() {
     } catch (error) { console.error("FIREBASE INITIALIZATION FAILED:", error); return false; }
 }
 
-// --- UI- & Zustandsverwaltung ---
 function updateUIBasedOnAuthState(user) {
     currentFirebaseUser = user ? { uid: user.uid, email: user.email, displayName: user.displayName || t('user') } : null;
     if (document.getElementById('chat-app')) { updateChatAppUI(user); }
@@ -286,8 +273,6 @@ async function logoutUser() {
         window.location.reload();
     } catch (error) { console.error("Logout failed:", error); }
 }
-
-// --- Seitenspezifische Logik ---
 
 function initLanguageSelector() {
     const langButton = document.getElementById('language-button');

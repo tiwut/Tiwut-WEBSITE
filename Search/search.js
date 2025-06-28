@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. Konfiguration und Übersetzungen ---
     const translations = {
         de: {
             siteTitle: "Website Suche",
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- 2. DOM-Elemente holen ---
     const searchInput = document.getElementById('searchInput');
     const resultsContainer = document.getElementById('results');
     const langSwitcher = document.getElementById('lang-switcher');
@@ -39,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLanguage = 'en';
     const supportedLangs = ['de', 'en', 'es'];
 
-    // --- 3. Cursor-Steuerung ---
     window.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
         cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
@@ -53,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     
-    // --- 4. Sprach-Management ---
     function getInitialLanguage() {
         const preferredLang = localStorage.getItem('preferredLang');
         if (preferredLang && supportedLangs.includes(preferredLang)) return preferredLang;
@@ -82,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         performSearch();
     }
 
-    // --- 5. Suchlogik (jetzt mit Tags) ---
     function performSearch() {
         const query = searchInput.value.trim().toLowerCase();
         resultsContainer.innerHTML = '';
@@ -91,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const foundResults = searchData.filter(item => {
             const title = item.title[currentLanguage]?.toLowerCase() || '';
             const content = item.content[currentLanguage]?.toLowerCase() || '';
-            // NEU: Tags durchsuchen
             const tagsMatch = item.tags && item.tags.some(tag => tag.toLowerCase().includes(query));
             
             return title.includes(query) || content.includes(query) || tagsMatch;
@@ -108,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const title = item.title[currentLanguage] || item.title.en;
                 const contentSnippet = (item.content[currentLanguage] || item.content.en).substring(0, 150);
 
-                // NEU: Tag-Anzeige hinzufügen
                 let tagsHTML = '';
                 if (item.tags && item.tags.length > 0) {
                     tagsHTML = `<div class="result-tags">
@@ -126,11 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             resultsContainer.innerHTML = `<p class="feedback-message">${translations[currentLanguage].noResults}</p>`;
         }
-        // Wichtig: Nach dem Anzeigen der Ergebnisse die Cursor-Interaktion neu initialisieren
         setupCursorInteraction(); 
     }
 
-    // --- 6. Initialisierung ---
     function initialize() {
         currentLanguage = getInitialLanguage();
         setLanguage(currentLanguage);

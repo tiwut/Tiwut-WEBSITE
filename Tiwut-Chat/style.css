@@ -1,4 +1,3 @@
-/* --- Global Styles & Resets --- */
 :root {
     --status-bar-height: 24px;
     --background-dark: #111B21;
@@ -26,14 +25,11 @@ a { color: var(--primary-accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 button { cursor: pointer; font-family: inherit; border: none; background: none; color: inherit; transition: background-color 0.2s ease, transform 0.1s ease; }
 
-/* --- Top Status Bar --- */
 .status-bar-mock { position: fixed; top: 0; left: 0; width: 100%; height: var(--status-bar-height); background-color: #000; z-index: 5000; }
 
-/* --- Main App Layout --- */
 .app-container { display: flex; justify-content: center; align-items: center; height: calc(100vh - var(--status-bar-height)); margin-top: var(--status-bar-height); padding: 20px; background: linear-gradient(to bottom, var(--primary-accent) 15%, var(--background-dark) 15%); }
 .chat-container { position: relative; width: 100%; max-width: 1600px; height: 100%; max-height: 95vh; display: flex; border-radius: var(--border-radius); overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
 
-/* --- Sidebar --- */
 .sidebar { width: 30%; min-width: 300px; max-width: 450px; background-color: var(--background-default); border-right: 1px solid var(--panel-border-color); display: flex; flex-direction: column; }
 .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background-color: var(--background-light); border-bottom: 1px solid var(--panel-border-color); flex-shrink: 0; }
 .user-profile-menu { position: relative; }
@@ -76,7 +72,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .chat-info .room-creator { font-size: 0.85rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .no-chats-placeholder { padding: 20px; text-align: center; color: var(--text-secondary); }
 
-/* --- Main Chat Area --- */
 .main-chat-area { width: 70%; flex-grow: 1; background-color: var(--background-default); background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); display: flex; flex-direction: column; }
 .chat-placeholder { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; color: var(--text-secondary); padding: 20px; }
 .placeholder-logo { width: 100px; height: 100px; margin-bottom: 20px; }
@@ -104,7 +99,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 #send:disabled { background-color: #555; cursor: not-allowed; }
 .chat-status { font-size: 0.8rem; text-align: center; padding: 4px; color: var(--text-secondary); background-color: var(--background-light); flex-shrink: 0; }
 
-/* --- Auth Pages --- */
 .auth-page-container { height: calc(100vh - var(--status-bar-height)); margin-top: var(--status-bar-height); display: flex; justify-content: center; align-items: center; background-color: var(--background-default); padding: 20px; }
 .auth-form-section { width: 100%; max-width: 400px; background-color: var(--background-light); padding: 40px 30px; border-radius: var(--border-radius); text-align: center; box-shadow: 0 5px 25px rgba(0,0,0,0.2); }
 .auth-logo { width: 60px; height: 60px; margin-bottom: 20px; }
@@ -120,13 +114,11 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 .form-link { margin-top: 20px; font-size: 0.9rem; color: var(--text-secondary); }
 .terms-container { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
 
-/* --- Status Messages --- */
 .status-message { border: 1px solid; padding: 10px; border-radius: var(--border-radius); margin-bottom: 15px; font-size: 0.9rem; text-align: center; display: none; }
 .status-message.error-message { color: var(--error-color); background-color: rgba(255, 99, 71, 0.1); border-color: rgba(255, 99, 71, 0.5); display: block; }
 .status-message.success-message { color: var(--success-color); background-color: rgba(124, 252, 0, 0.1); border-color: rgba(124, 252, 0, 0.5); display: block; }
 .status-message.info-message { color: var(--text-secondary); background-color: rgba(150, 150, 150, 0.1); border-color: rgba(150, 150, 150, 0.3); display: block;}
 
-/* --- Terms Page Scrollbox --- */
 .terms-scroll-box {
     margin-top: 20px;
     padding: 15px 20px;
@@ -151,7 +143,6 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
     margin-top: 0;
 }
 
-/* --- Mobile Optimizations --- */
 @media (max-width: 768px) {
     .app-container { padding: 0; height: calc(100% - var(--status-bar-height)); }
     .chat-container { height: 100%; max-height: 100%; border-radius: 0; }
