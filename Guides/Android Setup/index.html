@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<!-- Standardsprache ist Englisch, wird von JS aktualisiert -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Titel wird von JavaScript gesetzt -->
+    
     <title>Android Device Setup Guide</title>
     <style>
-        /* CSS-Variablen für Theming */
+        
         :root {
             --bg-color: #f4f4f4;
             --main-bg-color: #fff;
             --text-color: #333;
-            --sidebar-bg: #2a3e52; /* Dunkles Blau-Grau */
+            --sidebar-bg: #2a3e52; 
             --sidebar-text: #fff;
             --sidebar-link-text: #ddd;
             --sidebar-border-color: #444;
-            --primary-color: #3DDC84; /* Android Grün */
-            --primary-color-dark: #00A453; /* Dunkleres Android Grün */
+            --primary-color: #3DDC84;
+            --primary-color-dark: #00A453; 
             --code-bg: #e9ecef;
             --code-text: #c7254e;
             --border-color-light: #eee;
@@ -30,7 +30,7 @@
             --important-text: #0c5460;
         }
 
-        /* Automatischer Dark Mode */
+        
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg-color: #121212;
@@ -72,17 +72,17 @@
             height: 100vh;
             position: fixed;
             overflow-y: auto;
-            flex-shrink: 0; /* Verhindert das Schrumpfen der Sidebar */
+            flex-shrink: 0;
         }
         #main-content {
-            margin-left: 280px; /* Breite der Sidebar */
+            margin-left: 280px; 
             padding: 20px 40px;
             width: calc(100% - 280px);
             background-color: var(--main-bg-color);
             min-height: 100vh;
         }
 
-        /* --- Sidebar-Inhalte --- */
+        
         #sidebar-lang-switcher {
             display: flex;
             justify-content: center;
@@ -96,7 +96,7 @@
             border: 1px solid var(--sidebar-link-text);
             color: var(--sidebar-link-text);
             padding: 5px 15px;
-            border-radius: 20px; /* Pillenform */
+            border-radius: 20px; 
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 14px;
@@ -138,7 +138,7 @@
             color: var(--sidebar-bg);
         }
         
-        /* --- Hauptinhalt --- */
+        
         header {
             border-bottom: 1px solid var(--border-color-dark);
             padding-bottom: 20px;
@@ -195,7 +195,7 @@
             color: var(--important-text);
         }
         
-        /* --- Mobil-Kompatibilität --- */
+        
         @media (max-width: 800px) {
             body {
                 flex-direction: column;
@@ -205,7 +205,7 @@
                 height: auto;
                 position: relative;
                 margin-bottom: 20px;
-                padding: 15px; /* Weniger Padding auf Mobilgeräten */
+                padding: 15px; 
             }
             #main-content {
                 margin-left: 0;
@@ -246,9 +246,7 @@
             <h1 data-key="main_title">Android Device Setup Guide</h1>
         </header>
 
-        <!-- Der Rest des HTML-Inhalts (section, h2, p, etc.) bleibt unverändert. -->
-        <!-- Ich füge hier nur einen Platzhalter ein, um die Antwort kurz zu halten. -->
-        <!-- Kopieren Sie den Inhalt von <section> bis </section> aus der vorherigen Antwort hierher. -->
+        
 
         <section id="welcome">
             <h2 data-key="welcome_title">Welcome to Android</h2>
@@ -377,9 +375,7 @@
     </div>
 
     <script>
-        // --- TRANSLATION DATA ---
-        // Die Übersetzungsdaten bleiben unverändert.
-        // Fügen Sie das 'translations' Objekt aus der vorherigen Antwort hier ein.
+        
         const translations = {
             en: {
                 page_title: "Android Device Setup Guide",
@@ -630,17 +626,17 @@
         };
 
 
-        // --- SCRIPT LOGIC ---
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Die ID des Sprachumschalters wurde aktualisiert
+            
             const langSwitcher = document.getElementById('sidebar-lang-switcher');
             const sections = document.querySelectorAll('#main-content section');
             const navLinks = document.querySelectorAll('#sidebar ul li a');
 
-            // Funktion zum Wechseln der Sprache
+            
             const switchLanguage = (lang) => {
                 if (!translations[lang]) {
-                    lang = 'en'; // Standard auf Englisch
+                    lang = 'en'; 
                 }
                 document.documentElement.lang = lang;
                 document.querySelectorAll('[data-key]').forEach(elem => {
@@ -659,7 +655,7 @@
                 localStorage.setItem('preferredLanguage', lang);
             };
 
-            // Event Listeners für den Sprachumschalter
+            
             langSwitcher.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') {
                     const lang = e.target.dataset.lang;
@@ -667,7 +663,7 @@
                 }
             });
 
-            // Sprache beim Laden automatisch erkennen
+            
             const preferredLanguage = localStorage.getItem('preferredLanguage');
             const browserLanguage = navigator.language.split('-')[0];
             
@@ -676,10 +672,10 @@
             } else if (translations[browserLanguage]) {
                 switchLanguage(browserLanguage);
             } else {
-                switchLanguage('en'); // Fallback
+                switchLanguage('en'); 
             }
 
-            // Scrollspy für aktive Links in der Sidebar
+           
             const onScroll = () => {
                 let current = '';
                 sections.forEach(section => {
@@ -700,7 +696,7 @@
             };
             
             window.addEventListener('scroll', onScroll);
-            onScroll(); // Initialer Aufruf
+            onScroll(); 
         });
     </script>
 </body>

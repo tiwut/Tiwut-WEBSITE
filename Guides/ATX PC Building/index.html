@@ -46,7 +46,7 @@
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -116,7 +116,7 @@
             font-style: italic;
             color: #555;
         }
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -682,7 +682,7 @@
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -690,22 +690,20 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                // Adjust offset if you have a fixed header or other elements
-                // A smaller offset makes the link active sooner when scrolling up
-                // A larger offset delays it. For scrolling down, it should be active when section top passes a point.
+                
                 if (pageYOffset >= sectionTop - (window.innerHeight / 3) ) {
                     current = section.getAttribute('id');
                 }
             });
 
-            // If scrolled to the very bottom, make the last link active
-            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) { // -2 for safety margin
+            
+            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) { 
                 const lastSection = sections[sections.length-1];
                 if(lastSection) {
                     current = lastSection.getAttribute('id');
                 }
             }
-            // If scrolled to the very top, make the first link active
+            
             if (window.pageYOffset < sections[0].offsetTop - (window.innerHeight / 3) ) {
                  const firstSection = sections[0];
                  if(firstSection) {
@@ -723,8 +721,8 @@
         }
 
         window.addEventListener('scroll', highlightActiveLink);
-        window.addEventListener('resize', highlightActiveLink); // Recalculate on resize
-        document.addEventListener('DOMContentLoaded', highlightActiveLink); // Highlight on load
+        window.addEventListener('resize', highlightActiveLink); 
+        document.addEventListener('DOMContentLoaded', highlightActiveLink); 
 
     </script>
 

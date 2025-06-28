@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px;
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -99,8 +99,8 @@
             color: #c7254e;
         }
         pre {
-            background-color: #282c34; /* Dark background for ASM code */
-            color: #abb2bf; /* Light text for contrast */
+            background-color: #282c34; 
+            color: #abb2bf; 
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
@@ -114,16 +114,16 @@
             border-radius: 0;
             color: inherit;
         }
-        /* Basic ASM syntax highlighting for NASM x86 */
-        pre code .asm-instruction { color: #c678dd; font-weight: bold; } /* mov, add, int, jmp */
-        pre code .asm-register { color: #e06c75; } /* eax, ebx, ecx, esp */
-        pre code .asm-label { color: #61afef; } /* _start:, my_var: */
-        pre code .asm-directive { color: #d19a66; } /* section, global, db, equ, extern */
-        pre code .asm-comment { color: #5c6370; font-style: italic; } /* ; comment */
-        pre code .asm-string { color: #98c379; } /* 'Hello', "World" */
-        pre code .asm-number { color: #e5c07b; } /* 0x80, 1, 4, 10 (decimal or hex) */
-        pre code .asm-addressing { color: #abb2bf; } /* [], +, * (for memory operands) */
-        pre code .asm-size-specifier { color: #56b6c2; } /* byte, word, dword, qword */
+       
+        pre code .asm-instruction { color: #c678dd; font-weight: bold; } 
+        pre code .asm-register { color: #e06c75; } 
+        pre code .asm-label { color: #61afef; } 
+        pre code .asm-directive { color: #d19a66; } 
+        pre code .asm-comment { color: #5c6370; font-style: italic; } 
+        pre code .asm-string { color: #98c379; } 
+        pre code .asm-number { color: #e5c07b; } 
+        pre code .asm-addressing { color: #abb2bf; }
+        pre code .asm-size-specifier { color: #56b6c2; } 
 
 
         .warning, .important {
@@ -642,7 +642,7 @@ sudo apt install nasm</code></pre>
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -650,7 +650,7 @@ sudo apt install nasm</code></pre>
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -662,7 +662,7 @@ sudo apt install nasm</code></pre>
                 }
             });
         };
-        // Activate the first link by default or based on hash
+        
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -675,11 +675,11 @@ sudo apt install nasm</code></pre>
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active'); 
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink); 
     </script>
 
 </body>

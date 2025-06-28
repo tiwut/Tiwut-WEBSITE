@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Meta-Titel für jede Sprache -->
+   
     <title data-de="Apple Geräte einrichten - Ein Guide" 
            data-en="Set Up Apple Devices - A Guide" 
            data-es="Configurar Dispositivos Apple - Una Guía">Set Up Apple Devices - A Guide</title>
 
     <style>
-        /* --- 1. Grundlegende Stile & CSS-Variablen (für Hell-/Dunkelmodus) --- */
+       
         :root {
             --bg-color: #f4f5f7;
             --card-bg-color: #ffffff;
@@ -33,7 +33,7 @@
             }
         }
 
-        /* --- 2. Allgemeines Layout & Typografie --- */
+        
         * {
             box-sizing: border-box;
             margin: 0;
@@ -58,7 +58,7 @@
             padding: 20px;
         }
 
-        /* --- 3. Navigationsleiste --- */
+       
         nav {
             background-color: var(--card-bg-color);
             padding: 15px 20px;
@@ -69,7 +69,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; /* Wichtig für mobile Ansicht */
+            flex-wrap: wrap; 
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -119,7 +119,7 @@
             border-color: var(--accent-color);
         }
 
-        /* --- 4. Hauptinhalt & Karten-Design --- */
+       
         main {
             padding-top: 30px;
         }
@@ -156,7 +156,7 @@
             color: var(--text-color);
         }
 
-        /* --- 5. Mobile Kompatibilität (Responsiveness) --- */
+        
         @media (max-width: 768px) {
             nav {
                 flex-direction: column;
@@ -188,7 +188,7 @@
 </head>
 <body>
 
-    <!-- Navigation -->
+   
     <nav>
         <ul class="nav-links">
             <li><a href="#iphone" data-de="iPhone" data-en="iPhone" data-es="iPhone">iPhone</a></li>
@@ -206,10 +206,10 @@
         </div>
     </nav>
 
-    <!-- Hauptinhalt des Guides -->
+    
     <div class="container">
         <main>
-            <!-- iPhone Sektion -->
+            
             <section id="iphone" class="guide-section">
                 <h2 data-de="iPhone einrichten" data-en="Set Up iPhone" data-es="Configurar el iPhone"></h2>
                 <p data-de="Folgen Sie diesen Schritten, um Ihr neues iPhone schnell und einfach einzurichten." data-en="Follow these steps to set up your new iPhone quickly and easily." data-es="Sigue estos pasos para configurar tu nuevo iPhone de forma rápida y sencilla."></p>
@@ -222,7 +222,7 @@
                 </ol>
             </section>
 
-            <!-- iPad Sektion -->
+           
             <section id="ipad" class="guide-section">
                 <h2 data-de="iPad einrichten" data-en="Set Up iPad" data-es="Configurar el iPad"></h2>
                 <p data-de="Die Einrichtung des iPad ist der des iPhones sehr ähnlich und kann ebenfalls mit Schnellstart erfolgen." data-en="Setting up an iPad is very similar to the iPhone and can also be done with Quick Start." data-es="La configuración del iPad es muy similar a la del iPhone y también se puede hacer con Inicio Rápido."></p>
@@ -234,7 +234,7 @@
                 </ol>
             </section>
 
-            <!-- MacBook Sektion -->
+            
             <section id="macbook" class="guide-section">
                 <h2 data-de="MacBook einrichten" data-en="Set Up MacBook" data-es="Configurar el MacBook"></h2>
                 <p data-de="Ihr neues MacBook führt Sie mit dem Systemassistenten durch die Einrichtung." data-en="Your new MacBook will guide you through the setup with the Setup Assistant." data-es="Tu nuevo MacBook te guiará a través de la configuración con el Asistente de Configuración."></p>
@@ -247,7 +247,7 @@
                 </ol>
             </section>
 
-            <!-- Apple Watch Sektion -->
+            
             <section id="watch" class="guide-section">
                 <h2 data-de="Apple Watch einrichten" data-en="Set Up Apple Watch" data-es="Configurar el Apple Watch"></h2>
                 <p data-de="Die Apple Watch wird über Ihr iPhone gekoppelt und konfiguriert." data-en="The Apple Watch is paired and configured via your iPhone." data-es="El Apple Watch se enlaza y configura a través de tu iPhone."></p>
@@ -259,7 +259,7 @@
                 </ol>
             </section>
             
-            <!-- Apple Home Sektion -->
+            
             <section id="home" class="guide-section">
                 <h2 data-de="Apple Home einrichten (HomePod & Zubehör)" data-en="Set Up Apple Home (HomePod & Accessories)" data-es="Configurar Casa de Apple (HomePod y Accesorios)"></h2>
                 <p data-de="Verwandeln Sie Ihr Zuhause in ein Smart Home mit HomeKit-Zubehör und einem HomePod oder Apple TV als Steuerzentrale." data-en="Turn your house into a smart home with HomeKit accessories and a HomePod or Apple TV as a hub." data-es="Convierte tu casa en un hogar inteligente con accesorios de HomeKit y un HomePod o Apple TV como central."></p>
@@ -281,53 +281,52 @@
 
         const changeLanguage = (lang) => {
             if (!supportedLangs.includes(lang)) {
-                lang = 'en'; // Standard-Sprache
+                lang = 'en'; 
             }
 
-            // Textinhalte ändern
+            
             allTextElements.forEach(el => {
                 if (el.dataset[lang]) {
-                    // Für die meisten Elemente
+                    
                     if (el.tagName === 'TITLE') {
                         el.innerText = el.dataset[lang];
                     } else {
-                        // Verwendung von innerHTML erlaubt einfache Formatierungen wie <b>
-                        // Hier wird aber nur Text gesetzt, daher ist textContent sicherer.
+                        
                         el.textContent = el.dataset[lang];
                     }
                 }
             });
             
-            // lang-Attribut des HTML-Tags für SEO und Barrierefreiheit setzen
+            
             document.documentElement.lang = lang;
 
-            // Aktiven Button im Switcher markieren
+            
             languageSwitcher.querySelectorAll('button').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.lang === lang);
             });
 
-            // Auswahl des Benutzers speichern
+            
             localStorage.setItem('userLanguage', lang);
         };
 
         const getInitialLanguage = () => {
-            // 1. Gespeicherte Sprache des Benutzers prüfen
+            
             const savedLang = localStorage.getItem('userLanguage');
             if (savedLang && supportedLangs.includes(savedLang)) {
                 return savedLang;
             }
 
-            // 2. Browsersprache prüfen
+           
             const browserLang = navigator.language.split('-')[0];
             if (supportedLangs.includes(browserLang)) {
                 return browserLang;
             }
 
-            // 3. Fallback auf Englisch
+            
             return 'en';
         };
 
-        // Event-Listener für die Sprach-Buttons
+        
         languageSwitcher.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 const lang = e.target.dataset.lang;
@@ -337,7 +336,7 @@
             }
         });
 
-        // Initiale Sprache beim Laden der Seite festlegen
+        
         const initialLang = getInitialLanguage();
         changeLanguage(initialLang);
     });
