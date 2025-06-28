@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const length = parseInt(lengthEl.value);
         let characterPool = '';
         let generatedPassword = '';
-        let guaranteedChars = []; // To ensure at least one of each selected type
+        let guaranteedChars = [];
 
         if (length < 8 || length > 128) {
             showMessage("Password length must be between 8 and 128.", true);
@@ -61,30 +61,26 @@ document.addEventListener('DOMContentLoaded', () => {
              return;
         }
 
-        // Add guaranteed characters first
         for (let char of guaranteedChars) {
             generatedPassword += char;
         }
         
-        // Fill the rest of the password length
         const remainingLength = length - guaranteedChars.length;
         for (let i = 0; i < remainingLength; i++) {
             generatedPassword += getRandomChar(characterPool);
         }
 
-        // Shuffle the password to mix guaranteed characters
         generatedPassword = shuffleString(generatedPassword);
         
         passwordOutputEl.value = generatedPassword;
         showMessage("Password generated!", false);
     }
 
-    // Fisher-Yates (Knuth) Shuffle for strings
     function shuffleString(str) {
         let arr = str.split('');
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+            [arr[i], arr[j]] = [arr[j], arr[i]];
         }
         return arr.join('');
     }
@@ -108,15 +104,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showMessage(text, isError = false) {
         messageEl.textContent = text;
-        messageEl.style.color = isError ? '#e74c3c' : '#27ae60'; // Red for error, green for success
+        messageEl.style.color = isError ? '#e74c3c' : '#27ae60';
         setTimeout(() => {
             messageEl.textContent = '';
-        }, 3000); // Clear message after 3 seconds
+        }, 3000);
     }
 
     generateButton.addEventListener('click', generatePassword);
     copyButton.addEventListener('click', copyToClipboard);
 
-    // Generate a password on page load
     generatePassword();
 });

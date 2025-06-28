@@ -1,4 +1,3 @@
-/* Basic Reset & Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -9,17 +8,16 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-    /* background-color: #f4f4f4; Removed, handled by ::before */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    position: relative; /* For ::before pseudo-element positioning */
-    overflow-x: hidden; /* Prevent scrollbar from blur extending slightly */
+    position: relative; 
+    overflow-x: hidden; 
 }
 
 body::before {
     content: '';
-    position: fixed; /* Cover the entire viewport */
+    position: fixed; 
     top: 0;
     left: 0;
     right: 0;
@@ -28,19 +26,18 @@ body::before {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(1px); /* Adjust blur amount as needed */
-    z-index: -1; /* Place it behind all other content */
+    filter: blur(1px); 
+    z-index: -1; 
 }
 
 header {
-    /* background-color: #35424a; */
-    background-color: rgba(53, 66, 74, 0.75); /* Semi-transparent */
+    background-color: rgba(53, 66, 74, 0.75); 
     color: #ffffff;
     padding: 1rem 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    position: relative; /* Ensure it's above ::before */
-    z-index: 10; /* Ensure header is above blurred background */
+    position: relative; 
+    z-index: 10; 
 }
 
 header h1 {
@@ -51,58 +48,35 @@ header h1 {
 main {
     flex-grow: 1;
     display: flex;
-    flex-direction: row; /* Default for desktop */
-    overflow: hidden; /* Prevent scrollbars on main due to map/panel */
-    position: relative; /* Ensure content is above ::before */
-    z-index: 5; /* Ensure main content is above blurred background */
+    flex-direction: row; 
+    overflow: hidden; 
+    position: relative; 
+    z-index: 5; 
 }
 
 .controls-panel {
     width: 380px;
     padding: 20px;
-    /* background-color: #fff; */
-    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent */
+    background-color: rgba(255, 255, 255, 0.85); 
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    /* position: relative; z-index: 1; already covered by main's z-index */
 }
 
 .map-panel {
     flex-grow: 1;
     height: calc(100vh - 60px - 40px);
-    /* No background color needed here, map will cover or body::before shows */
 }
 
 #map {
     width: 100%;
     height: 100%;
-    background-color: #e0e0e0; /* Fallback for map tiles */
+    background-color: #e0e0e0; 
     cursor: crosshair;
 }
 
-/* Input & Buttons */
-/* Entfernt:
-.input-group {
-    margin-bottom: 5px;
-    display: flex;
-}
-
-.input-group input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px 0 0 4px;
-    font-size: 0.9rem;
-}
-
-.input-group button {
-    border-radius: 0 4px 4px 0;
-}
-*/
-
-.actions-group button, /* Kombiniert mit .input-group button, da dieser entfernt wurde */
+.actions-group button, 
 .button-like-label {
     padding: 10px 15px;
     background-color: #5cb85c;
@@ -129,7 +103,7 @@ main {
     background-color: #0056b3;
 }
 
-.actions-group button:hover { /* Allgemeiner Hover für Buttons in der Gruppe */
+.actions-group button:hover { 
     background-color: #4cae4c;
 }
 .actions-group button#exportPdfBtn {
@@ -147,13 +121,12 @@ main {
 
 .map-click-hint {
     font-size: 0.8em;
-    color: #333; /* Darker text for better readability on potentially lighter part of blurred bg */
+    color: #333; 
     margin-bottom: 15px;
     line-height: 1.3;
-    margin-top: 5px; /* Kleiner Abstand nach oben, da Input-Feld weg ist */
+    margin-top: 5px; 
 }
 
-/* Waypoint List */
 #waypointList {
     list-style: none;
     padding: 0;
@@ -161,15 +134,15 @@ main {
     flex-grow: 1;
     overflow-y: auto;
     min-height: 100px;
-    border: 1px solid #ccc; /* Slightly darker border */
+    border: 1px solid #ccc; 
     border-radius: 4px;
     padding: 5px;
 }
 
 #waypointList li {
-    background-color: rgba(249, 249, 249, 0.9); /* Slightly transparent list items */
+    background-color: rgba(249, 249, 249, 0.9); 
     padding: 8px 10px;
-    border: 1px solid #ddd; /* Slightly darker border */
+    border: 1px solid #ddd; 
     margin-bottom: 5px;
     border-radius: 4px;
     display: flex;
@@ -199,7 +172,7 @@ main {
     text-overflow: ellipsis;
 }
 .waypoint-name:hover {
-    background-color: rgba(233, 233, 233, 0.9); /* Slightly transparent hover */
+    background-color: rgba(233, 233, 233, 0.9); 
 }
 
 .waypoint-name-input {
@@ -209,7 +182,7 @@ main {
     border-radius: 3px;
     width: calc(100% - 0px);
     box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.95); /* Ensure input field is readable */
+    background-color: rgba(255, 255, 255, 0.95); 
 }
 
 .waypoint-controls {
@@ -226,7 +199,7 @@ main {
     padding: 0 5px;
     line-height: 1;
     margin-left: 4px;
-    color: #333; /* Ensure icons are visible */
+    color: #333; 
 }
 .waypoint-controls button:disabled {
     opacity: 0.4;
@@ -247,15 +220,14 @@ main {
     color: #0056b3;
 }
 
-/* Unit Selector */
 .unit-selector-group {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 8px;
-    background-color: rgba(249, 249, 249, 0.85); /* Slightly transparent */
-    border: 1px solid #ddd; /* Slightly darker border */
+    background-color: rgba(249, 249, 249, 0.85); 
+    border: 1px solid #ddd; 
     border-radius: 4px;
 }
 
@@ -271,14 +243,13 @@ main {
     border-radius: 4px;
     font-size: 0.9rem;
     flex-grow: 1;
-    background-color: rgba(255, 255, 255, 0.95); /* Ensure select is readable */
+    background-color: rgba(255, 255, 255, 0.95); 
 }
 
-/* Route Info */
 #routeInfo {
     margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid #ddd; /* Slightly darker border */
+    border-top: 1px solid #ddd; 
 }
 #routeInfo p {
     font-size: 0.9rem;
@@ -290,17 +261,15 @@ main {
 
 
 footer {
-    /* background-color: #35424a; */
-    background-color: rgba(53, 66, 74, 0.75); /* Semi-transparent */
+    background-color: rgba(53, 66, 74, 0.75); 
     color: #ffffff;
     text-align: center;
     padding: 0.5rem 0;
     font-size: 0.8rem;
-    position: relative; /* Ensure it's above ::before */
-    z-index: 10; /* Ensure footer is above blurred background */
+    position: relative; 
+    z-index: 10; 
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     main {
         flex-direction: column;
@@ -355,43 +324,37 @@ footer {
     }
 }
 
-/* Leaflet Customizations */
 .leaflet-routing-container {
     max-height: 150px;
     overflow-y: auto;
-    background-color: rgba(255, 255, 255, 0.8); /* Make routing plan slightly transparent */
+    background-color: rgba(255, 255, 255, 0.8); 
 }
 .leaflet-routing-container .leaflet-routing-alt {
-    background-color: rgba(245, 245, 245, 0.85); /* Slightly transparent alternatives */
+    background-color: rgba(245, 245, 245, 0.85); 
 }
 .leaflet-routing-container .leaflet-routing-alt:hover {
     background-color: rgba(230, 230, 230, 0.9);
 }
 
 .leaflet-control-layers {
-    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent layer control */
+    background-color: rgba(255, 255, 255, 0.85); 
     border-radius: 5px;
     box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 }
 .leaflet-control-layers-toggle {
-    /* Default style is fine */
 }
 .leaflet-control-layers-base label {
-    color: #333; /* Ensure text is readable */
+    color: #333; 
 }
 .leaflet-control-layers-selector {
-    /* Default style is fine */
 }
 
 .leaflet-control-geocoder {
-    /* Default style often fine, but can be customized if needed */
 }
 .leaflet-control-geocoder-form input {
-    background-color: rgba(255, 255, 255, 0.9); /* Ensure input is readable */
+    background-color: rgba(255, 255, 255, 0.9); 
 }
 
-
-/* Styling für das Karten-Klick-Popup */
 .map-click-popup-content {
     text-align: center;
     font-size: 0.9rem;
@@ -425,7 +388,7 @@ footer {
 
 .leaflet-popup-content-wrapper {
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent popup background */
+    background-color: rgba(255, 255, 255, 0.9); 
     box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 }
 
@@ -435,18 +398,17 @@ footer {
     line-height: 1.4;
     min-width: 180px;
     max-width: 250px;
-    color: #333; /* Ensure text is readable */
+    color: #333; 
 }
 
 .leaflet-popup-close-button {
     padding: 6px 6px 0 0 !important;
-    color: #555; /* Make close button slightly more visible */
+    color: #555; 
 }
 .leaflet-popup-close-button:hover {
     color: #222;
 }
 
-/* Pulsierender Marker für Kartenklick */
 .leaflet-pulsing-icon {
   background-color: rgba(0, 123, 255, 0.7);
   border-radius: 50%;

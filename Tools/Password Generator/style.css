@@ -1,16 +1,14 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    /* background-color: #f4f7f6; */ /* Entfernt, da das Bild den Hintergrund übernimmt */
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    /* padding: 20px; */ /* Entfernt, um einen vollflächigen Hintergrund zu ermöglichen */
     box-sizing: border-box;
-    position: relative; /* Erforderlich für die Positionierung des Pseudo-Elements */
-    overflow: hidden; /* Verhindert Scrollbalken durch den skalierten, unscharfen Hintergrund */
+    position: relative;
+    overflow: hidden;
 }
 
 body::before {
@@ -24,10 +22,9 @@ body::before {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    filter: blur(0px); /* Stärke des Unschärfeeffekts anpassen (z.B. 5px, 8px, 10px) */
-    /* Optional: Leicht skalieren, um Artefakte an den Rändern durch den Unschärfeeffekt zu vermeiden */
-    transform: scale(1.03); /* Etwas vergrößern, um unscharfe Kanten abzudecken */
-    z-index: -1; /* Stellt sicher, dass der Hintergrund hinter dem Inhalt liegt */
+    filter: blur(0px);
+    transform: scale(1.03);
+    z-index: -1;
 }
 
 .container {
@@ -37,10 +34,6 @@ body::before {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
-    /* Der Container liegt aufgrund von z-index: -1 des body::before darüber.
-       Eine explizite Positionierung ist hier nicht zwingend notwendig,
-       kann aber für komplexere Layouts sinnvoll sein.
-    */
 }
 
 h1 {
@@ -92,7 +85,7 @@ h1 {
 #copyButton img {
     width: 20px;
     height: 20px;
-    filter: invert(1); /* Makes SVG white if it's black */
+    filter: invert(1);
 }
 
 
@@ -152,6 +145,6 @@ h1 {
     text-align: center;
     margin-top: 15px;
     font-size: 0.9em;
-    height: 20px; /* Reserve space to prevent layout shift */
+    height: 20px;
     color: #27ae60;
 }

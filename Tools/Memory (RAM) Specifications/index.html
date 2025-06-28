@@ -6,7 +6,6 @@
     <title>Arbeitsspeicher Info Tool</title>
     
     <style>
-        /* Grundlegende Stile & Light Mode */
         :root {
             --bg-color: #f4f4f9;
             --text-color: #333;
@@ -16,7 +15,6 @@
             --border-color: #ddd;
         }
 
-        /* Dark Mode Variablen */
         body.dark-mode {
             --bg-color: #121212;
             --text-color: #e0e0e0;
@@ -141,7 +139,6 @@
         <input type="text" id="searchBar" placeholder="RAM-Modell oder Hersteller suchen...">
 
         <div id="ramList">
-            <!-- RAM-Karten werden hier per JavaScript eingefügt -->
         </div>
     </div>
 
@@ -156,7 +153,6 @@
             let specHeaders = {};
             let currentLang = 'de';
 
-            // --- Übersetzungen ---
             const translations = {
                 de: {
                     title: "Arbeitsspeicher (RAM) Spezifikationen",
@@ -164,7 +160,6 @@
                     dark_mode_toggle_dark: "Heller Modus",
                     dark_mode_toggle_light: "Dunkelmodus",
                     not_found: "Keine passenden RAM-Module gefunden.",
-                    // Spec Labels
                     Modell: "Modell",
                     Hersteller: "Hersteller",
                     Typ: "Typ",
@@ -180,7 +175,6 @@
                     dark_mode_toggle_dark: "Light Mode",
                     dark_mode_toggle_light: "Dark Mode",
                     not_found: "No matching RAM modules found.",
-                    // Spec Labels
                     Modell: "Model",
                     Hersteller: "Manufacturer",
                     Typ: "Type",
@@ -192,7 +186,6 @@
                 }
             };
 
-            // --- Hauptlogik ---
             async function loadRamData() {
                 try {
                     const response = await fetch('ram_specs.txt');
@@ -251,7 +244,6 @@
 
             searchBar.addEventListener('input', filterAndDisplay);
 
-            // --- Dunkelmodus (mit Systempräferenz) ---
             function applyTheme(theme) {
                 document.body.classList.toggle('dark-mode', theme === 'dark');
                 updateDarkModeButtonText(theme);
@@ -268,7 +260,6 @@
                 applyTheme(newTheme);
             });
 
-            // --- Sprachumschaltung ---
             function setLanguage(lang) {
                 currentLang = lang;
                 localStorage.setItem('language', lang);
@@ -280,14 +271,13 @@
                 const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
                 updateDarkModeButtonText(currentTheme);
                 
-                filterAndDisplay(); // Neu rendern mit der neuen Sprache
+                filterAndDisplay();
             }
 
             langSwitcher.addEventListener('change', (e) => {
                 setLanguage(e.target.value);
             });
 
-            // --- Initialisierung ---
             function initialize() {
                 const savedTheme = localStorage.getItem('theme');
                 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');

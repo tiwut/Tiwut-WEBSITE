@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM geladen. Leaflet-Skript startet.");
 
-    // Entfernt:
-    // const waypointInput = document.getElementById('waypointInput');
-    // const addWaypointBtn = document.getElementById('addWaypointBtn');
     const waypointListUI = document.getElementById('waypointList');
     const exportJsonBtn = document.getElementById('exportJsonBtn');
     const importJsonInput = document.getElementById('importJsonInput');
@@ -24,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let rawTotalTimeSeconds = 0;
     const METERS_TO_MILES = 0.000621371;
 
-    // 1. Karteninitialisierung
     function initMap() {
         console.log("initMap() wird aufgerufen.");
         try {
@@ -92,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 2. Behandlung von Kartenklicks
     function handleMapClick(e) {
         const clickedLatLng = e.latlng;
         if (mapClickPopup) map.closePopup(mapClickPopup);
@@ -129,14 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Entfernt: Funktion handleAddWaypointFromInput()
-    /* 
-    function handleAddWaypointFromInput() {
-        // ...
-    }
-    */
-
-    // 4. Allgemeine Funktion zum Hinzufügen eines Wegpunkts
     function addWaypoint(name, latLng) {
         const finalLatLng = (latLng instanceof L.LatLng) ? latLng : L.latLng(latLng.lat, latLng.lng);
         
@@ -145,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateRoute();
     }
 
-    // 5. Wegpunktliste rendern
     function renderWaypointList() {
         waypointListUI.innerHTML = '';
         waypoints.forEach((wp, index) => {
@@ -184,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentUnitSystem === 'imperial') {
                 distance = distance * METERS_TO_MILES;
                 unitLabel = 'mi';
-            } else { // metric
+            } else { 
                 distance = distance / 1000;
             }
             if (totalDistanceEl) totalDistanceEl.textContent = `${distance.toFixed(2)} ${unitLabel}`;
@@ -195,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 6. Route aktualisieren / Routenplanung initialisieren
     function updateRoute() {
         console.log("updateRoute() aufgerufen.");
         if (waypoints.length < 2) {
@@ -278,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return timeString.trim() || '0 Min.';
     }
 
-    // 8. JSON Export / Import
     if (exportJsonBtn) {
         exportJsonBtn.addEventListener('click', () => {
             if (waypoints.length === 0) { alert("Keine Wegpunkte zum Exportieren vorhanden."); return; }
@@ -307,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. PDF Export
     if (exportPdfBtn) {
         exportPdfBtn.addEventListener('click', () => {
             if (waypoints.length === 0) {
@@ -346,7 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // 10. Live Standort
     if(showLocationBtn) {
         showLocationBtn.addEventListener('click', () => {
             if (!navigator.geolocation) { alert("Geolocation wird von Ihrem Browser nicht unterstützt."); return; }
@@ -369,14 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
             displayRouteInfo();
         });
     }
-
-    // Entfernt: Event Listener für die alte Suchleiste
-    /*
-    if(addWaypointBtn) addWaypointBtn.addEventListener('click', handleAddWaypointFromInput);
-    if(waypointInput) waypointInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleAddWaypointFromInput();
-    });
-    */
 
     initMap();
     renderWaypointList(); 

@@ -10,10 +10,9 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            /* background-color: #f0f2f5; -- Removed to allow blurred background to show */
             color: #333;
-            position: relative; /* For ::before pseudo-element positioning */
-            overflow-x: hidden; /* Prevent horizontal scroll if blur causes overflow */
+            position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
@@ -27,26 +26,24 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(0px); /* Adjust blur amount as needed */
-            z-index: -1; /* Place it behind the content */
-            /* Optional: add a fallback background color if main.avif fails to load or has transparency */
-            /* background-color: #f0f2f5; */ 
+            filter: blur(0px);
+            z-index: -1;
         }
 
         .container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 20px;
-            position: relative; /* Ensure content is above the ::before pseudo-element */
+            position: relative;
             z-index: 1;
         }
         header {
-            background-color: #2c3e50; /* This will sit on top of the blurred background */
+            background-color: #2c3e50;
             color: white;
             padding: 30px 20px;
             text-align: center;
             border-bottom: 5px solid #3498db;
-            position: relative; /* Ensure content is above the ::before pseudo-element */
+            position: relative;
             z-index: 1;
         }
         header h1 {
@@ -61,7 +58,7 @@
         .search-container {
             margin: 30px 0;
             text-align: center;
-            position: relative; /* Ensure content is above the ::before pseudo-element */
+            position: relative;
             z-index: 1;
         }
         #searchInput {
@@ -81,10 +78,10 @@
         .category-section {
             margin-bottom: 40px;
             padding: 20px;
-            background-color: #fff; /* This will sit on top of the blurred background */
+            background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: relative; /* Ensure content is above the ::before pseudo-element */
+            position: relative;
             z-index: 1;
         }
         .category-title {
@@ -101,7 +98,7 @@
             gap: 20px;
         }
         .resource-item {
-            background-color: #fdfdfd; /* This will sit on top of the blurred background */
+            background-color: #fdfdfd;
             border: 1px solid #e7e7e7;
             border-radius: 6px;
             padding: 18px;
@@ -116,7 +113,7 @@
             box-shadow: 0 6px 12px rgba(0,0,0,0.12);
         }
         .resource-item img.logo {
-            width: 50px; /* Slightly smaller logo */
+            width: 50px;
             height: 50px;
             object-fit: contain;
             margin-bottom: 12px;
@@ -139,7 +136,7 @@
             color: #3498db;
             text-decoration: underline;
         }
-        .resource-item .tag { /* Changed from category to tag for item-level */
+        .resource-item .tag {
             font-size: 0.8em;
             color: #16a085;
             background-color: #e8f6f3;
@@ -176,10 +173,10 @@
             font-size: 1.2em;
             color: #7f8c8d;
             padding: 30px;
-            background-color: #fff; /* This will sit on top of the blurred background */
+            background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            position: relative; /* Ensure content is above the ::before pseudo-element */
+            position: relative;
             z-index: 1;
         }
         .footer-note {
@@ -187,12 +184,9 @@
             margin-top: 40px;
             padding: 20px;
             font-size: 0.9em;
-            color: #7f8c8d; /* This text might need adjustment if main.avif is dark */
-            position: relative; /* Ensure content is above the ::before pseudo-element */
+            color: #7f8c8d;
+            position: relative;
             z-index: 1;
-            /* If you want the footer note to have a solid background: */
-            /* background-color: rgba(255, 255, 255, 0.8); */
-            /* border-radius: 8px; */
         }
     </style>
 </head>
@@ -208,7 +202,6 @@
         </div>
 
         <div id="resourceContainer">
-            <!-- Categories and resources will be dynamically inserted here -->
         </div>
         <div id="noResults" class="hidden">No matching resources found. Try a different search term.</div>
     </div>
@@ -220,7 +213,6 @@
 
     <script>
         const resourcesData = [
-            // Game Development
             { name: "Unity", url: "https://unity.com/", category: "Game Development", tags: ["Game Engine", "3D", "2D", "C#"], description: "Cross-platform game engine for 2D and 3D games.", logoDomain: "unity.com" },
             { name: "Unreal Engine", url: "https://www.unrealengine.com/", category: "Game Development", tags: ["Game Engine", "3D", "C++", "Blueprints"], description: "Powerful game engine for high-fidelity 3D games.", logoDomain: "unrealengine.com" },
             { name: "Godot Engine", url: "https://godotengine.org/", category: "Game Development", tags: ["Game Engine", "2D", "3D", "GDScript", "C#"], description: "Free and open-source 2D and 3D game engine.", logoDomain: "godotengine.org" },
@@ -233,8 +225,6 @@
             { name: "Aseprite", url: "https://www.aseprite.org/", category: "Game Development", tags: ["Pixel Art", "Animation"], description: "Animated sprite editor & pixel art tool.", logoDomain: "aseprite.org" },
             { name: "FMOD", url: "https://www.fmod.com/", category: "Game Development", tags: ["Audio Engine", "Sound Design"], description: "Adaptive audio solution for games.", logoDomain: "fmod.com" },
             { name: "Wwise", url: "https://www.audiokinetic.com/products/wwise/", category: "Game Development", tags: ["Audio Engine", "Sound Design"], description: "Advanced interactive audio solution for games.", logoDomain: "audiokinetic.com" },
-
-            // Web Development - Frontend
             { name: "React", url: "https://react.dev/", category: "Web Development - Frontend", tags: ["JavaScript Library", "UI"], description: "JavaScript library for building user interfaces.", logoDomain: "reactjs.org" },
             { name: "Angular", url: "https://angular.io/", category: "Web Development - Frontend", tags: ["Framework", "TypeScript", "UI"], description: "Platform for building mobile and desktop web applications.", logoDomain: "angular.io" },
             { name: "Vue.js", url: "https://vuejs.org/", category: "Web Development - Frontend", tags: ["Framework", "JavaScript", "UI"], description: "Progressive JavaScript framework for building UIs.", logoDomain: "vuejs.org" },
@@ -246,8 +236,6 @@
             { name: "SolidJS", url: "https://www.solidjs.com/", category: "Web Development - Frontend", tags: ["JavaScript Library", "UI", "Reactive"], description: "A declarative, efficient, and flexible JavaScript library for building user interfaces.", logoDomain: "solidjs.com" },
             { name: "Alpine.js", url: "https://alpinejs.dev/", category: "Web Development - Frontend", tags: ["JavaScript Library", "Minimalist", "Utility"], description: "A rugged, minimal framework for composing JavaScript behavior in your markup.", logoDomain: "alpinejs.dev" },
             { name: "jQuery", url: "https://jquery.com/", category: "Web Development - Frontend", tags: ["JavaScript Library", "DOM Manipulation"], description: "Fast, small, and feature-rich JavaScript library.", logoDomain: "jquery.com" },
-            
-            // Web Development - Backend & Runtimes
             { name: "Node.js", url: "https://nodejs.org/", category: "Web Development - Backend & Runtimes", tags: ["Runtime", "JavaScript", "V8"], description: "JavaScript runtime built on Chrome's V8 JavaScript engine.", logoDomain: "nodejs.org" },
             { name: "Express.js", url: "https://expressjs.com/", category: "Web Development - Backend & Runtimes", tags: ["Node.js Framework", "Minimalist"], description: "Fast, unopinionated, minimalist web framework for Node.js.", logoDomain: "expressjs.com" },
             { name: "Django", url: "https://www.djangoproject.com/", category: "Web Development - Backend & Runtimes", tags: ["Python Framework", "High-level"], description: "High-level Python web framework.", logoDomain: "djangoproject.com" },
@@ -261,8 +249,6 @@
             { name: "NestJS", url: "https://nestjs.com/", category: "Web Development - Backend & Runtimes", tags: ["Node.js Framework", "TypeScript", "Modular"], description: "A progressive Node.js framework for building efficient, reliable and scalable server-side applications.", logoDomain: "nestjs.com" },
             { name: "Deno", url: "https://deno.land/", category: "Web Development - Backend & Runtimes", tags: ["Runtime", "JavaScript", "TypeScript", "Secure"], description: "A modern runtime for JavaScript and TypeScript.", logoDomain: "deno.land" },
             { name: "Bun", url: "https://bun.sh/", category: "Web Development - Backend & Runtimes", tags: ["Runtime", "JavaScript", "TypeScript", "Fast"], description: "Fast all-in-one JavaScript runtime.", logoDomain: "bun.sh" },
-
-            // Web Development - CSS Frameworks & Preprocessors
             { name: "Tailwind CSS", url: "https://tailwindcss.com/", category: "Web Development - CSS", tags: ["CSS Framework", "Utility-first"], description: "A utility-first CSS framework for rapid UI development.", logoDomain: "tailwindcss.com" },
             { name: "Bootstrap", url: "https://getbootstrap.com/", category: "Web Development - CSS", tags: ["CSS Framework", "Responsive"], description: "Popular framework for building responsive, mobile-first sites.", logoDomain: "getbootstrap.com" },
             { name: "Sass", url: "https://sass-lang.com/", category: "Web Development - CSS", tags: ["CSS Preprocessor", "Syntactic Sugar"], description: "CSS extension language with more power and elegance.", logoDomain: "sass-lang.com" },
@@ -270,8 +256,6 @@
             { name: "Bulma", url: "https://bulma.io/", category: "Web Development - CSS", tags: ["CSS Framework", "Flexbox-based", "Modern"], description: "Free, open source CSS framework based on Flexbox.", logoDomain: "bulma.io" },
             { name: "Materialize CSS", url: "https://materializecss.com/", category: "Web Development - CSS", tags: ["CSS Framework", "Material Design"], description: "A modern responsive front-end framework based on Material Design.", logoDomain: "materializecss.com" },
             { name: "PostCSS", url: "https://postcss.org/", category: "Web Development - CSS", tags: ["CSS Tool", "Transformation", "Plugins"], description: "A tool for transforming CSS with JavaScript plugins.", logoDomain: "postcss.org" },
-            
-            // Web Development - Build Tools & Static Site Generators
             { name: "Webpack", url: "https://webpack.js.org/", category: "Web Development - Build Tools & SSG", tags: ["Module Bundler", "JavaScript"], description: "A static module bundler for modern JavaScript applications.", logoDomain: "webpack.js.org" },
             { name: "Vite", url: "https://vitejs.dev/", category: "Web Development - Build Tools & SSG", tags: ["Build Tool", "Frontend", "Fast"], description: "Next generation frontend tooling. It's fast!", logoDomain: "vitejs.dev" },
             { name: "Parcel", url: "https://parceljs.org/", category: "Web Development - Build Tools & SSG", tags: ["Module Bundler", "Zero Configuration"], description: "Blazing fast, zero configuration web application bundler.", logoDomain: "parceljs.org" },
@@ -282,20 +266,16 @@
             { name: "Jekyll", url: "https://jekyllrb.com/", category: "Web Development - Build Tools & SSG", tags: ["Static Site Generator", "Ruby", "Blog-aware"], description: "Simple, blog-aware, static site generator for personal, project, or organization sites.", logoDomain: "jekyllrb.com" },
             { name: "Gatsby", url: "https://www.gatsbyjs.com/", category: "Web Development - Build Tools & SSG", tags: ["Static Site Generator", "React", "GraphQL"], description: "Fast and modern site generator for React.", logoDomain: "gatsbyjs.com" },
             { name: "Docusaurus", url: "https://docusaurus.io/", category: "Web Development - Build Tools & SSG", tags: ["Static Site Generator", "Documentation", "React"], description: "Easy to maintain open source documentation websites.", logoDomain: "docusaurus.io" },
-            
-            // Mobile Development
             { name: "Flutter", url: "https://flutter.dev/", category: "Mobile Development", tags: ["Cross-Platform UI", "Dart", "Google"], description: "Google's UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.", logoDomain: "flutter.dev" },
             { name: "React Native", url: "https://reactnative.dev/", category: "Mobile Development", tags: ["Cross-Platform UI", "JavaScript", "React"], description: "Framework for building native apps using React.", logoDomain: "reactnative.dev" },
             { name: "Swift", url: "https://developer.apple.com/swift/", category: "Mobile Development", tags: ["Programming Language", "iOS", "macOS", "Apple"], description: "Powerful and intuitive programming language for macOS, iOS, watchOS, tvOS and beyond.", logoDomain: "apple.com" },
             { name: "Kotlin", url: "https://kotlinlang.org/", category: "Mobile Development", tags: ["Programming Language", "Android", "JVM", "JetBrains"], description: "Statically typed programming language for modern multiplatform applications.", logoDomain: "kotlinlang.org" },
             { name: "Xcode", url: "https://developer.apple.com/xcode/", category: "Mobile Development", tags: ["IDE", "iOS", "macOS", "Apple"], description: "IDE for developing macOS, iOS, watchOS, and tvOS apps.", logoDomain: "apple.com" },
             { name: "Android Studio", url: "https://developer.android.com/studio", category: "Mobile Development", tags: ["IDE", "Android", "Google"], description: "Official IDE for Android app development.", logoDomain: "android.com" },
-            { name: "Xamarin", url: "https://dotnet.microsoft.com/apps/xamarin", category: "Mobile Development", tags: ["Cross-Platform", ".NET", "C#", "Microsoft"], description: "Build cross-platform apps with .NET and C#.", logoDomain: "microsoft.com" }, // Now .NET MAUI
+            { name: "Xamarin", url: "https://dotnet.microsoft.com/apps/xamarin", category: "Mobile Development", tags: ["Cross-Platform", ".NET", "C#", "Microsoft"], description: "Build cross-platform apps with .NET and C#.", logoDomain: "microsoft.com" },
             { name: ".NET MAUI", url: "https://dotnet.microsoft.com/apps/maui", category: "Mobile Development", tags: ["Cross-Platform UI", ".NET", "C#", "Microsoft"], description: "Cross-platform framework for creating native mobile and desktop apps with C# and XAML.", logoDomain: "microsoft.com" },
             { name: "Ionic Framework", url: "https://ionicframework.com/", category: "Mobile Development", tags: ["Cross-Platform UI", "Web Technologies", "Hybrid"], description: "Open-source mobile UI toolkit for building high-quality, cross-platform native and web app experiences.", logoDomain: "ionicframework.com" },
             { name: "NativeScript", url: "https://nativescript.org/", category: "Mobile Development", tags: ["Cross-Platform", "JavaScript", "TypeScript", "Angular", "Vue"], description: "Empower JavaScript with native APIs. Build truly native apps with JavaScript, TypeScript, Angular, or Vue.js.", logoDomain: "nativescript.org" },
-            
-            // Desktop Development
             { name: "Electron", url: "https://www.electronjs.org/", category: "Desktop Development", tags: ["Cross-Platform", "JavaScript", "HTML", "CSS"], description: "Build cross-platform desktop apps with JavaScript, HTML, and CSS.", logoDomain: "electronjs.org" },
             { name: "Tauri", url: "https://tauri.app/", category: "Desktop Development", tags: ["Cross-Platform", "Rust", "Web Frontend", "Secure"], description: "Build smaller, faster, and more secure desktop applications with a web frontend.", logoDomain: "tauri.app" },
             { name: "Qt", url: "https://www.qt.io/", category: "Desktop Development", tags: ["Cross-Platform", "C++", "UI Framework"], description: "Cross-platform software for embedded, desktop, and mobile UIs.", logoDomain: "qt.io" },
@@ -303,8 +283,6 @@
             { name: "WinForms (Windows Forms)", url: "https://docs.microsoft.com/en-us/dotnet/desktop/winforms/", category: "Desktop Development", tags: ["Windows", ".NET", "UI Framework"], description: "Graphical API for creating rich Windows desktop applications.", logoDomain: "microsoft.com" },
             { name: "GTK", url: "https://www.gtk.org/", category: "Desktop Development", tags: ["Cross-Platform", "C", "UI Toolkit", "GNOME"], description: "Multi-platform toolkit for creating graphical user interfaces.", logoDomain: "gtk.org" },
             { name: "JavaFX", url: "https://openjfx.io/", category: "Desktop Development", tags: ["Cross-Platform", "Java", "UI Platform"], description: "Open source, next generation client application platform for desktop, mobile and embedded systems built on Java.", logoDomain: "openjfx.io" },
-
-            // Databases & Storage
             { name: "PostgreSQL", url: "https://www.postgresql.org/", category: "Databases & Storage", tags: ["SQL", "Relational", "Open Source"], description: "Powerful, open source object-relational database system.", logoDomain: "postgresql.org" },
             { name: "MySQL", url: "https://www.mysql.com/", category: "Databases & Storage", tags: ["SQL", "Relational", "Open Source"], description: "Popular open-source relational database management system.", logoDomain: "mysql.com" },
             { name: "MongoDB", url: "https://www.mongodb.com/", category: "Databases & Storage", tags: ["NoSQL", "Document", "Scalable"], description: "Source-available cross-platform document-oriented database program.", logoDomain: "mongodb.com" },
@@ -320,8 +298,6 @@
             { name: "Amazon S3", url: "https://aws.amazon.com/s3/", category: "Databases & Storage", tags: ["Object Storage", "Cloud", "Scalable"], description: "Scalable object storage in the cloud.", logoDomain: "amazon.com" },
             { name: "Google Cloud Storage", url: "https://cloud.google.com/storage", category: "Databases & Storage", tags: ["Object Storage", "Cloud", "Scalable"], description: "Unified object storage for developers and enterprises.", logoDomain: "google.com" },
             { name: "Azure Blob Storage", url: "https://azure.microsoft.com/en-us/services/storage/blobs/", category: "Databases & Storage", tags: ["Object Storage", "Cloud", "Scalable"], description: "Massively scalable and secure object storage for cloud-native workloads, archives, data lakes, HPC, and machine learning.", logoDomain: "microsoft.com" },
-
-            // Data Science & Machine Learning
             { name: "Python", url: "https://www.python.org/", category: "Data Science & Machine Learning", tags: ["Programming Language", "Versatile"], description: "Popular high-level programming language widely used in DS/ML.", logoDomain: "python.org" },
             { name: "R", url: "https://www.r-project.org/", category: "Data Science & Machine Learning", tags: ["Programming Language", "Statistics"], description: "Language and environment for statistical computing and graphics.", logoDomain: "r-project.org" },
             { name: "TensorFlow", url: "https://www.tensorflow.org/", category: "Data Science & Machine Learning", tags: ["ML Framework", "Deep Learning", "Google"], description: "Open-source machine learning platform.", logoDomain: "tensorflow.org" },
@@ -337,8 +313,6 @@
             { name: "RapidMiner", url: "https://rapidminer.com/", category: "Data Science & Machine Learning", tags: ["Data Science Platform", "Low-code"], description: "Data science platform for teams that unites data prep, machine learning, and predictive model deployment.", logoDomain: "rapidminer.com" },
             { name: "KNIME", url: "https://www.knime.com/", category: "Data Science & Machine Learning", tags: ["Data Analytics Platform", "Visual Workflow"], description: "Open-source data analytics, reporting and integration platform.", logoDomain: "knime.com" },
             { name: "MLflow", url: "https://mlflow.org/", category: "Data Science & Machine Learning", tags: ["ML Lifecycle", "Experiment Tracking", "Model Management"], description: "An open source platform to manage the ML lifecycle, including experimentation, reproducibility, deployment, and a central model registry.", logoDomain: "mlflow.org" },
-
-            // IDEs & Code Editors
             { name: "Visual Studio Code", url: "https://code.visualstudio.com/", category: "IDEs & Code Editors", tags: ["Code Editor", "Extensible", "Microsoft"], description: "Popular, free source code editor by Microsoft.", logoDomain: "visualstudio.com" },
             { name: "Visual Studio", url: "https://visualstudio.microsoft.com/", category: "IDEs & Code Editors", tags: ["IDE", ".NET", "C++", "Windows", "Microsoft"], description: "Integrated development environment from Microsoft.", logoDomain: "visualstudio.microsoft.com" },
             { name: "IntelliJ IDEA", url: "https://www.jetbrains.com/idea/", category: "IDEs & Code Editors", tags: ["IDE", "Java", "Kotlin", "JVM", "JetBrains"], description: "Capable and ergonomic IDE for JVM languages.", logoDomain: "jetbrains.com" },
@@ -356,8 +330,6 @@
             { name: "GNU Emacs", url: "https://www.gnu.org/software/emacs/", category: "IDEs & Code Editors", tags: ["Code Editor", "Extensible", "Lisp", "Powerful"], description: "An extensible, customizable, free/libre text editor — and more.", logoDomain: "gnu.org" },
             { name: "Fleet", url: "https://www.jetbrains.com/fleet/", category: "IDEs & Code Editors", tags: ["IDE", "Lightweight", "Polyglot", "JetBrains"], description: "Next-generation IDE by JetBrains, designed to be lightweight and polyglot.", logoDomain: "jetbrains.com" },
             { name: "Zed", url: "https://zed.dev/", category: "IDEs & Code Editors", tags: ["Code Editor", "Collaborative", "Rust", "Fast"], description: "A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.", logoDomain: "zed.dev" },
-
-            // Version Control & Hosting
             { name: "Git", url: "https://git-scm.com/", category: "Version Control & Hosting", tags: ["VCS", "Distributed", "Open Source"], description: "Distributed version control system.", logoDomain: "git-scm.com" },
             { name: "GitHub", url: "https://github.com/", category: "Version Control & Hosting", tags: ["Git Hosting", "Collaboration", "DevOps"], description: "Platform for hosting and collaborating on Git repositories.", logoDomain: "github.com" },
             { name: "GitLab", url: "https://about.gitlab.com/", category: "Version Control & Hosting", tags: ["Git Hosting", "DevOps Platform", "CI/CD"], description: "Complete DevOps platform, delivered as a single application.", logoDomain: "gitlab.com" },
@@ -366,8 +338,6 @@
             { name: "SourceTree", url: "https://www.sourcetreeapp.com/", category: "Version Control & Hosting", tags: ["Git GUI", "Mercurial GUI", "Atlassian"], description: "A free Git client for Windows and Mac.", logoDomain: "sourcetreeapp.com" },
             { name: "GitKraken", url: "https://www.gitkraken.com/", category: "Version Control & Hosting", tags: ["Git GUI", "Productivity"], description: "Legendary Git GUI client for Windows, Mac, & Linux.", logoDomain: "gitkraken.com" },
             { name: "Subversion (SVN)", url: "https://subversion.apache.org/", category: "Version Control & Hosting", tags: ["VCS", "Centralized", "Open Source"], description: "Centralized version control system.", logoDomain: "apache.org" },
-
-            // DevOps, CI/CD & Infrastructure
             { name: "Docker", url: "https://www.docker.com/", category: "DevOps, CI/CD & Infrastructure", tags: ["Containerization", "Microservices"], description: "Platform for developing, shipping, and running applications in containers.", logoDomain: "docker.com" },
             { name: "Kubernetes (K8s)", url: "https://kubernetes.io/", category: "DevOps, CI/CD & Infrastructure", tags: ["Container Orchestration", "Scalability", "Open Source"], description: "Open-source system for automating deployment, scaling, and management of containerized applications.", logoDomain: "kubernetes.io" },
             { name: "Jenkins", url: "https://www.jenkins.io/", category: "DevOps, CI/CD & Infrastructure", tags: ["CI/CD", "Automation Server", "Open Source"], description: "Open source automation server for continuous integration and delivery.", logoDomain: "jenkins.io" },
@@ -388,9 +358,7 @@
             { name: "Splunk", url: "https://www.splunk.com/", category: "DevOps, CI/CD & Infrastructure", tags: ["Log Management", "SIEM", "Big Data"], description: "Software for searching, monitoring, and analyzing machine-generated big data.", logoDomain: "splunk.com" },
             { name: "ELK Stack (Elasticsearch, Logstash, Kibana)", url: "https://www.elastic.co/elastic-stack", category: "DevOps, CI/CD & Infrastructure", tags: ["Logging", "Analytics", "Search"], description: "Popular open-source logging platform.", logoDomain: "elastic.co" },
             { name: "Helm", url: "https://helm.sh/", category: "DevOps, CI/CD & Infrastructure", tags: ["Kubernetes Package Manager", "CNCF"], description: "The package manager for Kubernetes.", logoDomain: "helm.sh" },
-            { name: "Argo CD", url: "https://argo-cd.readthedocs.io/", category: "DevOps, CI/CD & Infrastructure", tags: ["GitOps", "Continuous Delivery", "Kubernetes", "CNCF"], description: "Declarative, GitOps continuous delivery tool for Kubernetes.", logoDomain: "cncf.io" }, // logo might be on cncf
-            
-            // Cloud Platforms & Services
+            { name: "Argo CD", url: "https://argo-cd.readthedocs.io/", category: "DevOps, CI/CD & Infrastructure", tags: ["GitOps", "Continuous Delivery", "Kubernetes", "CNCF"], description: "Declarative, GitOps continuous delivery tool for Kubernetes.", logoDomain: "cncf.io" },
             { name: "Amazon Web Services (AWS)", url: "https://aws.amazon.com/", category: "Cloud Platforms & Services", tags: ["IaaS", "PaaS", "SaaS", "Comprehensive"], description: "Comprehensive cloud computing platform by Amazon.", logoDomain: "amazon.com" },
             { name: "Microsoft Azure", url: "https://azure.microsoft.com/", category: "Cloud Platforms & Services", tags: ["IaaS", "PaaS", "SaaS", "Hybrid Cloud"], description: "Cloud computing service by Microsoft.", logoDomain: "microsoft.com" },
             { name: "Google Cloud Platform (GCP)", url: "https://cloud.google.com/", category: "Cloud Platforms & Services", tags: ["IaaS", "PaaS", "SaaS", "AI/ML Focus"], description: "Suite of cloud computing services by Google.", logoDomain: "google.com" },
@@ -406,8 +374,6 @@
             { name: "IBM Cloud", url: "https://www.ibm.com/cloud", category: "Cloud Platforms & Services", tags: ["IaaS", "PaaS", "AI", "Enterprise"], description: "Suite of cloud computing services from IBM.", logoDomain: "ibm.com" },
             { name: "Render", url: "https://render.com/", category: "Cloud Platforms & Services", tags: ["PaaS", "App Deployment", "Databases", "Zero DevOps"], description: "Unified cloud to build and run all your apps and websites.", logoDomain: "render.com" },
             { name: "Fly.io", url: "https://fly.io/", category: "Cloud Platforms & Services", tags: ["PaaS", "Edge Computing", "App Deployment", "Global"], description: "Run your full stack apps (and databases!) all over the world. No ops required.", logoDomain: "fly.io" },
-
-            // API Development, Testing & Management
             { name: "Postman", url: "https://www.postman.com/", category: "API Development, Testing & Management", tags: ["API Platform", "Testing", "Collaboration"], description: "Collaboration platform for API development.", logoDomain: "postman.com" },
             { name: "Insomnia", url: "https://insomnia.rest/", category: "API Development, Testing & Management", tags: ["API Client", "Design", "Testing", "Open Source"], description: "Open-source, cross-platform API design and testing tool.", logoDomain: "insomnia.rest" },
             { name: "Swagger / OpenAPI", url: "https://swagger.io/", category: "API Development, Testing & Management", tags: ["API Specification", "Design", "Documentation"], description: "Framework for designing, building, documenting, and consuming RESTful APIs.", logoDomain: "swagger.io" },
@@ -419,8 +385,6 @@
             { name: "Apigee (Google Cloud)", url: "https://cloud.google.com/apigee", category: "API Development, Testing & Management", tags: ["API Management", "Gateway", "Analytics"], description: "Platform for developing and managing APIs.", logoDomain: "google.com" },
             { name: "Kong API Gateway", url: "https://konghq.com/kong/", category: "API Development, Testing & Management", tags: ["API Gateway", "Microservices", "Open Source"], description: "Cloud-native API gateway built for hybrid and multi-cloud.", logoDomain: "konghq.com" },
             { name: "Stoplight", url: "https://stoplight.io/", category: "API Development, Testing & Management", tags: ["API Design", "Documentation", "Collaboration"], description: "Platform for collaborative API design and documentation.", logoDomain: "stoplight.io" },
-            
-            // Testing Frameworks & Tools
             { name: "Jest", url: "https://jestjs.io/", category: "Testing Frameworks & Tools", tags: ["JavaScript Testing", "Unit Testing", "Facebook"], description: "Delightful JavaScript Testing Framework with a focus on simplicity.", logoDomain: "jestjs.io" },
             { name: "Mocha", url: "https://mochajs.org/", category: "Testing Frameworks & Tools", tags: ["JavaScript Testing", "Test Runner", "Flexible"], description: "Simple, flexible, fun JavaScript test framework for Node.js & The Browser.", logoDomain: "mochajs.org" },
             { name: "Cypress", url: "https://www.cypress.io/", category: "Testing Frameworks & Tools", tags: ["E2E Testing", "Web Testing", "JavaScript"], description: "Fast, easy and reliable testing for anything that runs in a browser.", logoDomain: "cypress.io" },
@@ -435,8 +399,6 @@
             { name: "K6", url: "https://k6.io/", category: "Testing Frameworks & Tools", tags: ["Load Testing", "Performance Testing", "Developer-centric"], description: "Modern load testing tool for developers and testers.", logoDomain: "k6.io" },
             { name: "JMeter", url: "https://jmeter.apache.org/", category: "Testing Frameworks & Tools", tags: ["Load Testing", "Performance Testing", "Java"], description: "Open source software designed to load test functional behavior and measure performance.", logoDomain: "apache.org" },
             { name: "Testing Library", url: "https://testing-library.com/", category: "Testing Frameworks & Tools", tags: ["UI Testing", "User-centric", "JavaScript"], description: "Simple and complete testing utilities that encourage good testing practices.", logoDomain: "testing-library.com" },
-            
-            // Project Management & Collaboration
             { name: "Jira", url: "https://www.atlassian.com/software/jira", category: "Project Management & Collaboration", tags: ["Issue Tracking", "Agile", "Atlassian"], description: "Issue tracking and project management tool.", logoDomain: "atlassian.com" },
             { name: "Trello", url: "https://trello.com/", category: "Project Management & Collaboration", tags: ["Kanban", "Visual", "Simple", "Atlassian"], description: "Kanban-style list-making application.", logoDomain: "trello.com" },
             { name: "Asana", url: "https://asana.com/", category: "Project Management & Collaboration", tags: ["Task Management", "Teamwork", "Workflow"], description: "Web and mobile application designed to help teams organize, track, and manage their work.", logoDomain: "asana.com" },
@@ -449,8 +411,6 @@
             { name: "Figma (FigJam)", url: "https://www.figma.com/figjam/", category: "Project Management & Collaboration", tags: ["Online Whiteboard", "Brainstorming", "Diagramming"], description: "An online whiteboard for teams to ideate and brainstorm together.", logoDomain: "figma.com" },
             { name: "Monday.com", url: "https://monday.com/", category: "Project Management & Collaboration", tags: ["Work OS", "Project Management", "Workflow Automation"], description: "Work Operating System (Work OS) that powers teams to run projects and workflows with confidence.", logoDomain: "monday.com" },
             { name: "ClickUp", url: "https://clickup.com/", category: "Project Management & Collaboration", tags: ["Productivity Platform", "Project Management", "All-in-one"], description: "One app to replace them all. All your work in one place: Tasks, Docs, Chat, Goals, & more.", logoDomain: "clickup.com" },
-
-            // Design & Prototyping
             { name: "Figma", url: "https://www.figma.com/", category: "Design & Prototyping", tags: ["UI/UX Design", "Collaborative", "Web-based"], description: "Collaborative interface design tool.", logoDomain: "figma.com" },
             { name: "Sketch", url: "https://www.sketch.com/", category: "Design & Prototyping", tags: ["UI/UX Design", "Vector Graphics", "macOS"], description: "Digital design toolkit (macOS only).", logoDomain: "sketch.com" },
             { name: "Adobe XD", url: "https://www.adobe.com/products/xd.html", category: "Design & Prototyping", tags: ["UI/UX Design", "Prototyping", "Adobe"], description: "Vector-based user experience design tool.", logoDomain: "adobe.com" },
@@ -461,16 +421,12 @@
             { name: "Proto.io", url: "https://proto.io/", category: "Design & Prototyping", tags: ["Prototyping", "Interactive", "No-code"], description: "Create fully-interactive high-fidelity prototypes that look and work exactly like your app should.", logoDomain: "proto.io" },
             { name: "Marvel", url: "https://marvelapp.com/", category: "Design & Prototyping", tags: ["Prototyping", "User Testing", "Collaboration"], description: "All-in-one platform powering design.", logoDomain: "marvelapp.com" },
             { name: "Zeplin", url: "https://zeplin.io/", category: "Design & Prototyping", tags: ["Design Handoff", "Developer Collaboration", "Specs"], description: "Connected space for product teams to share designs, generate specs, assets, and code snippets.", logoDomain: "zeplin.io" },
-            
-            // Documentation Tools
             { name: "MkDocs", url: "https://www.mkdocs.org/", category: "Documentation Tools", tags: ["Static Site Generator", "Markdown", "Python"], description: "Fast, simple and downright gorgeous static site generator for project documentation.", logoDomain: "mkdocs.org" },
             { name: "GitBook", url: "https://www.gitbook.com/", category: "Documentation Tools", tags: ["Documentation Platform", "Knowledge Base", "Collaboration"], description: "Modern documentation platform where teams can document everything.", logoDomain: "gitbook.com" },
             { name: "Read the Docs", url: "https://readthedocs.org/", category: "Documentation Tools", tags: ["Documentation Hosting", "Open Source", "Sphinx"], description: "Host documentation, making it fully searchable and easy to find.", logoDomain: "readthedocs.org" },
             { name: "Sphinx", url: "https://www.sphinx-doc.org/", category: "Documentation Tools", tags: ["Documentation Generator", "Python", "reStructuredText"], description: "Tool that makes it easy to create intelligent and beautiful documentation.", logoDomain: "sphinx-doc.org" },
             { name: "Swagger UI", url: "https://swagger.io/tools/swagger-ui/", category: "Documentation Tools", tags: ["API Documentation", "OpenAPI", "Interactive"], description: "Allows anyone to visualize and interact with the API’s resources without having any of the implementation logic in place.", logoDomain: "swagger.io" },
-            { name: "Slate", url: "https://slatedocs.github.io/slate/", category: "Documentation Tools", tags: ["API Documentation", "Static Site", "Markdown"], description: "Beautiful static documentation for your API.", logoDomain: "github.io" }, // Generic github, might need better domain
-            
-            // Security Tools
+            { name: "Slate", url: "https://slatedocs.github.io/slate/", category: "Documentation Tools", tags: ["API Documentation", "Static Site", "Markdown"], description: "Beautiful static documentation for your API.", logoDomain: "github.io" },
             { name: "OWASP ZAP (Zed Attack Proxy)", url: "https://www.zaproxy.org/", category: "Security Tools", tags: ["Web App Security", "Penetration Testing", "Open Source", "OWASP"], description: "One of the world’s most popular free security tools.", logoDomain: "owasp.org" },
             { name: "Snyk", url: "https://snyk.io/", category: "Security Tools", tags: ["Developer Security", "Vulnerability Scanning", "Open Source Security"], description: "Helps you use open source and stay secure.", logoDomain: "snyk.io" },
             { name: "SonarQube", url: "https://www.sonarsource.com/products/sonarqube/", category: "Security Tools", tags: ["Static Analysis", "Code Quality", "Security Vulnerabilities"], description: "Continuous inspection of code quality to perform automatic reviews with static analysis of code.", logoDomain: "sonarsource.com" },
@@ -480,22 +436,18 @@
             { name: "HashiCorp Vault", url: "https://www.vaultproject.io/", category: "Security Tools", tags: ["Secrets Management", "Encryption", "Identity"], description: "Secure, store and tightly control access to tokens, passwords, certificates, encryption keys.", logoDomain: "hashicorp.com" },
             { name: "Metasploit Framework", url: "https://www.metasploit.com/", category: "Security Tools", tags: ["Penetration Testing", "Exploitation", "Rapid7"], description: "The world’s most used penetration testing framework.", logoDomain: "metasploit.com" },
             { name: "ClamAV", url: "https://www.clamav.net/", category: "Security Tools", tags: ["Antivirus", "Open Source", "Malware Detection"], description: "Open source antivirus engine for detecting trojans, viruses, malware & other malicious threats.", logoDomain: "clamav.net" },
-
-            // Utilities & General Dev Tools
             { name: "ESLint", url: "https://eslint.org/", category: "Utilities & General Dev Tools", tags: ["Linter", "JavaScript", "Code Quality"], description: "Find and fix problems in your JavaScript code.", logoDomain: "eslint.org" },
             { name: "Prettier", url: "https://prettier.io/", category: "Utilities & General Dev Tools", tags: ["Code Formatter", "Opinionated", "Multi-language"], description: "An opinionated code formatter.", logoDomain: "prettier.io" },
-            { name: "Browser Developer Tools", url: "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools", category: "Utilities & General Dev Tools", tags: ["Debugging", "Web Inspection", "Built-in"], description: "Essential built-in tools in browsers (Chrome DevTools, Firefox Developer Tools, etc.) for web development.", logoDomain: "mozilla.org" }, // Using Mozilla as a general rep
+            { name: "Browser Developer Tools", url: "https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools", category: "Utilities & General Dev Tools", tags: ["Debugging", "Web Inspection", "Built-in"], description: "Essential built-in tools in browsers (Chrome DevTools, Firefox Developer Tools, etc.) for web development.", logoDomain: "mozilla.org" },
             { name: "Fiddler", url: "https://www.telerik.com/fiddler", category: "Utilities & General Dev Tools", tags: ["HTTP Debugging Proxy", "Web Debugging"], description: "Free web debugging proxy for any browser, system or platform.", logoDomain: "telerik.com" },
-            { name: "Insomnia REST Client", url: "https://insomnia.rest/", category: "Utilities & General Dev Tools", tags: ["API Client", "HTTP Client", "GraphQL"], description: "Powerful REST API Client with cookie management, environment variables, code generation, and authentication.", logoDomain: "insomnia.rest" }, // Already listed but also a utility
+            { name: "Insomnia REST Client", url: "https://insomnia.rest/", category: "Utilities & General Dev Tools", tags: ["API Client", "HTTP Client", "GraphQL"], description: "Powerful REST API Client with cookie management, environment variables, code generation, and authentication.", logoDomain: "insomnia.rest" },
             { name: "ngrok", url: "https://ngrok.com/", category: "Utilities & General Dev Tools", tags: ["Tunneling", "Localhost Exposure", "Development"], description: "Secure introspectable tunnels to localhost.", logoDomain: "ngrok.com" },
             { name: "Homebrew", url: "https://brew.sh/", category: "Utilities & General Dev Tools", tags: ["Package Manager", "macOS", "Linux"], description: "The Missing Package Manager for macOS (or Linux).", logoDomain: "brew.sh" },
             { name: "Chocolatey", url: "https://chocolatey.org/", category: "Utilities & General Dev Tools", tags: ["Package Manager", "Windows"], description: "The package manager for Windows.", logoDomain: "chocolatey.org" },
             { name: "Oh My Zsh", url: "https://ohmyz.sh/", category: "Utilities & General Dev Tools", tags: ["Shell Framework", "Zsh", "Terminal Productivity"], description: "A delightful community-driven framework for managing your Zsh configuration.", logoDomain: "ohmyz.sh" },
             { name: "PowerShell", url: "https://docs.microsoft.com/en-us/powershell/", category: "Utilities & General Dev Tools", tags: ["Command-line Shell", "Scripting", "Automation", "Microsoft"], description: "Task automation and configuration management framework from Microsoft.", logoDomain: "microsoft.com" },
-            { name: "jq", url: "https://stedolan.github.io/jq/", category: "Utilities & General Dev Tools", tags: ["JSON Processor", "CLI", "Data Manipulation"], description: "Lightweight and flexible command-line JSON processor.", logoDomain: "github.io" }, // Generic github logo
+            { name: "jq", url: "https://stedolan.github.io/jq/", category: "Utilities & General Dev Tools", tags: ["JSON Processor", "CLI", "Data Manipulation"], description: "Lightweight and flexible command-line JSON processor.", logoDomain: "github.io" },
             { name: "cURL", url: "https://curl.se/", category: "Utilities & General Dev Tools", tags: ["HTTP Client", "CLI", "Data Transfer"], description: "Command line tool and library for transferring data with URLs.", logoDomain: "curl.se" },
-
-            // Low-Code / No-Code Platforms
             { name: "Bubble", url: "https://bubble.io/", category: "Low-Code / No-Code Platforms", tags: ["No-Code", "Web Apps", "Visual Programming"], description: "The best way to build web apps without code.", logoDomain: "bubble.io" },
             { name: "Webflow", url: "https://webflow.com/", category: "Low-Code / No-Code Platforms", tags: ["No-Code", "Website Builder", "CMS", "Responsive Design"], description: "Build responsive websites in your browser, then launch or export code.", logoDomain: "webflow.com" },
             { name: "Airtable", url: "https://www.airtable.com/", category: "Low-Code / No-Code Platforms", tags: ["Spreadsheet-Database Hybrid", "Collaboration", "App Building"], description: "Part spreadsheet, part database, and entirely flexible, teams use Airtable to organize their work, their way.", logoDomain: "airtable.com" },
@@ -512,7 +464,7 @@
         const noResultsDiv = document.getElementById('noResults');
 
         function displayResources(filter = '') {
-            resourceContainer.innerHTML = ''; // Clear existing categories and items
+            resourceContainer.innerHTML = '';
             let totalItemsFound = 0;
             const lowerCaseFilter = filter.toLowerCase();
 
@@ -565,10 +517,9 @@
                 if (itemsInCategoryFound > 0) {
                     categorySection.appendChild(resourceGrid);
                     resourceContainer.appendChild(categorySection);
-                } else if (filter !== '' && categorySection.parentNode) { // Only hide if actively filtering and section was added
-                     // If no items in this category match the filter, don't add the section
-                } else if (filter === '') { // Always show category if no filter
-                     categorySection.appendChild(resourceGrid); // Add grid even if empty for structure if no filter
+                } else if (filter !== '' && categorySection.parentNode) {
+                } else if (filter === '') {
+                     categorySection.appendChild(resourceGrid);
                      resourceContainer.appendChild(categorySection);
                 }
             });
@@ -580,11 +531,10 @@
             }
         }
 
-        searchInput.addEventListener('input', (e) => { // Changed to 'input' for better responsiveness
+        searchInput.addEventListener('input', (e) => {
             displayResources(e.target.value);
         });
 
-        // Initial display of all resources
         displayResources();
     </script>
 </body>
