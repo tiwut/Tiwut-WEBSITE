@@ -309,7 +309,6 @@
             <option value="bmp">BMP</option>
         </select>
         
-        <!-- General Options -->
         <div class="options-group" id="resizeSetting">
             <label data-i18n="resizeLabel">Resize (px):</label>
             <div class="inline-input-group">
@@ -336,7 +335,6 @@
             </div>
         </div>
 
-        <!-- Format-Specific Options -->
         <div class="options-group" id="icoSizeSetting">
             <label for="targetSize" data-i18n="icoSizeLabel">ICO Size (px):</label>
             <select id="targetSize">
@@ -370,7 +368,6 @@
     <canvas id="canvas" class="hidden-canvas"></canvas>
 
     <script>
-        // --- DOM Elements ---
         const imageFileInput = document.getElementById('imageFile');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         const outputFormatSelect = document.getElementById('outputFormat');
@@ -383,7 +380,6 @@
         const themeSwitcherBtn = document.getElementById('themeSwitcher');
         const languageSwitcher = document.getElementById('languageSwitcher');
         
-        // --- Option Elements ---
         const qualitySettingDiv = document.getElementById('qualitySetting');
         const qualityRangeInput = document.getElementById('qualityRange');
         const qualityValueSpan = document.getElementById('qualityValue');
@@ -400,7 +396,6 @@
         let originalImage = new Image();
         let aspectRatio = 1;
 
-        // --- I18N (Internationalization) ---
         const translations = {
             en: {
                 title: "Image Converter",
@@ -519,7 +514,7 @@
             });
             
             document.title = translations[lang].title;
-            updateStatusText(''); // Clear status or re-evaluate
+            updateStatusText('');
         }
         
         function getStatusText(key, params = {}) {
@@ -552,7 +547,6 @@
         
         languageSwitcher.addEventListener('change', (e) => setLanguage(e.target.value));
 
-        // --- THEME LOGIC ---
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
         function applyTheme(theme) {
             document.body.setAttribute('data-theme', theme);
@@ -584,8 +578,6 @@
             applyTheme(newTheme);
         });
         
-
-        // --- CORE APP LOGIC ---
         function updateStatusText(key, params = {}) {
             statusP.textContent = key ? getStatusText(key, params) : '';
         }
@@ -706,7 +698,7 @@
                     }
                     
                     ctx.drawImage(originalImage, 0, 0, targetWidth, targetHeight);
-                    ctx.filter = 'none'; // Reset filter
+                    ctx.filter = 'none';
 
                     const baseFileName = selectedFile.name.substring(0, selectedFile.name.lastIndexOf('.')) || selectedFile.name;
                     let downloadFileName = `${baseFileName}.${format}`;
@@ -781,10 +773,10 @@
             let offset = dibHeaderSize;
             for (let y = size - 1; y >= 0; y--) {
                 for (let x = 0; x < size; x++) {
-                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 2]); // B
-                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 1]); // G
-                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 0]); // R
-                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 3]); // A
+                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 2]);
+                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 1]);
+                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 0]);
+                    bitmapView.setUint8(offset++, imageData.data[(y * size + x) * 4 + 3]);
                 }
             }
             for (let i = 0; i < andMaskSize; i++) { bitmapView.setUint8(offset++, 0); }
@@ -817,17 +809,16 @@
             for (let y = height - 1; y >= 0; y--) {
                 for (let x = 0; x < width; x++) {
                     const i = (y * width + x) * 4;
-                    view.setUint8(offset++, imageData.data[i + 2]); // B
-                    view.setUint8(offset++, imageData.data[i + 1]); // G
-                    view.setUint8(offset++, imageData.data[i + 0]); // R
-                    if (BITS_PER_PIXEL === 32) view.setUint8(offset++, imageData.data[i + 3]); // A
+                    view.setUint8(offset++, imageData.data[i + 2]);
+                    view.setUint8(offset++, imageData.data[i + 1]);
+                    view.setUint8(offset++, imageData.data[i + 0]);
+                    if (BITS_PER_PIXEL === 32) view.setUint8(offset++, imageData.data[i + 3]);
                 }
                 for (let p = 0; p < paddingBytesPerRow; p++) view.setUint8(offset++, 0);
             }
             return new Uint8Array(buffer);
         }
         
-        // --- INITIALIZATION ---
         function initialize() {
             populateLanguageSwitcher();
             const initialLang = getInitialLanguage();

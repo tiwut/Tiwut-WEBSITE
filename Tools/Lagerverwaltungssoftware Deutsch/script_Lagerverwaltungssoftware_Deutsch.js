@@ -13,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadJsonButton = document.getElementById('downloadJsonButton');
     const lastLoadedFileDisplay = document.getElementById('lastLoadedFile');
 
-
-    // Modal elements
     const modal = document.getElementById('produktModal');
     const modalTitle = document.getElementById('modalTitle');
     const produktForm = document.getElementById('produktForm');
@@ -30,12 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const eigenschaftenInput = document.getElementById('eigenschaften');
     const hashtagsInput = document.getElementById('hashtags');
 
-    let produkteData = []; // Hier werden die Daten gehalten
+    let produkteData = [];
     let selectedProductId = null;
     let currentEditProdukt = null;
     let unsavedChanges = false;
 
-    // --- Hilfsfunktionen ---
     function generateUUID() { 
         return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -64,13 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // --- Datei Laden/Speichern (Download) ---
     jsonFileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
             if (unsavedChanges) {
                 if (!confirm("Es gibt ungespeicherte Änderungen. Möchten Sie trotzdem eine neue Datei laden? Ungespeicherte Änderungen gehen verloren.")) {
-                    jsonFileInput.value = ""; // Input zurücksetzen
+                    jsonFileInput.value = "";
                     return;
                 }
             }
@@ -104,12 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Es gibt keine Daten zum Herunterladen.");
             return;
         }
-        const jsonDataStr = JSON.stringify(produkteData, null, 4); // 4 für pretty print
+        const jsonDataStr = JSON.stringify(produkteData, null, 4);
         const blob = new Blob([jsonDataStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'lager_data.json'; // Vorgeschlagener Dateiname
+        a.download = 'lager_data.json';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -118,8 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Die Datei 'lager_data.json' wird heruntergeladen. Bitte speichern Sie sie an einem geeigneten Ort (z.B. überschreiben Sie die alte Datei).");
     });
 
-
-    // --- Tabellen-Rendering ---
     function renderTable(filterFn = null) {
         produktTableBody.innerHTML = ''; 
         const dataToRender = filterFn ? produkteData.filter(filterFn) : produkteData;
@@ -167,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Modal öffnen/schließen ---
     function openModal(title, produkt = null) {
         modalTitle.textContent = title;
         currentEditProdukt = produkt;
@@ -188,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
             stueckzahlInput.value = 0;
         }
         modal.style.display = 'block';
-        produktnameInput.focus(); // Fokus auf das erste Feld
+        produktnameInput.focus();
     }
 
     function closeModal() {
@@ -196,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentEditProdukt = null;
     }
 
-    // --- CRUD Operationen (Client-seitig) ---
     function handleFormSubmit(event) {
         event.preventDefault();
         const produkt = {
@@ -260,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Suche ---
     function performSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         const category = searchCategorySelect.value;
@@ -288,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable(filterFn);
     }
 
-    // --- Event Listeners ---
     addButton.addEventListener('click', addProdukt);
     editButton.addEventListener('click', () => openEditModal());
     deleteButton.addEventListener('click', deleteProdukt);
@@ -303,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable();
     });
 
-    // Modal events
     closeButton.addEventListener('click', closeModal);
     cancelModalButton.addEventListener('click', closeModal);
     window.addEventListener('click', (event) => { 
@@ -313,16 +302,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     produktForm.addEventListener('submit', handleFormSubmit);
 
-    // Warnung bei ungespeicherten Änderungen beim Verlassen der Seite
     window.addEventListener('beforeunload', (event) => {
         if (unsavedChanges) {
-            event.preventDefault(); // Standard in vielen Browsern
-            event.returnValue = ''; // Für ältere Browser / Chrome
+            event.preventDefault();
+            event.returnValue = '';
             return "Es gibt ungespeicherte Änderungen. Möchten Sie die Seite wirklich verlassen?";
         }
     });
 
-    // Initialisierung (Tabelle ist anfangs leer, bis Daten geladen werden)
     renderTable(); 
     lastLoadedFileDisplay.textContent = "Noch keine Datei geladen. Bitte 'lager_data.json' auswählen.";
 });

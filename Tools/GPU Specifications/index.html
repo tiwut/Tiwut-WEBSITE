@@ -6,17 +6,15 @@
     <title>GPU Info Tool</title>
     
     <style>
-        /* Grundlegende Stile & Light Mode */
         :root {
             --bg-color: #f4f4f9;
             --text-color: #333;
             --card-bg: #ffffff;
             --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            --primary-color: #76b900; /* NVIDIA-Grün als Akzent */
+            --primary-color: #76b900;
             --border-color: #ddd;
         }
 
-        /* Dark Mode Variablen */
         body.dark-mode {
             --bg-color: #121212;
             --text-color: #e0e0e0;
@@ -141,7 +139,6 @@
         <input type="text" id="searchBar" placeholder="GPU-Modell suchen...">
 
         <div id="gpuList">
-            <!-- GPU-Karten werden hier per JavaScript eingefügt -->
         </div>
     </div>
 
@@ -156,7 +153,6 @@
             let specHeaders = [];
             let currentLang = 'de';
 
-            // --- Übersetzungen ---
             const translations = {
                 de: {
                     title: "GPU Spezifikationen",
@@ -164,7 +160,6 @@
                     dark_mode_toggle_dark: "Heller Modus",
                     dark_mode_toggle_light: "Dunkelmodus",
                     not_found: "Keine passenden GPUs gefunden.",
-                    // Spec Labels
                     Architektur: "Architektur",
                     VRAM: "VRAM",
                     Speicherinterface: "Speicherinterface",
@@ -179,7 +174,6 @@
                     dark_mode_toggle_dark: "Light Mode",
                     dark_mode_toggle_light: "Dark Mode",
                     not_found: "No matching GPUs found.",
-                    // Spec Labels
                     Architektur: "Architecture",
                     VRAM: "VRAM",
                     Speicherinterface: "Memory Interface",
@@ -190,20 +184,16 @@
                 }
             };
 
-            // --- Hauptlogik ---
-
             async function loadGpuData() {
                 try {
-                    const response = await fetch('gpu_specs.txt'); // Geänderter Dateiname
+                    const response = await fetch('gpu_specs.txt');
                     const text = await response.text();
                     
-                    // Filtert Leerzeilen und Kommentarzeilen, die mit '###' beginnen
                     const lines = text.trim().split('\n').filter(line => line && !line.startsWith('###'));
                     
                     const headers = lines.shift().split(';');
                     specHeaders = headers;
 
-                    // Ignoriert Zeilen, die nicht die korrekte Anzahl an Spalten haben
                     allGpus = lines.map(line => {
                         const values = line.split(';');
                         if (values.length !== headers.length) return null;
@@ -212,7 +202,7 @@
                             gpuObject[header] = values[index];
                         });
                         return gpuObject;
-                    }).filter(gpu => gpu !== null && gpu.Modell); // Stellt sicher, dass nur valide Objekte mit Modellnamen bleiben
+                    }).filter(gpu => gpu !== null && gpu.Modell);
 
                     displayGpus(allGpus);
                 } catch (error) {
@@ -251,7 +241,6 @@
                 displayGpus(filteredGpus);
             });
 
-            // --- Dunkelmodus (mit Systempräferenz) ---
             function applyTheme(theme) {
                 document.body.classList.toggle('dark-mode', theme === 'dark');
                 updateDarkModeButtonText(theme);
@@ -268,7 +257,6 @@
                 applyTheme(newTheme);
             });
 
-            // --- Sprachumschaltung ---
             function setLanguage(lang) {
                 currentLang = lang;
                 localStorage.setItem('language', lang);
@@ -285,7 +273,6 @@
                 const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
                 updateDarkModeButtonText(currentTheme);
                 
-                // Filtere die aktuell angezeigten GPUs neu, um die Labels zu aktualisieren
                 const currentSearchTerm = searchBar.value.toLowerCase();
                 const currentlyFilteredGpus = allGpus.filter(gpu => gpu.Modell.toLowerCase().includes(currentSearchTerm));
                 displayGpus(currentlyFilteredGpus);
@@ -295,9 +282,7 @@
                 setLanguage(e.target.value);
             });
 
-            // --- Initialisierung ---
             function initialize() {
-                // 1. Theme initialisieren
                 const savedTheme = localStorage.getItem('theme');
                 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
                 if (savedTheme) {
@@ -311,13 +296,11 @@
                     }
                 });
 
-                // 2. Sprache initialisieren
                 const savedLang = localStorage.getItem('language');
                 const browserLang = navigator.language.split('-')[0];
                 const initialLang = savedLang || (translations[browserLang] ? browserLang : 'de');
                 setLanguage(initialLang);
                 
-                // 3. Daten laden
                 loadGpuData();
             }
 

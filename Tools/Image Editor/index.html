@@ -217,7 +217,6 @@
         </div>
     </footer>
 
-    <!-- Resize Modal -->
     <div id="resizeModal" class="modal">
         <div class="modal-content">
             <h4 data-translate-key="resizeModalTitle">Resize Image</h4>
@@ -242,7 +241,6 @@
         </div>
     </div>
 
-    <!-- Rotate Modal -->
     <div id="rotateModal" class="modal">
         <div class="modal-content">
             <h4 data-translate-key="rotateModalTitle">Rotate Image</h4>
@@ -257,7 +255,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- I18N Translations ---
             const translations = {
                 en: {
                     langName: "English",
@@ -352,7 +349,6 @@
             };
             let currentLanguage = 'en';
 
-            // --- DOM Elements ---
             const mainControls = document.getElementById('main-controls');
             const croppingControlsPanel = document.getElementById('cropping-controls-panel');
             const btnCrop = document.getElementById('btnCrop');
@@ -390,20 +386,17 @@
             const btnRotateConfirm = document.getElementById('btnRotateConfirm');
             const btnRotateCancel = document.getElementById('btnRotateCancel');
 
-            // --- State ---
             let originalImage = null, currentImageForOperations = null;
             let currentImageFileName = 'untitled.png';
             let currentWidth, currentHeight;
             const initialSettings = { brightness: 100, contrast: 100, filter: 'none', rotation: 0 };
             let currentSettings = { ...initialSettings };
             
-            // --- Cropping State ---
             let isCropping = false;
             let cropRect = { x: 0, y: 0, width: 0, height: 0 };
             let cropDrag = { active: false, type: 'move', startX: 0, startY: 0 };
             let currentCropRatio = 'free';
 
-            // --- Helper Functions ---
             function getLang() { return translations[currentLanguage] || translations.en; }
             function alertError(message) { console.error(message); alert(`${getLang().errorPrefix}: ${message}`); }
             function alertInfo(message) { console.log(message); alert(message); }
@@ -494,7 +487,6 @@
                 updateStatus(getLang().statusImageInfo(currentImageFileName, imageToDraw.width, imageToDraw.height, currentSettings.rotation));
             }
             
-            // --- Cropping Logic ---
             function enterCropMode() {
                 if (!currentImageForOperations || currentSettings.rotation !== 0) {
                     if (currentSettings.rotation !== 0) alertInfo("Please reset rotation to 0 before cropping.");
@@ -699,7 +691,6 @@
                 drawCropOverlay();
             }
 
-            // --- Event Handlers (General) ---
             btnLoadTrigger.addEventListener('click', () => loadImageInput.click());
             loadImageInput.addEventListener('change', (event) => {
                 const file = event.target.files[0];

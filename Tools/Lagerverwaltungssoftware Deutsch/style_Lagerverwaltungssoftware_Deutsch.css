@@ -1,47 +1,46 @@
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     margin: 0;
-    /* background-color: #f0f2f5; -- REMOVED, will be handled by ::before */
     color: #1c1e21;
     display: flex;
     justify-content: center;
-    align-items: center; /* Vertically center .container if content is short */
-    min-height: 100vh; /* Ensure body takes full viewport height */
+    align-items: center;
+    min-height: 100vh;
     padding: 20px;
     line-height: 1.5;
-    position: relative; /* Needed for the ::before pseudo-element to be positioned correctly */
-    overflow-x: hidden; /* Prevent horizontal scrollbar if blur effect slightly overflows */
+    position: relative;
+    overflow-x: hidden;
 }
 
 body::before {
     content: "";
-    position: fixed; /* Fixed position to cover the entire viewport */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-image: url('main.avif');
-    background-size: cover; /* Cover the entire area */
-    background-position: center; /* Center the image */
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    filter: blur(5px); /* Adjust blur strength as needed, e.g., 5px or 8px */
-    -webkit-filter: blur(5px); /* For Safari compatibility */
-    z-index: -1; /* Place the pseudo-element behind the body's content */
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    z-index: -1;
 }
 
 .container {
-    background-color: #fff; /* Solid background to make content readable over blurred bg */
+    background-color: #fff;
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
     width: 95%;
     max-width: 1300px;
-    z-index: 1; /* Ensure container is above the ::before pseudo-element */
+    z-index: 1;
 }
 
 h1 {
     text-align: center;
-    color: #1877f2; /* Facebook Blau als Akzent */
+    color: #1877f2;
     margin-bottom: 25px;
 }
 
@@ -58,7 +57,7 @@ h1 {
 
 .button-like-label {
     padding: 10px 15px;
-    background-color: #42b72a; /* Grüner Button */
+    background-color: #42b72a;
     color: white;
     border-radius: 4px;
     cursor: pointer;
@@ -69,7 +68,6 @@ h1 {
 .button-like-label:hover {
     background-color: #36a420;
 }
-
 
 .controls, .actions {
     margin-bottom: 20px;
@@ -126,7 +124,6 @@ button.danger:hover:not(:disabled) {
     background-color: #e03030;
 }
 
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -154,8 +151,6 @@ tbody tr.selected {
     font-weight: 500;
 }
 
-
-/* Modal Styles */
 .modal {
     display: none; 
     position: fixed; 
@@ -189,9 +184,8 @@ tbody tr.selected {
     color: #606770;
 }
 .modal-content input, .modal-content select, .modal-content textarea {
-    width: calc(100% - 22px); /* Account for padding */
+    width: calc(100% - 22px);
 }
-
 
 .close-button {
     color: #aaa;

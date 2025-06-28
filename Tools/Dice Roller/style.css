@@ -1,7 +1,7 @@
 :root {
-    --bg-color: #1a1a2e; /* Dark blue/purple */
-    --primary-color: #e94560; /* Vibrant pink/red */
-    --secondary-color: #16213e; /* Darker blue */
+    --bg-color: #1a1a2e;
+    --primary-color: #e94560;
+    --secondary-color: #16213e;
     --text-color: #f0f0f0;
     --die-size: 80px;
     --dot-size: calc(var(--die-size) / 7);
@@ -23,7 +23,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* Prevents scrollbars during animation */
+    overflow: hidden;
     padding: 20px;
 }
 
@@ -49,7 +49,6 @@ header p {
     opacity: 0.8;
 }
 
-/* Scene and Platform */
 .scene {
     width: calc(var(--die-size) * 3);
     height: calc(var(--die-size) * 3);
@@ -81,7 +80,6 @@ header p {
     transform: translateX(-50%) translateY(-150%) rotateX(0deg) rotateY(0deg);
 }
 
-/* Die Styling */
 .die {
     width: var(--die-size);
     height: var(--die-size);
@@ -139,7 +137,6 @@ header p {
 .back .dot-bl { bottom: 20%; left: 20%; }
 .back .dot-br { bottom: 20%; right: 20%; }
 
-/* Button and Result */
 #roll-button {
     background-color: var(--primary-color);
     color: white;
@@ -152,7 +149,6 @@ header p {
     transition: background-color 0.3s ease, transform 0.1s ease;
     margin-top: 30px;
     box-shadow: 0 5px 15px rgba(233, 69, 96, 0.3);
-    /* display: none; WURDE ENTFERNT ODER AUSKOMMENTIERT */
 }
 
 #roll-button:hover {
@@ -170,7 +166,7 @@ header p {
 .result-container {
     margin-top: 30px;
     font-size: 1.5em;
-    /* display: none; BLEIBT AKTIV */
+    display: none;
 }
 
 #result-display {
@@ -211,11 +207,6 @@ footer {
     }
 }
 
-/* ANGEPASSTE REGEL ZUM AUSBLENDEN */
-/* #roll-button {
-    display: none;  <-- Diese Regel ist nicht mehr aktiv oder wurde entfernt
-} */
-
 .result-container {
-    display: none; /* Dieser bleibt ausgeblendet */
+    display: none;
 }
