@@ -9,46 +9,43 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            /* Removed direct background-color from body */
             color: #333;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            position: relative; /* Needed for z-index of pseudo-element */
-            overflow-x: hidden; /* Prevent horizontal scrollbar if blur extends slightly */
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Pseudo-element for blurred background */
         body::before {
             content: '';
-            position: fixed; /* Fixed position to cover the entire viewport */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-image: url('main.avif');
-            background-size: cover; /* Cover the entire area */
-            background-position: center; /* Center the image */
+            background-size: cover;
+            background-position: center;
             background-repeat: no-repeat;
-            filter: blur(0px); /* Adjust blur radius as needed */
-            z-index: -1; /* Place it behind the content */
-            /* Optional: slightly scale to avoid edge artifacts from blur */
+            filter: blur(0px);
+            z-index: -1;
             transform: scale(1.05); 
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for better blend with blurred bg */
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 30px rgba(0,0,0,0.1); /* Enhanced shadow for depth */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 30px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 600px;
-            z-index: 1; /* Ensure container is above the ::before pseudo-element */
+            z-index: 1;
         }
         h1 {
             text-align: center;
-            color: #4285F4; /* Google Blue */
+            color: #4285F4;
             margin-bottom: 25px;
         }
         .warning {
@@ -102,7 +99,7 @@
         .result-box {
             margin-top: 25px;
             padding: 15px;
-            background-color: #e8f0fe; /* Lighter Google Blue */
+            background-color: #e8f0fe;
             border: 1px solid #d2e3fc;
             border-radius: 6px;
         }
@@ -116,7 +113,7 @@
             word-wrap: break-word;
         }
         .error-message {
-            color: #d93025; /* Google Red */
+            color: #d93025;
             background-color: #fce8e6;
             border: 1px solid #fcc2c0;
             padding: 10px;
@@ -129,12 +126,6 @@
 <body>
     <div class="container">
         <h1>Web Translator</h1>
-        <div class="warning">
-            <strong>Note:</strong> translated by google
-        </div>
-        <div class="warning">
-            <strong>Note:</strong> This demo uses an unofficial method to access Google Translate. It is not intended for production use and may stop working at any time without warning.
-        </div>
 
         <div>
             <label for="text-to-translate">Text to Translate:</label>
@@ -145,7 +136,6 @@
             <label for="source-lang">Source Language:</label>
             <select id="source-lang">
                 <option value="auto">Select Language</option>
-                <!-- Popular languages first -->
                 <option value="en">English</option>
                 <option value="de">German</option>
                 <option value="es">Spanish</option>
@@ -157,8 +147,6 @@
                 <option value="zh-CN">Chinese (Simplified)</option>
                 <option value="ar">Arabic</option>
                 <option value="hi">Hindi</option>
-                <!-- Add more languages alphabetically or as needed. Google supports many. -->
-                <!-- A complete list is very long. Here's a small selection: -->
                 <option value="af">Afrikaans</option>
                 <option value="sq">Albanian</option>
                 <option value="am">Amharic</option>
@@ -263,7 +251,6 @@
         <div>
             <label for="target-lang">Target Language:</label>
             <select id="target-lang">
-                <!-- Same list as above, but perhaps a different default selection -->
                 <option value="en">English</option>
                 <option value="de">German</option>
                 <option value="es">Spanish</option>
@@ -400,10 +387,7 @@
         const errorOutputDiv = document.getElementById('error-output');
         const loadingIndicator = document.getElementById('loading-indicator');
 
-        // Unofficial Google Translate API endpoint
-        // This can change or be blocked at any time!
         const googleTranslateApiUrl = 'https://translate.googleapis.com/translate_a/single';
-
 
         translateButton.addEventListener('click', async () => {
             const text = textToTranslateInput.value.trim();
@@ -418,7 +402,6 @@
                 showError("Please select a target language.");
                 return;
             }
-             // If source and target are the same (and not auto), just show original text
             if (sourceLang === targetLang && sourceLang !== 'auto') {
                  translatedTextP.textContent = text;
                  translationOutputDiv.style.display = 'block';
@@ -427,41 +410,32 @@
                  return;
             }
 
-            // Reset UI elements
             translationOutputDiv.style.display = 'none';
             errorOutputDiv.style.display = 'none';
             loadingIndicator.style.display = 'block';
             translateButton.disabled = true;
 
-            // Parameters for the API request
             const params = new URLSearchParams({
-                client: 'gtx',    // Important for this endpoint
-                sl: sourceLang,   // Source language (auto for Select Languageion)
-                tl: targetLang,   // Target language
-                dt: 't',          // Data type (t for text)
-                q: text           // The text to translate
+                client: 'gtx',
+                sl: sourceLang,
+                tl: targetLang,
+                dt: 't',
+                q: text
             });
 
             try {
-                // Important: Since this is a cross-origin request that might send cookies or auth headers,
-                // browsers would normally block it unless the server (Google) explicitly allows it
-                // with CORS headers. This specific endpoint is often configured to be accessible
-                // from any origin, but this is not guaranteed.
                 const response = await fetch(`${googleTranslateApiUrl}?${params.toString()}`, {
-                    method: 'GET' // This endpoint often uses GET, though POST would be better for longer texts
-                                  // Sometimes POST with application/x-www-form-urlencoded also works
+                    method: 'GET'
                 });
 
                 if (!response.ok) {
-                    // Try to get a more detailed error message
                     let errorText = `API Error: ${response.status} ${response.statusText}.`;
                     try {
-                        const errorData = await response.json(); // Google sometimes returns JSON errors here
+                        const errorData = await response.json();
                         if (errorData && errorData.error && errorData.error.message) {
                              errorText += ` Details: ${errorData.error.message}`;
                         }
-                    } catch (e) { /* Ignore if response is not JSON */ }
-                     // Specific error for 429 (Too Many Requests)
+                    } catch (e) { }
                     if (response.status === 429) {
                         errorText = "Too many requests. Please try again later. Google may have blocked the request.";
                     } else if (response.status === 403) {
@@ -472,10 +446,6 @@
 
                 const data = await response.json();
 
-                // The response from this endpoint is a nested array.
-                // The translated text is usually in the first element of the first array of the first element.
-                // Example: data[0][0][0]
-                // It's good to make this robust:
                 let resultText = '';
                 if (data && data[0] && Array.isArray(data[0])) {
                     data[0].forEach(segment => {
@@ -506,9 +476,6 @@
             errorOutputDiv.style.display = 'block';
             translationOutputDiv.style.display = 'none';
         }
-
-        // Populate language dropdowns (optional, but good for UX if list is very long)
-        // For this example, languages are hardcoded in HTML for simplicity.
     </script>
 </body>
 </html>

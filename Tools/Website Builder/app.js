@@ -1,9 +1,7 @@
-// app.js
 document.addEventListener('DOMContentLoaded', () => {
-    // DOM Elemente
     const paletteContainer = document.getElementById('palette-categories');
     const iframe = document.getElementById('canvas-iframe');
-    let iframeDoc; // Wird nach dem Laden des Iframes gesetzt
+    let iframeDoc;
     let iframeBody;
     const inspectorContent = document.getElementById('inspector-content');
     const searchInput = document.getElementById('search-elements');
@@ -31,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadTemplateButton = document.getElementById('btn-load-template');
 
 
-    // Anwendungszustand
     let editorState = {
         pageSettings: {
             pageTitle: "Meine Webseite",
@@ -39,23 +36,21 @@ document.addEventListener('DOMContentLoaded', () => {
             googleFont: "",
             customCSS: ""
         },
-        canvasElements: [] // Hier werden die Element-Daten gespeichert (nicht die DOM-Nodes selbst)
+        canvasElements: []
     };
-    let selectedElementData = null; // Das Datenobjekt des ausgewählten Elements
-    let draggedElementDefinition = null; // Definition des Elements, das von der Palette gezogen wird
+    let selectedElementData = null;
+    let draggedElementDefinition = null;
 
     const history = [];
     let historyIndex = -1;
     const MAX_HISTORY = 20;
 
-    // ---- Initialisierung ----
     function init() {
         loadPaletteElements();
         setupEventListeners();
-        loadInitialProject(); // Lädt leeres Projekt oder aus localStorage
+        loadInitialProject();
         updateUndoRedoButtons();
 
-        // Warten bis iframe geladen ist
         iframe.addEventListener('load', () => {
             iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             iframeBody = iframeDoc.body;
@@ -63,18 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("iframeBody konnte nicht gefunden werden!");
                 return;
             }
-            iframeBody.id = 'page-body'; // Wichtig für spätere Referenzen
+            iframeBody.id = 'page-body';
             setupIframeEventListeners();
-            renderCanvasFromState(); // Canvas neu rendern, wenn iframe geladen ist
+            renderCanvasFromState();
             applyPageSettingsToIframe();
         });
     }
 
     function loadInitialProject() {
-        // Hier könnte man später aus localStorage laden
-        // Fürs Erste: Neues, leeres Projekt oder Standard-Vorlage
-        // newProject(true); // true, um keine Bestätigung zu zeigen
-        showTemplateModal(); // Biete Vorlagen beim Start an
+        showTemplateModal();
     }
 
     function showTemplateModal() {
@@ -82,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ---- Seiteneinstellungen ----
     function openPageSettingsModal() {
         document.getElementById('page-title').value = editorState.pageSettings.pageTitle;
         document.getElementById('page-meta-description').value = editorState.pageSettings.metaDescription;
@@ -107,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyPageSettingsToIframe() {
         if (!iframeDoc) return;
-        // Google Font
         const fontStyleEl = iframeDoc.getElementById('google-font-style');
         if (fontStyleEl) {
             if (editorState.pageSettings.googleFont) {
@@ -116,17 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 iframeBody.style.fontFamily = `'${editorState.pageSettings.googleFont}', sans-serif`;
             } else {
                 fontStyleEl.innerHTML = '';
-                iframeBody.style.fontFamily = ''; // Reset
+                iframeBody.style.fontFamily = '';
             }
         }
-        // Custom CSS
         const customStyleEl = iframeDoc.getElementById('global-custom-styles');
         if (customStyleEl) {
             customStyleEl.textContent = editorState.pageSettings.customCSS;
         }
     }
 
-    // ---- Element-Palette ----
     function loadPaletteElements(filter = '') {
         paletteContainer.innerHTML = '';
         const categories = {};
@@ -159,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ---- Drag & Drop ----
     function handleDragStart(event, elDef) {
         draggedElementDefinition = elDef;
         event.dataTransfer.setData('text/plain', elDef.id);
@@ -171,14 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
         iframeBody.addEventListener('dragover', handleDragOver);
         iframeBody.addEventListener('dragleave', handleDragLeave);
         iframeBody.addEventListener('drop', handleDrop);
-        iframeBody.addEventListener('click', handleIframeBodyClick); // Für Deselektion
+        iframeBody.addEventListener('click', handleIframeBodyClick);
     }
 
     function handleDragOver(event) {
         event.preventDefault();
         event.dataTransfer.dropEffect = 'copy';
-        // Highlight potenzielles Drop-Target
-        let target = event.target.closest('[data-canvas-id], .col-flex, #page-body'); // Auch Spalten und Body als Ziel
+        let target = event.target.closest('[data-canvas-id], .col-flex, #page-body');
         if (target) {
             if (target.id === 'page-body' || (target.dataset.canvasId && WEB_ELEMENTS.find(e=>e.id === editorState.canvasElements.find(c => c.id === target.dataset.canvasId)?.definitionId)?.canHaveChildren) || target.classList.contains('col-flex')) {
                 target.classList.add('drop-target-highlight');
@@ -199,25 +185,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let dropTarget = event.target.closest('[data-canvas-id], .col-flex, #page-body');
         if (dropTarget) dropTarget.classList.remove('drop-target-highlight');
-        else dropTarget = iframeBody; // Fallback auf Body
+        else dropTarget = iframeBody;
 
         const parentElementData = dropTarget.id === 'page-body' ? null : editorState.canvasElements.find(el => el.id === dropTarget.dataset.canvasId);
         const parentDefinition = parentElementData ? WEB_ELEMENTS.find(d => d.id === parentElementData.definitionId) : null;
 
-        // Nur in Container oder direkt in Body droppen, wenn das Element es erlaubt oder es das Body ist
         const canDropInTarget = dropTarget.id === 'page-body' ||
-                                dropTarget.classList.contains('col-flex') || // Spalten sind immer Drop-Ziele
+                                dropTarget.classList.contains('col-flex') ||
                                 (parentElementData && parentDefinition && parentDefinition.canHaveChildren);
 
         if (!canDropInTarget && dropTarget.id !== 'page-body' && !dropTarget.classList.contains('col-flex')) {
-            // Versuche, zum nächsten gültigen Parent zu gehen
             dropTarget = dropTarget.parentElement.closest('[data-canvas-id], .col-flex, #page-body') || iframeBody;
         }
 
         const newElementData = createElementDataFromDefinition(draggedElementDefinition);
 
         if (draggedElementDefinition.isBlock) {
-            // Füge alle Elemente des Blocks ein
             draggedElementDefinition.structure.forEach(blockElementDef => {
                 const blockElData = createStructuredElementData(blockElementDef);
                 insertElementData(blockElData, dropTarget.dataset.canvasId || null, dropTarget.classList.contains('col-flex') ? dropTarget : null);
@@ -227,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         renderCanvasFromState();
-        selectElementInCanvas(newElementData.id); // Das erste Element des Blocks oder das einzelne Element
+        selectElementInCanvas(newElementData.id);
         saveStateToHistory(`Element '${draggedElementDefinition.name}' hinzugefügt`);
         draggedElementDefinition = null;
     }
@@ -243,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             id: newId,
             definitionId: definition.id,
             properties: { ...cloneObject(definition.defaultAttributes), ...cloneObject(elementConfig.properties) },
-            styles: { ...cloneObject(definition.defaultStyles), ...cloneObject(elementConfig.styles) }, // Falls Stile im Block definiert
+            styles: { ...cloneObject(definition.defaultStyles), ...cloneObject(elementConfig.styles) },
             content: definition.defaultContent || '',
             children: []
         };
@@ -261,20 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function insertElementData(elementData, parentCanvasId, parentDomElementForColumn) {
         if (parentDomElementForColumn && parentDomElementForColumn.classList.contains('col-flex')) {
-            // Spezialfall: In Spalte einfügen (Spalten sind nicht Teil von editorState.canvasElements)
-            // Finde den Parent der Spaltenreihe und dann die richtige Spalte zum Einfügen. Kompliziert.
-            // Vereinfachung: Wir fügen direkt dem DOM hinzu und hoffen, dass renderCanvasFromState das später korrekt abbildet.
-            // Besser wäre, Spalten auch im editorState abzubilden.
-            // Für diese "leichte" Version fügen wir es einfach dem editorState auf oberster Ebene hinzu.
-            // Beim Rendern muss dann die Logik die Spalten finden.
-             editorState.canvasElements.push(elementData); // Nicht ideal, aber einfacher für den Start
+             editorState.canvasElements.push(elementData);
         } else if (parentCanvasId) {
             const parentData = findElementDataById(editorState.canvasElements, parentCanvasId);
             if (parentData && WEB_ELEMENTS.find(d => d.id === parentData.definitionId)?.canHaveChildren) {
                 if (!parentData.children) parentData.children = [];
                 parentData.children.push(elementData);
             } else {
-                editorState.canvasElements.push(elementData); // Fallback auf Root
+                editorState.canvasElements.push(elementData);
             }
         } else {
             editorState.canvasElements.push(elementData);
@@ -299,18 +276,17 @@ document.addEventListener('DOMContentLoaded', () => {
             definitionId: elDef.id,
             properties: cloneObject(elDef.defaultAttributes || {}),
             styles: cloneObject(elDef.defaultStyles || {}),
-            content: elDef.defaultContent || '', // Für Elemente ohne Kinder
+            content: elDef.defaultContent || '',
             children: elDef.canHaveChildren ? [] : undefined
         };
     }
 
-    // ---- Canvas Rendering ----
     function renderCanvasFromState() {
         if (!iframeBody) {
             console.warn("iframeBody noch nicht bereit für Rendering.");
             return;
         }
-        iframeBody.innerHTML = ''; // Canvas leeren
+        iframeBody.innerHTML = '';
         if (editorState.canvasElements.length === 0) {
             iframeBody.innerHTML = '<p>Ziehe Elemente aus der Palette hierher.</p>';
         } else {
@@ -319,7 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (domElement) iframeBody.appendChild(domElement);
             });
         }
-        // Nach dem Rendern erneut den Selektionsstatus anwenden, falls vorhanden
         if (selectedElementData) {
             const domEl = iframeDoc.querySelector(`[data-canvas-id="${selectedElementData.id}"]`);
             if (domEl) domEl.classList.add('selected-element-iframe');
@@ -331,20 +306,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!definition) return null;
 
         let el;
-        if (definition.generateStructure) { // Für komplexe Elemente wie Spalten
+        if (definition.generateStructure) {
             el = doc.createElement(definition.htmlTag || 'div');
-            if (definition.className) el.className = definition.className; // Klasse für Row-Flex
+            if (definition.className) el.className = definition.className;
             el.innerHTML = definition.generateStructure();
-             // Wichtig: Kind-Elemente, die in die Spalten gedroppt werden, müssen hier separat behandelt werden.
-            // Dies ist ein Schwachpunkt der vereinfachten Struktur.
-            // In einer robusten Lösung hätten Spalten selbst einen "children" Array in editorState.
         } else {
             el = doc.createElement(definition.htmlTag);
         }
 
-        el.dataset.canvasId = elementData.id; // Wichtig für Selektion und Inspektor
+        el.dataset.canvasId = elementData.id;
 
-        // Attribute setzen
         for (const attr in elementData.properties) {
             if (elementData.properties[attr] !== undefined && elementData.properties[attr] !== null && elementData.properties[attr] !== '') {
                 if (attr === 'className') el.className = `${el.className || ''} ${elementData.properties[attr]}`.trim();
@@ -354,36 +325,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 else el.setAttribute(attr, elementData.properties[attr]);
             }
         }
-        // Stile setzen
         for (const styleProp in elementData.styles) {
             if (elementData.styles[styleProp]) {
                 el.style[styleProp] = elementData.styles[styleProp];
             }
         }
-        // Inhalt für Elemente ohne Kinder
         if (!definition.canHaveChildren && elementData.content) {
             el.textContent = elementData.content;
         }
 
-        // Klick-Handler für Selektion hinzufügen
         el.addEventListener('click', (e) => {
-            e.stopPropagation(); // Verhindert, dass Klick auf Body durchgeht
+            e.stopPropagation();
             selectElementInCanvas(elementData.id);
         });
 
-        // Rekursiv Kinder rendern, falls vorhanden und erlaubt
         if (definition.canHaveChildren && elementData.children && elementData.children.length > 0) {
             let targetForChildren = el;
-            // Spezialbehandlung für Spalten: Kinder in die .col-flex divs einfügen
-            if (definition.id === 'columns_2') { // Oder andere Spalten-Layouts
+            if (definition.id === 'columns_2') {
                 const cols = Array.from(el.querySelectorAll('.col-flex'));
-                // Hier müsste eine Logik her, wie Kinder auf Spalten verteilt werden.
-                // Vereinfachung: Alle Kinder in die erste Spalte oder abwechselnd.
                 elementData.children.forEach((childData, index) => {
                     const childDOM = createDOMElementFromData(childData, doc);
-                    if (childDOM && cols[index % cols.length]) { // Abwechselnd in Spalten
+                    if (childDOM && cols[index % cols.length]) {
                         cols[index % cols.length].appendChild(childDOM);
-                    } else if (childDOM && cols.length > 0) { // Fallback: erste Spalte
+                    } else if (childDOM && cols.length > 0) {
                          cols[0].appendChild(childDOM);
                     }
                 });
@@ -398,9 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ---- Element Selektion & Inspektor ----
     function handleIframeBodyClick(event) {
-        // Wenn direkt auf den Body (oder leeren Bereich im Body) geklickt wird, deselektieren
         if (event.target.id === 'page-body' || event.target.tagName === 'HTML') {
             deselectElement();
         }
@@ -416,9 +378,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function selectElementInCanvas(elementId) {
-        if (selectedElementData && selectedElementData.id === elementId) return; // Bereits ausgewählt
+        if (selectedElementData && selectedElementData.id === elementId) return;
 
-        deselectElement(); // Vorheriges deselektieren
+        deselectElement();
 
         selectedElementData = findElementDataById(editorState.canvasElements, elementId);
         if (!selectedElementData) {
@@ -433,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadInspector(selectedElementData);
         } else {
             console.warn("DOM Element für Selektion nicht im Iframe gefunden:", elementId);
-            deselectElement(); // Element nicht gefunden, also nichts auswählen
+            deselectElement();
         }
     }
 
@@ -447,13 +409,11 @@ document.addEventListener('DOMContentLoaded', () => {
         title.textContent = definition.name;
         inspectorContent.appendChild(title);
 
-        // Eigenschaften (Attribute & Inhalt)
         if (definition.properties) {
             definition.properties.forEach(propDef => {
                 createPropertyField(propDef, elementData, 'properties', elementData.properties[propDef.name]);
             });
         }
-        // Inhalt für Elemente ohne Kinder, falls nicht schon als 'textContent' in properties
         if (!definition.canHaveChildren && !definition.properties?.find(p=>p.name==='textContent')) {
             createPropertyField(
                 { name: 'content', type: 'textarea', label: 'Inhalt' },
@@ -461,14 +421,11 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // Stile
         const styleTitle = document.createElement('h5');
         styleTitle.textContent = 'Styling';
         styleTitle.style.marginTop = '20px';
         inspectorContent.appendChild(styleTitle);
 
-        // Erlaube Bearbeitung aller Standardstile, die in defaultStyles des Elements definiert sind
-        // oder füge ein paar generische hinzu.
         const commonStyleProps = ['color', 'backgroundColor', 'padding', 'margin', 'fontSize', 'textAlign', 'width', 'height', 'borderRadius'];
         if (definition.defaultStyles) {
             Object.keys(definition.defaultStyles).forEach(styleKey => {
@@ -488,7 +445,6 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         });
 
-        // Löschen-Button
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Element löschen';
         deleteButton.style.marginTop = '20px';
@@ -512,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function removeElementRecursive(elementsArray, idToRemove) {
         return elementsArray.filter(el => {
             if (el.id === idToRemove) {
-                return false; // Element entfernen
+                return false;
             }
             if (el.children && el.children.length > 0) {
                 el.children = removeElementRecursive(el.children, idToRemove);
@@ -547,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'checkbox':
                 input = document.createElement('input');
                 input.type = 'checkbox';
-                input.checked = currentValue === true || currentValue === 'true' || currentValue === propDef.name; // Für 'required' etc.
+                input.checked = currentValue === true || currentValue === 'true' || currentValue === propDef.name;
                 break;
             default:
                 input = document.createElement('input');
@@ -563,14 +519,13 @@ document.addEventListener('DOMContentLoaded', () => {
         input.addEventListener('input', (e) => {
             let value = propDef.type === 'checkbox' ? e.target.checked : e.target.value;
 
-            if (targetObjectKey === 'content') { // Direkt das content-Feld
+            if (targetObjectKey === 'content') {
                  elementData.content = value;
-            } else { // properties oder styles Objekt
+            } else {
                 if (!elementData[targetObjectKey]) elementData[targetObjectKey] = {};
                 elementData[targetObjectKey][propDef.name] = value;
             }
 
-            // Live-Update des DOM-Elements im Iframe
             const domToUpdate = iframeDoc.querySelector(`[data-canvas-id="${elementData.id}"]`);
             if (domToUpdate) {
                 const definition = WEB_ELEMENTS.find(def => def.id === elementData.definitionId);
@@ -578,10 +533,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     domToUpdate.style[propDef.name] = value;
                 } else if (targetObjectKey === 'properties') {
                     if (propDef.name === 'className') {
-                        // Alte Klassen entfernen, die nicht 'selected-element-iframe' sind
                         const classes = Array.from(domToUpdate.classList).filter(c => c === 'selected-element-iframe');
                         domToUpdate.className = classes.join(' ');
-                        if(value) domToUpdate.classList.add(...value.split(' ').filter(s => s)); // Neue Klassen hinzufügen
+                        if(value) domToUpdate.classList.add(...value.split(' ').filter(s => s));
                     } else if (propDef.name === 'required' && typeof value === 'boolean') {
                         if(value) domToUpdate.setAttribute(propDef.name, ''); else domToUpdate.removeAttribute(propDef.name);
                     }
@@ -600,26 +554,24 @@ document.addEventListener('DOMContentLoaded', () => {
         inspectorContent.appendChild(container);
     }
 
-    // ---- Projekt Speichern & Laden & Neu ----
     function newProject(skipConfirm = false) {
         if (!skipConfirm && !confirm("Aktuelles Projekt verwerfen und ein neues starten? Alle nicht gespeicherten Änderungen gehen verloren.")) {
             return;
         }
-        editorState = cloneObject(TEMPLATES.blank); // Tief kopieren
+        editorState = cloneObject(TEMPLATES.blank);
         deselectElement();
         renderCanvasFromState();
-        applyPageSettingsToIframe(); // Wichtig für Titel etc.
+        applyPageSettingsToIframe();
         history.length = 0;
         historyIndex = -1;
         updateUndoRedoButtons();
-        saveStateToHistory("Neues Projekt gestartet"); // Initialer Zustand für Undo
-        // Schließe Template Modal, falls offen
+        saveStateToHistory("Neues Projekt gestartet");
         if (templateModal.style.display === 'block') templateModal.style.display = 'none';
     }
 
     function saveProject() {
         const filename = `projekt-${new Date().toISOString().slice(0,10)}.json`;
-        const dataStr = JSON.stringify(editorState, null, 2); // null, 2 für pretty print
+        const dataStr = JSON.stringify(editorState, null, 2);
         const blob = new Blob([dataStr], {type: "application/json"});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -639,7 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
             reader.onload = (e) => {
                 try {
                     const loadedState = JSON.parse(e.target.result);
-                    // Validierung wäre hier gut
                     editorState = loadedState;
                     deselectElement();
                     renderCanvasFromState();
@@ -654,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
             reader.readAsText(file);
-            event.target.value = null; // Damit gleicher Dateiname erneut geladen werden kann
+            event.target.value = null;
         }
     }
 
@@ -664,7 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!confirm(`Vorlage "${templateKey.replace('_', ' ')}" laden? Aktueller Inhalt wird überschrieben.`)) {
                 return;
             }
-            editorState = cloneObject(TEMPLATES[templateKey]); // Tief kopieren
+            editorState = cloneObject(TEMPLATES[templateKey]);
             deselectElement();
             renderCanvasFromState();
             applyPageSettingsToIframe();
@@ -679,16 +630,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // ---- Undo / Redo ----
     function saveStateToHistory(actionName = "Aktion") {
-        // console.log("Saving state:", actionName, editorState);
         if (historyIndex < history.length - 1) {
-            history.splice(historyIndex + 1); // Zukünftige Zustände verwerfen
+            history.splice(historyIndex + 1);
         }
-        history.push(cloneObject(editorState)); // Tiefkopie des Zustands speichern
+        history.push(cloneObject(editorState));
 
         if (history.length > MAX_HISTORY) {
-            history.shift(); // Ältesten Zustand entfernen
+            history.shift();
         } else {
             historyIndex++;
         }
@@ -701,8 +650,8 @@ document.addEventListener('DOMContentLoaded', () => {
             editorState = cloneObject(history[historyIndex]);
             deselectElement();
             renderCanvasFromState();
-            applyPageSettingsToIframe(); // Wichtig, da Seiteneinstellungen auch im State sind
-            loadInspectorForSelected(); // Inspektor neu laden, falls etwas selektiert war
+            applyPageSettingsToIframe();
+            loadInspectorForSelected();
         }
         updateUndoRedoButtons();
     }
@@ -725,37 +674,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadInspectorForSelected() {
-        // Finde das Element, das im (jetzt alten) State selektiert war,
-        // aber basierend auf der ID, da die Objekte neu sind.
-        // Diese Funktion ist knifflig, da die Objektidentitäten sich ändern.
-        // Vereinfachung: Wenn vorher ein Element selektiert war, versuche es erneut zu selektieren.
-        // Eine robustere Lösung würde die ID des selektierten Elements separat speichern.
-        // Für jetzt: Einfach den Inspektor leeren.
         if (selectedElementData) {
             const currentSelectedData = findElementDataById(editorState.canvasElements, selectedElementData.id);
             if (currentSelectedData) {
-                selectedElementData = currentSelectedData; // Referenz aktualisieren
+                selectedElementData = currentSelectedData;
                 loadInspector(selectedElementData);
                 const domEl = iframeDoc.querySelector(`[data-canvas-id="${selectedElementData.id}"]`);
                 if (domEl) domEl.classList.add('selected-element-iframe');
 
             } else {
-                deselectElement(); // Das Element existiert vielleicht nicht mehr im aktuellen State
+                deselectElement();
             }
         } else {
             deselectElement();
         }
     }
 
-    // ---- Responsive Ansicht ----
-    function setResponsiveView(view) { // view: 'desktop', 'tablet', 'mobile'
+    function setResponsiveView(view) {
         iframeWrapper.classList.remove('desktop-view', 'tablet-view', 'mobile-view');
         responsiveControls.querySelectorAll('button').forEach(b => b.classList.remove('active'));
 
         if (view === 'desktop') {
             iframeWrapper.classList.add('desktop-view');
             document.getElementById('btn-view-desktop').classList.add('active');
-            iframeWrapper.style.width = '100%'; // Oder spezifischer Desktop-Wert
+            iframeWrapper.style.width = '100%';
         } else if (view === 'tablet') {
             iframeWrapper.classList.add('tablet-view');
             document.getElementById('btn-view-tablet').classList.add('active');
@@ -767,7 +709,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ---- Export ----
     function generatePageHTML(forPhpExport = false) {
         let html = `<!DOCTYPE html>\n<html lang="de">\n<head>\n`;
         html += `  <meta charset="UTF-8">\n`;
@@ -782,18 +723,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         html += `  <style>\n`;
         html += `    body { margin: 0; font-family: ${editorState.pageSettings.googleFont ? `'${editorState.pageSettings.googleFont}', ` : ''}sans-serif; }\n`;
-        // Basis-Styling für Spalten etc.
-        html += `    .row-flex { display: flex; gap: 10px; padding: 5px 0; flex-wrap: wrap; } /* flex-wrap für responsive */\n`;
-        html += `    .col-flex { flex: 1; min-width: 280px; /* Basis für Umbruch */ }\n`; // min-width für responsive
+        html += `    .row-flex { display: flex; gap: 10px; padding: 5px 0; flex-wrap: wrap; }\n`;
+        html += `    .col-flex { flex: 1; min-width: 280px; }\n`;
         if (editorState.pageSettings.customCSS) {
-            html += `    /* --- Benutzerdefiniertes CSS Start --- */\n`;
+            html += `    \n`;
             html += `    ${editorState.pageSettings.customCSS}\n`;
-            html += `    /* --- Benutzerdefiniertes CSS Ende --- */\n`;
+            html += `    \n`;
         }
         html += `  </style>\n`;
         html += `</head>\n<body>\n`;
 
-        // PHP Formular Handler einfügen, falls benötigt
         let hasForm = false;
         function checkForm(elements) {
             for (const el of elements) {
@@ -805,15 +744,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (forPhpExport && checkForm(editorState.canvasElements)) {
             hasForm = true;
             html += "<?php\n";
-            html += "// Einfacher PHP Formular Handler (Beispiel - NICHT PRODUKTIV NUTZEN OHNE SICHERHEITSCHECKS!)\n";
+            html += "\n";
             html += "if ($_SERVER['REQUEST_METHOD'] == 'POST') {\n";
-            html += "    $to = 'deine-email@example.com'; // BITTE ERSETZEN!\n";
+            html += "    $to = 'deine-email@example.com'; \n";
             html += "    $subject = 'Neue Formularnachricht';\n";
             html += "    $message_body = '';\n";
             html += "    foreach ($_POST as \$key => \$value) {\n";
             html += "        $message_body .= htmlspecialchars(\$key) . ': ' . htmlspecialchars(\$value) . \"\\n\";\n";
             html += "    }\n";
-            html += "    $headers = 'From: webform@example.com'; // BITTE ANPASSEN\n";
+            html += "    $headers = 'From: webform@example.com'; \n";
             html += "    if (mail($to, $subject, $message_body, $headers)) {\n";
             html += "        echo '<p style=\"color:green; text-align:center; padding:10px; background:#e6ffe6;\">Nachricht erfolgreich gesendet!</p>';\n";
             html += "    } else {\n";
@@ -831,7 +770,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!definition) return;
 
                 let openingTag = `<${definition.htmlTag}`;
-                // Attribute
                 for (const attr in elementData.properties) {
                     const val = elementData.properties[attr];
                     if (val !== undefined && val !== null && val !== '') {
@@ -842,7 +780,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 }
-                // Styles (Inline - nicht ideal, aber für "leichte" Version OK)
                 let styleString = '';
                 for (const styleProp in elementData.styles) {
                     if (elementData.styles[styleProp]) {
@@ -855,21 +792,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 openingTag += '>';
                 elementsHtml += openingTag;
 
-                // Inhalt oder Kinder
-                if (definition.generateStructure) { // Für Spalten etc.
-                    elementsHtml += definition.generateStructure(); // Fügt die leere Spaltenstruktur ein
-                    // Kinder von Spalten müssen hier intelligent platziert werden.
-                    // Diese Logik ist im aktuellen Datenmodell nicht einfach abzubilden.
-                    // Die Kinder sind auf Root-Ebene oder in anderen Containern, nicht direkt in der Spalten-Definition.
-                    // Für den Export müssen wir die Kinder, die für diese Spaltenreihe vorgesehen sind, finden.
-                    // Dies ist ein sehr komplexer Teil, der hier vereinfacht wird, indem er Kinder direkt in die Row einfügt.
-                    // Eine bessere Lösung würde die Spalten-Divs direkt im DOM suchen und die Kinder dort platzieren.
-                    // ODER: Das Datenmodell muss Spalten als echte Container mit Kindern behandeln.
+                if (definition.generateStructure) {
+                    elementsHtml += definition.generateStructure();
                     if (elementData.children && elementData.children.length > 0) {
-                         // Hier müsste man die Kinder in die .col-flex divs der gerade erzeugten Struktur einfügen.
-                         // Das ist mit reinem String-Concat schwierig ohne DOM-Manipulation.
-                         // Vereinfachung: Wir lassen es für den Export mal weg, oder fügen sie in die Row.
-                         // elementsHtml += buildHtmlRecursive(elementData.children); // Würde sie in die Row einfügen
                     }
 
                 } else if (definition.canHaveChildren && elementData.children && elementData.children.length > 0) {
@@ -897,22 +822,18 @@ document.addEventListener('DOMContentLoaded', () => {
         URL.revokeObjectURL(a.href);
     }
 
-    // ---- Theme Toggle ----
     function toggleTheme() {
         document.body.classList.toggle('theme-dark');
         document.body.classList.toggle('theme-light');
         themeToggleButton.textContent = document.body.classList.contains('theme-dark') ? '☀️' : '🌙';
-        // Optional: Präferenz in localStorage speichern
         localStorage.setItem('editorTheme', document.body.classList.contains('theme-dark') ? 'dark' : 'light');
     }
-    // Beim Laden Theme aus localStorage wiederherstellen
     const savedTheme = localStorage.getItem('editorTheme');
     if (savedTheme === 'dark') {
-        toggleTheme(); // Umschalten auf Dark, wenn gespeichert
+        toggleTheme();
     }
 
 
-    // ---- Hilfsfunktionen ----
     function cloneObject(obj) {
         if (obj === null || typeof obj !== 'object') return obj;
         return JSON.parse(JSON.stringify(obj));
@@ -932,7 +853,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return str.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase());
     }
 
-    // ---- Event Listener Setup ----
     function setupEventListeners() {
         searchInput.addEventListener('input', (e) => loadPaletteElements(e.target.value));
         exportHtmlButton.addEventListener('click', () => {
@@ -945,13 +865,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         saveProjectButton.addEventListener('click', saveProject);
         loadProjectInput.addEventListener('change', loadProject);
-        newProjectButton.addEventListener('click', () => newProject(false)); // false für Bestätigung
+        newProjectButton.addEventListener('click', () => newProject(false));
         previewTabButton.addEventListener('click', () => {
             const htmlContent = generatePageHTML(false);
             const blob = new Blob([htmlContent], {type : 'text/html'});
             const url = URL.createObjectURL(blob);
             window.open(url, '_blank');
-            // URL.revokeObjectURL(url); // Nicht sofort, da Tab es noch braucht. Browser macht das später.
         });
 
         undoButton.addEventListener('click', undo);
@@ -972,13 +891,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         loadTemplateButton.addEventListener('click', loadSelectedTemplate);
         document.querySelector('#template-selection-modal .close-button').addEventListener('click', () => {
-            // Wenn Template Modal ohne Auswahl geschlossen wird und keine Elemente da sind, leeres Projekt starten
-            if(editorState.canvasElements.length === 0 && history.length <=1) { // <=1, da der "Vorlage geladen" State existieren könnte
+            if(editorState.canvasElements.length === 0 && history.length <=1) {
                 newProject(true);
             }
         });
 
-        // Schließen des Modals bei Klick außerhalb des Inhalts
         window.addEventListener('click', (event) => {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
@@ -989,6 +906,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---- App starten ----
     init();
 });

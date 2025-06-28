@@ -1,6 +1,4 @@
-// elements.js
 const WEB_ELEMENTS = [
-    // Kategorie: Grundstruktur
     {
         id: 'section_basic',
         name: 'Section',
@@ -21,18 +19,16 @@ const WEB_ELEMENTS = [
         name: '2 Spalten',
         category: 'Grundstruktur',
         icon: '||',
-        htmlTag: 'div', // Wird als Wrapper für Flexbox dienen
-        className: 'row-flex', // Vordefinierte Klasse für Styling
-        // Generiert beim Drop eine spezifische Struktur
+        htmlTag: 'div',
+        className: 'row-flex',
         generateStructure: () => `<div class="col-flex" data-canvas-id="col-${Date.now()}1"></div><div class="col-flex" data-canvas-id="col-${Date.now()}2"></div>`,
-        canHaveChildren: true, // Die Spalten im Inneren können Kinder haben
+        canHaveChildren: true,
         properties: [
             { name: 'id', type: 'text', label: 'HTML ID (Reihe)' },
             { name: 'className', type: 'text', label: 'CSS-Klassen (Reihe)' },
             { name: 'gap', type: 'text', label: 'Spaltenabstand (CSS)', placeholder: 'z.B. 10px' }
         ]
     },
-    // Kategorie: Text
     {
         id: 'h1_heading',
         name: 'Überschrift H1',
@@ -66,19 +62,16 @@ const WEB_ELEMENTS = [
             { name: 'textAlign', type: 'select', label: 'Ausrichtung', options: ['left', 'center', 'right', 'justify'] },
         ]
     },
-    // Kategorie: Medien
     {
         id: 'img_basic',
         name: 'Bild',
         category: 'Medien',
         icon: '🖼️',
         htmlTag: 'img',
-        // defaultAttributes: { src: 'https://via.placeholder.com/300x200?text=Bild', alt: 'Platzhalterbild' },
-        // Für "leichte" Version: src wird im Inspektor gesetzt.
-        defaultStyles: { maxWidth: '100%', height: 'auto', display: 'block' }, // display block für margin auto
+        defaultStyles: { maxWidth: '100%', height: 'auto', display: 'block' },
         canHaveChildren: false,
         properties: [
-            { name: 'src', type: 'url', label: 'Bild-URL oder Data-URL' }, // Oder später File-Input
+            { name: 'src', type: 'url', label: 'Bild-URL oder Data-URL' },
             { name: 'alt', type: 'text', label: 'Alternativtext (alt)' },
             { name: 'width', type: 'text', label: 'Breite (CSS)', placeholder: 'z.B. 100px oder 50%' },
             { name: 'height', type: 'text', label: 'Höhe (CSS)', placeholder: 'z.B. auto oder 100px' },
@@ -86,15 +79,14 @@ const WEB_ELEMENTS = [
             { name: 'margin', type: 'text', label: 'Außenabstand', placeholder: 'z.B. 0 auto' }
         ]
     },
-    // Kategorie: Interaktion
     {
         id: 'button_basic',
         name: 'Button',
         category: 'Interaktion',
         icon: '🔘',
-        htmlTag: 'a', // Verwenden <a> für einfaches Styling und Verlinkung
+        htmlTag: 'a',
         defaultContent: 'Klick Mich',
-        defaultAttributes: { href: '#', role: 'button' }, // role für Semantik
+        defaultAttributes: { href: '#', role: 'button' },
         defaultStyles: {
             display: 'inline-block',
             padding: '10px 20px',
@@ -115,7 +107,6 @@ const WEB_ELEMENTS = [
             { name: 'target', type: 'select', label: 'Link öffnen in', options: ['_self', '_blank'] }
         ]
     },
-    // Kategorie: Layout-Helfer
     {
         id: 'divider_basic',
         name: 'Trennlinie',
@@ -142,7 +133,6 @@ const WEB_ELEMENTS = [
             { name: 'height', type: 'text', label: 'Höhe (CSS)', placeholder: 'z.B. 20px' }
         ]
     },
-    // Kategorie: Formulare (sehr einfach)
     {
         id: 'form_container',
         name: 'Formular Container',
@@ -208,14 +198,12 @@ const WEB_ELEMENTS = [
             { name: 'type', type: 'select', label: 'Button-Typ', options: ['submit', 'button', 'reset'] }
         ]
     },
-     // Kategorie: Vorgefertigte Blöcke (Beispiele)
     {
         id: 'hero_simple',
         name: 'Einfacher Hero',
         category: 'Vorgefertigte Blöcke',
         icon: '🌟',
-        isBlock: true, // Markiert es als Block für spezielle Behandlung
-        // Struktur, die beim Drop eingefügt wird. IDs müssen einzigartig sein!
+        isBlock: true,
         structure: [
             {
                 definitionId: 'section_basic',
@@ -231,7 +219,7 @@ const WEB_ELEMENTS = [
                     },
                     {
                         definitionId: 'button_basic',
-                        properties: { textContent: 'Mehr Erfahren', href:'#next-section', margin: '20px auto 0 auto', display: 'block', width: 'fit-content' } // display block & margin auto für Zentrierung
+                        properties: { textContent: 'Mehr Erfahren', href:'#next-section', margin: '20px auto 0 auto', display: 'block', width: 'fit-content' }
                     }
                 ]
             }
@@ -239,7 +227,6 @@ const WEB_ELEMENTS = [
     },
 ];
 
-// Beispiel-Vorlagen (JSON-Struktur, die einem gespeicherten Projekt ähnelt)
 const TEMPLATES = {
     blank: {
         pageSettings: { pageTitle: "Neues Projekt", metaDescription: "", googleFont: "", customCSS: "" },
@@ -253,15 +240,11 @@ const TEMPLATES = {
             customCSS: "body { font-family: 'Roboto', sans-serif; }"
         },
         canvasElements: [
-            // Dies würde der Struktur eines exportierten Projekts ähneln
-            // Hier könnte die Struktur des 'hero_simple' Blocks direkt eingefügt werden,
-            // oder man referenziert Blöcke und der Lade-Mechanismus baut sie auf.
-            // Für Einfachheit: Direkte Struktur
             {
                 definitionId: 'section_basic',
                 id: `canvas-el-${Date.now() + 1}`,
                 properties: { id: 'hero', backgroundColor: '#e9ecef', padding: '60px 20px' },
-                styles: { backgroundColor: '#e9ecef', padding: '60px 20px' }, // Redundant, aber für Demo
+                styles: { backgroundColor: '#e9ecef', padding: '60px 20px' },
                 children: [
                     {
                         definitionId: 'h1_heading',
@@ -283,12 +266,10 @@ const TEMPLATES = {
                     }
                 ]
             },
-            // Weitere Sektionen hier...
         ]
     },
     portfolio_basic: {
-        // Ähnliche Struktur wie landing_page_simple
         pageSettings: { pageTitle: "Mein Portfolio", metaDescription: "Portfolio Seite.", googleFont: "Lato", customCSS: "" },
-        canvasElements: [ /* ... Elemente für ein Portfolio ... */ ]
+        canvasElements: []
     }
 };

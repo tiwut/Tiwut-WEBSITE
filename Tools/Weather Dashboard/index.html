@@ -9,8 +9,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
         :root {
-            /* Background variables are kept for potential future use or other elements,
-               but body background will be main.avif */
             --bg-clear-day: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
             --bg-clear-night: linear-gradient(135deg, #0c1445 0%, #293a80 100%);
             --bg-cloudy: linear-gradient(135deg, #B0C4DE 0%, #778899 100%);
@@ -29,39 +27,37 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            color: var(--text-light); /* Default text color */
-            /* background: var(--bg-clear-day); Removed */
-            /* transition: background 0.8s ease-in-out; Removed */
+            color: var(--text-light);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
-            position: relative; /* For pseudo-element positioning */
-            overflow-x: hidden; /* Prevent horizontal scroll from blur */
+            position: relative;
+            overflow-x: hidden;
         }
 
         body::before {
             content: "";
-            position: fixed; /* Covers the entire viewport and stays fixed */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('main.avif'); /* Your background image */
+            background-image: url('main.avif');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: blur(0px); /* Adjust blur radius as needed */
-            -webkit-filter: blur(5px); /* Safari support */
-            z-index: -1; /* Place it behind the body content */
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            z-index: -1;
         }
 
         .container {
             width: 100%;
             max-width: 1000px;
-            z-index: 1; /* Ensure content is above the ::before pseudo-element */
+            z-index: 1;
         }
 
         header {
@@ -126,7 +122,7 @@
             border-radius: 15px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Safari */
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -197,12 +193,12 @@
         }
         .forecast-days {
             display: flex;
-            overflow-x: auto; /* Allows scrolling on smaller screens */
+            overflow-x: auto;
             gap: 10px;
-            padding-bottom: 10px; /* For scrollbar */
+            padding-bottom: 10px;
         }
         .forecast-day {
-            flex: 0 0 120px; /* Fixed width for forecast items */
+            flex: 0 0 120px;
             background: var(--card-bg-darker);
             padding: 15px;
             border-radius: 10px;
@@ -239,7 +235,7 @@
         }
         #radarMap {
             width: 100%;
-            height: 400px; /* Adjust as needed */
+            height: 400px;
             border: none;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -257,10 +253,9 @@
         }
         .error {
             background-color: rgba(220, 53, 69, 0.2);
-            color: #dc3545; /* Or a lighter red if background is dark */
+            color: #dc3545;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             header h1 { font-size: 2.2em; }
             .input-section { flex-direction: column; }
@@ -269,7 +264,7 @@
             .current-weather .weather-icon i { font-size: 4em; }
         }
          @media (max-width: 480px) {
-            .forecast-day { flex: 0 0 100px; } /* Smaller forecast cards */
+            .forecast-day { flex: 0 0 100px; }
          }
     </style>
 </head>
@@ -306,7 +301,6 @@
             <section class="weather-card forecast" id="forecastCard" style="display:none;">
                 <h3>7-Day Forecast</h3>
                 <div class="forecast-days" id="forecastDaysContainer">
-                    <!-- Forecast items will be injected here -->
                 </div>
             </section>
         </main>
@@ -324,7 +318,6 @@
         const getLocationBtn = document.getElementById('getLocationBtn');
         const messageArea = document.getElementById('messageArea');
 
-        // Current Weather Elements
         const currentWeatherCard = document.getElementById('currentWeatherCard');
         const cityNameEl = document.getElementById('cityName');
         const currentWeatherIconEl = document.getElementById('currentWeatherIcon');
@@ -335,18 +328,14 @@
         const humidityEl = document.getElementById('humidity');
         const isDayEl = document.getElementById('isDay');
 
-        // Forecast Elements
         const forecastCard = document.getElementById('forecastCard');
         const forecastDaysContainer = document.getElementById('forecastDaysContainer');
 
-        // Radar Elements
         const radarSectionCard = document.getElementById('radarSectionCard');
         const radarMapEl = document.getElementById('radarMap');
 
-
-        // WMO Weather interpretation codes: https://open-meteo.com/en/docs
         const weatherCodeMap = {
-            0: { description: "Clear sky", icon: "fa-sun", night_icon: "fa-moon" }, // Day/Night specific
+            0: { description: "Clear sky", icon: "fa-sun", night_icon: "fa-moon" },
             1: { description: "Mainly clear", icon: "fa-cloud-sun", night_icon: "fa-cloud-moon" },
             2: { description: "Partly cloudy", icon: "fa-cloud-sun", night_icon: "fa-cloud-moon" },
             3: { description: "Overcast", icon: "fa-cloud" },
@@ -355,7 +344,7 @@
             51: { description: "Light drizzle", icon: "fa-cloud-rain" },
             53: { description: "Moderate drizzle", icon: "fa-cloud-rain" },
             55: { description: "Dense drizzle", icon: "fa-cloud-showers-heavy" },
-            56: { description: "Light freezing drizzle", icon: "fa-snowflake" }, // Using snowflake for freezing
+            56: { description: "Light freezing drizzle", icon: "fa-snowflake" },
             57: { description: "Dense freezing drizzle", icon: "fa-snowflake" },
             61: { description: "Slight rain", icon: "fa-cloud-rain" },
             63: { description: "Moderate rain", icon: "fa-cloud-rain" },
@@ -371,14 +360,14 @@
             82: { description: "Violent rain showers", icon: "fa-cloud-showers-heavy" },
             85: { description: "Slight snow showers", icon: "fa-snowflake" },
             86: { description: "Heavy snow showers", icon: "fa-snowflake" },
-            95: { description: "Thunderstorm", icon: "fa-bolt-lightning" }, // Or fa-poo-storm
+            95: { description: "Thunderstorm", icon: "fa-bolt-lightning" },
             96: { description: "Thunderstorm with slight hail", icon: "fa-cloud-bolt" },
             99: { description: "Thunderstorm with heavy hail", icon: "fa-cloud-bolt" },
         };
 
         function getWeatherIconClass(code, isDay = 1) {
-            const weather = weatherCodeMap[code] || { icon: "fa-question-circle" }; // Default icon
-            if (isDay === 0 && weather.night_icon) { // Check if it's night and a night icon exists
+            const weather = weatherCodeMap[code] || { icon: "fa-question-circle" };
+            if (isDay === 0 && weather.night_icon) {
                 return `fas ${weather.night_icon}`;
             }
             return `fas ${weather.icon}`;
@@ -393,7 +382,6 @@
             messageArea.className = `message ${type}`;
             messageArea.style.display = 'block';
             if (type !== 'loading') {
-                // Hide cards if it's an error
                 currentWeatherCard.style.display = 'none';
                 forecastCard.style.display = 'none';
                 radarSectionCard.style.display = 'none';
@@ -405,37 +393,6 @@
         }
 
         function updateDynamicBackground(weatherCode, isDay) {
-            // This function no longer directly manipulates document.body.style.background
-            // or document.body.style.color as the background is now a static blurred image
-            // and text color is globally set.
-            // The logic for selecting different background types could be repurposed
-            // if other elements needed dynamic styling based on weather.
-
-            // Original logic (commented out or removed where it affects body):
-            /*
-            let bgStyle = 'var(--bg-clear-day)'; 
-            let textColor = 'var(--text-light)';
-
-            if (isDay === 0) { // Night
-                if (weatherCode <= 2) bgStyle = 'var(--bg-clear-night)';
-                else if (weatherCode === 3 || (weatherCode >= 45 && weatherCode <= 48)) bgStyle = 'var(--bg-cloudy)'; 
-                else if ((weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82)) bgStyle = 'var(--bg-rain)'; 
-                else if (weatherCode >= 95 && weatherCode <= 99) bgStyle = 'var(--bg-thunderstorm)';
-                else bgStyle = 'var(--bg-clear-night)'; 
-            } else { // Day
-                if (weatherCode <= 2) bgStyle = 'var(--bg-clear-day)';
-                else if (weatherCode === 3) bgStyle = 'var(--bg-cloudy)';
-                else if (weatherCode >= 45 && weatherCode <= 48) bgStyle = 'var(--bg-fog)';
-                else if ((weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82)) bgStyle = 'var(--bg-rain)';
-                else if ((weatherCode >= 71 && weatherCode <= 77) || (weatherCode >= 85 && weatherCode <= 86)) {
-                    bgStyle = 'var(--bg-snow)';
-                    // textColor = 'var(--text-dark)'; // Body text color is now static
-                }
-                else if (weatherCode >= 95 && weatherCode <= 99) bgStyle = 'var(--bg-thunderstorm)';
-            }
-            // document.body.style.background = bgStyle; // REMOVED
-            // document.body.style.color = textColor; // REMOVED
-            */
         }
 
 
@@ -506,10 +463,8 @@
                     displayForecast(data.daily, data.daily_units);
                     currentWeatherCard.style.display = 'block';
                     forecastCard.style.display = 'block';
-                    radarSectionCard.style.display = 'block'; // Show radar once we have coordinates
+                    radarSectionCard.style.display = 'block';
 
-                    // Call to updateDynamicBackground is kept, but its effect on body is removed.
-                    // It could be used for other purposes if needed in the future.
                     updateDynamicBackground(data.current.weather_code, data.current.is_day);
                 })
                 .catch(error => {
@@ -529,7 +484,7 @@
         }
 
         function displayForecast(daily, units) {
-            forecastDaysContainer.innerHTML = ''; // Clear previous forecast
+            forecastDaysContainer.innerHTML = '';
             daily.time.forEach((dateStr, index) => {
                 const dayDiv = document.createElement('div');
                 dayDiv.className = 'forecast-day';
@@ -544,7 +499,7 @@
 
                 dayDiv.innerHTML = `
                     <div class="day-name">${dayName}</div>
-                    <div class="weather-icon"><i class="${getWeatherIconClass(weatherCode, 1)}"></i></div> <!-- Assuming daytime for forecast icons for simplicity -->
+                    <div class="weather-icon"><i class="${getWeatherIconClass(weatherCode, 1)}"></i></div>
                     <div class="temps">
                         <span class="temp-max">${tempMax}°</span>
                         <span class="temp-min">${tempMin}°</span>
@@ -556,11 +511,8 @@
         }
 
         function updateRadarMap(latitude, longitude) {
-            // Using RainViewer embed - adjust zoom (z) and marker (mk) as needed
-            // More options: https://www.rainviewer.com/api.html#embedded-map
-            const zoomLevel = 7; // Adjust for desired initial zoom
+            const zoomLevel = 7;
             radarMapEl.src = `https://www.rainviewer.com/map.html?loc=${latitude},${longitude},${zoomLevel}&o=83&c=3&lg=en&fc=ffffff&z=0&m=0&p=0&u=0&l=1&fp=0&ru=0`;
-            // Show the radar card
             radarSectionCard.style.display = 'block';
         }
         
@@ -573,14 +525,14 @@
                         fetchWeatherData(position.coords.latitude, position.coords.longitude);
                         updateRadarMap(position.coords.latitude, position.coords.longitude);
                     },
-                    (error) => { // If geolocation fails or is denied, load a default
+                    (error) => {
                         console.warn("Initial geolocation failed, loading default (Berlin):", error.message);
                         showMessage("Could not get your location. Loading weather for Berlin.", "loading");
                         cityInput.value = "Berlin";
                         fetchGeocodingData("Berlin");
                     }
                 );
-            } else { // Geolocation not supported, load a default
+            } else {
                  showMessage("Geolocation not supported. Loading weather for Berlin.", "loading");
                  cityInput.value = "Berlin";
                  fetchGeocodingData("Berlin");

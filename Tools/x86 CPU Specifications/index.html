@@ -6,7 +6,7 @@
     <title>x86 CPU Info Tool</title>
     
     <style>
-        /* Grundlegende Stile & Light Mode */
+         
         :root {
             --bg-color: #f4f4f9;
             --text-color: #333;
@@ -16,7 +16,7 @@
             --border-color: #ddd;
         }
 
-        /* Dark Mode Variablen */
+        
         body.dark-mode {
             --bg-color: #121212;
             --text-color: #e0e0e0;
@@ -141,7 +141,7 @@
         <input type="text" id="searchBar" placeholder="CPU-Modell suchen...">
 
         <div id="cpuList">
-            <!-- CPU-Karten werden hier per JavaScript eingefügt -->
+            
         </div>
     </div>
 
@@ -156,7 +156,7 @@
             let specHeaders = {};
             let currentLang = 'de';
 
-            // --- Übersetzungen ---
+            
             const translations = {
                 de: {
                     title: "x86 CPU Spezifikationen",
@@ -164,7 +164,7 @@
                     dark_mode_toggle_dark: "Heller Modus",
                     dark_mode_toggle_light: "Dunkelmodus",
                     not_found: "Keine passenden CPUs gefunden.",
-                    // Spec Labels
+                    
                     Kerne: "Kerne",
                     Threads: "Threads",
                     Basistakt: "Basistakt",
@@ -179,7 +179,7 @@
                     dark_mode_toggle_dark: "Light Mode",
                     dark_mode_toggle_light: "Dark Mode",
                     not_found: "No matching CPUs found.",
-                    // Spec Labels
+                    
                     Kerne: "Cores",
                     Threads: "Threads",
                     Basistakt: "Base Clock",
@@ -190,7 +190,7 @@
                 }
             };
 
-            // --- Hauptlogik ---
+            
 
             async function loadCpuData() {
                 try {
@@ -247,7 +247,7 @@
                 displayCpus(filteredCpus);
             });
 
-            // --- Dunkelmodus (mit Systempräferenz) ---
+            
             function applyTheme(theme) {
                 document.body.classList.toggle('dark-mode', theme === 'dark');
                 updateDarkModeButtonText(theme);
@@ -260,11 +260,11 @@
 
             darkModeToggle.addEventListener('click', () => {
                 const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
-                localStorage.setItem('theme', newTheme); // Manuelle Wahl speichern
+                localStorage.setItem('theme', newTheme); 
                 applyTheme(newTheme);
             });
 
-            // --- Sprachumschaltung ---
+            
             function setLanguage(lang) {
                 currentLang = lang;
                 localStorage.setItem('language', lang);
@@ -288,9 +288,9 @@
                 setLanguage(e.target.value);
             });
 
-            // --- Initialisierung ---
+            
             function initialize() {
-                // 1. Theme initialisieren (LocalStorage > System > Fallback)
+                
                 const savedTheme = localStorage.getItem('theme');
                 const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -300,21 +300,21 @@
                     applyTheme(systemPrefersDark.matches ? 'dark' : 'light');
                 }
 
-                // Auf Änderungen der System-Einstellung hören
+                
                 systemPrefersDark.addEventListener('change', (e) => {
-                    // Nur anwenden, wenn der Nutzer keine manuelle Wahl getroffen hat
+                    
                     if (!localStorage.getItem('theme')) {
                         applyTheme(e.matches ? 'dark' : 'light');
                     }
                 });
 
-                // 2. Sprache initialisieren (localStorage -> Browser -> Fallback)
+                
                 const savedLang = localStorage.getItem('language');
                 const browserLang = navigator.language.split('-')[0];
                 const initialLang = savedLang || (translations[browserLang] ? browserLang : 'de');
                 setLanguage(initialLang);
                 
-                // 3. Daten laden
+                
                 loadCpuData();
             }
 
