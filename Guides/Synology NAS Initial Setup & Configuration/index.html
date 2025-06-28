@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<!-- Sprachattribut wird dynamisch per JS gesetzt -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Titel wird dynamisch per JS gesetzt -->
+    
     <title>Synology NAS Initial Setup Guide</title>
     <style>
         :root {
-            /* Light Theme Farbvariablen */
+            
             --bg-color: #f4f4f4;
             --content-bg: #fff;
             --text-color: #333;
@@ -36,7 +36,7 @@
             --button-bg-active: #0073cf;
         }
 
-        /* Automatischer Dunkelmodus basierend auf Systemeinstellungen */
+        
         @media (prefers-color-scheme: dark) {
             :root:not(.light-theme) {
                 --bg-color: #1a1d21;
@@ -67,7 +67,7 @@
             }
         }
         
-        /* Manueller Dunkelmodus (überschreibt Systemeinstellung) */
+        
         html.dark-theme {
             --bg-color: #1a1d21;
             --content-bg: #272b30;
@@ -139,7 +139,7 @@
             color: var(--sidebar-text-active);
         }
         #main-content {
-            margin-left: 300px; /* sidebar width + padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: var(--content-bg);
@@ -203,7 +203,7 @@
         }
         .path {
             font-style: italic;
-            color: #555; /* Bleibt dunkel für Lesbarkeit auf hellem Hintergrund */
+            color: #555; 
         }
 
         #ui-controls {
@@ -246,7 +246,7 @@
             font-weight: bold;
         }
         
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -406,7 +406,7 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             const translations = {
-                // English
+                
                 en: {
                     page_title: "Synology NAS Initial Setup Guide",
                     lang_label: "Language",
@@ -708,7 +708,7 @@
                     sec_disclaimer_p1: "This guide is provided for informational purposes only. While it aims to cover common setup steps, specific Synology models or DSM versions may have slight variations. Always refer to the official Synology documentation for your specific device for the most accurate and up-to-date information.",
                     sec_disclaimer_p2: "The author of this webpage is not responsible for any data loss, hardware damage, or other issues that may arise from following this guide. Proceed with care, especially when dealing with drive formatting and data management.",
                 },
-                // German
+                
                 de: {
                     page_title: "Synology NAS Ersteinrichtungsanleitung",
                     lang_label: "Sprache",
@@ -1010,7 +1010,7 @@
                     sec_disclaimer_p1: "Diese Anleitung dient nur zu Informationszwecken. Obwohl sie darauf abzielt, gängige Einrichtungsschritte abzudecken, können bei bestimmten Synology-Modellen oder DSM-Versionen leichte Abweichungen auftreten. Beziehen Sie sich immer auf die offizielle Synology-Dokumentation für Ihr spezifisches Gerät, um die genauesten und aktuellsten Informationen zu erhalten.",
                     sec_disclaimer_p2: "Der Autor dieser Webseite ist nicht verantwortlich für Datenverlust, Hardwareschäden oder andere Probleme, die durch das Befolgen dieser Anleitung entstehen können. Gehen Sie mit Vorsicht vor, insbesondere bei der Formatierung von Laufwerken und der Datenverwaltung.",
                 },
-                // Spanish
+                
                 es: {
                     page_title: "Guía de Configuración Inicial de Synology NAS",
                     lang_label: "Idioma",
@@ -1318,9 +1318,9 @@
             const themeButtons = document.querySelectorAll('#theme-switcher button');
             const htmlEl = document.documentElement;
 
-            // --- Language Logic ---
+            
             const setLanguage = (lang) => {
-                if (!translations[lang]) lang = 'en'; // Default to English
+                if (!translations[lang]) lang = 'en'; 
                 
                 htmlEl.setAttribute('lang', lang);
                 document.title = translations[lang].page_title;
@@ -1328,7 +1328,7 @@
                 document.querySelectorAll('[data-i18n]').forEach(element => {
                     const key = element.getAttribute('data-i18n');
                     if (translations[lang][key]) {
-                        // Use innerHTML to allow for tags like <a>, <code> etc. in translations
+                       
                         element.innerHTML = translations[lang][key];
                     }
                 });
@@ -1341,7 +1341,7 @@
                 setLanguage(event.target.value);
             });
             
-            // --- Theme Logic ---
+            
             const applyTheme = (theme) => {
                 htmlEl.classList.remove('light-theme', 'dark-theme');
                 if (theme === 'light' || theme === 'dark') {
@@ -1361,7 +1361,7 @@
                 });
             });
 
-            // --- Active link highlighting in sidebar ---
+           
             const sections = document.querySelectorAll('#main-content section');
             const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -1384,18 +1384,17 @@
             
             window.addEventListener('scroll', updateActiveLink);
             
-            // --- Initialization ---
-            // 1. Set theme
+            
             const savedTheme = localStorage.getItem('theme') || 'auto';
             applyTheme(savedTheme);
 
-            // 2. Set language
+            
             const savedLang = localStorage.getItem('language');
             const browserLang = navigator.language.split('-')[0];
             const initialLang = savedLang || (translations[browserLang] ? browserLang : 'en');
             setLanguage(initialLang);
 
-            // 3. Initial scroll check for active link
+            
             updateActiveLink();
         });
     </script>

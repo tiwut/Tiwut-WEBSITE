@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* A slightly more Raspberry Pi-ish green */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -70,13 +70,13 @@
             border-bottom: none;
         }
         h2 {
-            color: #c51a4a; /* Raspberry Pi Foundation Raspberry Red */
+            color: #c51a4a; 
             border-bottom: 2px solid #c51a4a;
             padding-bottom: 10px;
             margin-top: 0;
         }
         h3 {
-            color: #7b1130; /* Darker Raspberry Red */
+            color: #7b1130; 
         }
         ul, ol {
             margin-bottom: 15px;
@@ -96,7 +96,7 @@
             padding: 2px 6px;
             border-radius: 4px;
             font-family: "Courier New", Courier, monospace;
-            color: #c7254e; /* Bootstrap's code color */
+            color: #c7254e; 
         }
         .warning, .important {
             padding: 15px;
@@ -117,7 +117,7 @@
             font-style: italic;
             color: #555;
         }
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -417,7 +417,7 @@ network={
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -425,7 +425,7 @@ network={
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 70) { // 70px offset for better UX with fixed header potentially
+                if (pageYOffset >= sectionTop - 70) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -436,14 +436,14 @@ network={
                     link.classList.add('active');
                 }
             });
-             // Ensure first link is active if at top of page or no section is "current"
+             
             if (!current && navLinks.length > 0 && sections.length > 0 && pageYOffset < sections[0].offsetTop - 70) {
                 navLinks[0].classList.add('active');
-            } else if (!current && navLinks.length > 0 && sections.length === 0) { // Case for very short page
+            } else if (!current && navLinks.length > 0 && sections.length === 0) { 
                  navLinks[0].classList.add('active');
             }
         };
-        // Initial call to set active link on page load
+        
         window.dispatchEvent(new Event('scroll'));
     </script>
 

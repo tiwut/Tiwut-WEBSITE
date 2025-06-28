@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<!-- Sprachattribut wird dynamisch per JS gesetzt -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Titel wird dynamisch per JS gesetzt -->
+    
     <title>"Tiny Windows" (e.g., Tiny10/Tiny11) Installation Guide</title>
     <style>
         :root {
-            /* Light Theme Farbvariablen (Tiny Windows Gray Theme) */
+            
             --bg-color: #f4f4f4;
             --content-bg: #fff;
             --text-color: #333;
             --sidebar-bg: #4A4A4A;
             --sidebar-text: #ddd;
             --sidebar-text-active: #000;
-            --accent-gray: #9E9E9E; /* Sidebar hover background */
-            --accent-gray-dark: #616161; /* h2 color */
-            --accent-gray-darker: #424242; /* h3 color */
+            --accent-gray: #9E9E9E; 
+            --accent-gray-dark: #616161; 
+            --accent-gray-darker: #424242; 
             --link-color: #757575;
             --border-color: #ddd;
             --border-color-light: #eee;
@@ -39,7 +39,7 @@
             --button-bg-active: #9E9E9E;
         }
 
-        /* Automatischer Dunkelmodus basierend auf Systemeinstellungen */
+       
         @media (prefers-color-scheme: dark) {
             :root:not(.light-theme) {
                 --bg-color: #1a1d21;
@@ -73,7 +73,7 @@
             }
         }
         
-        /* Manueller Dunkelmodus (überschreibt Systemeinstellung) */
+        
         html.dark-theme {
             --bg-color: #1a1d21;
             --content-bg: #272b30;
@@ -126,7 +126,7 @@
             transition: background-color 0.3s;
         }
         #sidebar h2 {
-            color: #fff; /* White title on dark sidebar is consistent */
+            color: #fff; 
             text-align: center;
             margin-bottom: 20px;
         }
@@ -148,7 +148,7 @@
             color: var(--sidebar-text-active);
         }
         #main-content {
-            margin-left: 300px; /* sidebar width + padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: var(--content-bg);
@@ -260,7 +260,7 @@
             font-weight: bold;
         }
         
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -399,7 +399,7 @@
     <script>
        document.addEventListener('DOMContentLoaded', () => {
             const translations = {
-                // English
+                
                 en: {
                     page_title: '"Tiny Windows" (e.g., Tiny10/Tiny11) Installation Guide',
                     lang_label: "Language",
@@ -604,7 +604,7 @@
                     sec_disclaimer_p1_danger: '<strong>This guide is for informational purposes only. The use of unofficial, modified operating systems like "Tiny Windows" carries significant risks, including but not limited to severe security vulnerabilities, system instability, data loss, software/hardware incompatibilities, and potential violation of software license agreements.</strong>',
                     sec_disclaimer_p2: "You proceed entirely at your own risk. The author of this webpage is not affiliated with the developers of \"Tiny Windows\" and is not responsible for any damage, data loss, security breaches, legal issues, or any other negative consequences that may arise from following this guide or using such software. It is strongly recommended to use official, supported operating systems from Microsoft for any critical or daily use."
                 },
-                // German
+                
                 de: {
                     page_title: '"Tiny Windows" (z.B. Tiny10/Tiny11) Installationsanleitung',
                     lang_label: "Sprache",
@@ -809,7 +809,7 @@
                     sec_disclaimer_p1_danger: '<strong>Diese Anleitung dient nur zu Informationszwecken. Die Verwendung inoffizieller, modifizierter Betriebssysteme wie "Tiny Windows" birgt erhebliche Risiken, einschließlich, aber nicht beschränkt auf schwere Sicherheitslücken, Systeminstabilität, Datenverlust, Software-/Hardware-Inkompatibilitäten und eine mögliche Verletzung von Software-Lizenzvereinbarungen.</strong>',
                     sec_disclaimer_p2: "Sie handeln vollständig auf eigenes Risiko. Der Autor dieser Webseite ist nicht mit den Entwicklern von \"Tiny Windows\" verbunden und ist nicht verantwortlich für Schäden, Datenverlust, Sicherheitsverletzungen, rechtliche Probleme oder andere negative Konsequenzen, die sich aus dem Befolgen dieser Anleitung oder der Verwendung solcher Software ergeben können. Es wird dringend empfohlen, für jeden kritischen oder täglichen Gebrauch offizielle, unterstützte Betriebssysteme von Microsoft zu verwenden."
                 },
-                // Spanish
+               
                 es: {
                     page_title: 'Guía de Instalación de "Tiny Windows" (p. ej., Tiny10/Tiny11)',
                     lang_label: "Idioma",
@@ -1021,9 +1021,9 @@
             const themeButtons = document.querySelectorAll('#theme-switcher button');
             const htmlEl = document.documentElement;
 
-            // --- Language Logic ---
+           
             const setLanguage = (lang) => {
-                if (!translations[lang]) lang = 'en'; // Default to English
+                if (!translations[lang]) lang = 'en'; 
                 
                 htmlEl.setAttribute('lang', lang);
                 document.title = translations[lang].page_title;
@@ -1031,7 +1031,7 @@
                 document.querySelectorAll('[data-i18n]').forEach(element => {
                     const key = element.getAttribute('data-i18n');
                     if (translations[lang][key]) {
-                        // Use innerHTML to allow for tags like <a>, <code> etc. in translations
+                        
                         element.innerHTML = translations[lang][key];
                     }
                 });
@@ -1044,7 +1044,7 @@
                 setLanguage(event.target.value);
             });
             
-            // --- Theme Logic ---
+            
             const applyTheme = (theme) => {
                 htmlEl.classList.remove('light-theme', 'dark-theme');
                 if (theme === 'light' || theme === 'dark') {
@@ -1064,7 +1064,7 @@
                 });
             });
 
-            // --- Active link highlighting in sidebar ---
+           
             const sections = document.querySelectorAll('#main-content section');
             const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -1087,18 +1087,17 @@
             
             window.addEventListener('scroll', updateActiveLink);
             
-            // --- Initialization ---
-            // 1. Set theme
+            
             const savedTheme = localStorage.getItem('theme') || 'auto';
             applyTheme(savedTheme);
 
-            // 2. Set language
+           
             const savedLang = localStorage.getItem('language');
             const browserLang = navigator.language.split('-')[0];
             const initialLang = savedLang || (translations[browserLang] ? browserLang : 'en');
             setLanguage(initialLang);
 
-            // 3. Initial scroll check for active link
+           
             updateActiveLink();
         });
     </script>

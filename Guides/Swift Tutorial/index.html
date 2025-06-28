@@ -43,11 +43,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -100,8 +100,8 @@
             color: #c7254e;
         }
         pre {
-            background-color: #2d2d2d; /* Dark background for Swift code */
-            color: #f8f8f2; /* Light text for contrast (similar to Xcode dark theme) */
+            background-color: #2d2d2d; 
+            color: #f8f8f2; 
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
@@ -115,18 +115,18 @@
             border-radius: 0;
             color: inherit;
         }
-        /* Basic Swift syntax highlighting */
-        pre code .swift-keyword { color: #fc5fa3; font-weight: bold; } /* import, func, var, let, if, else, for, class, struct, enum, extension, public, private */
-        pre code .swift-type { color: #79c0ff; } /* Int, String, Bool, Double, Array, Dictionary, Optional, Any */
-        pre code .swift-string { color: #a5d6ff; } /* "string literal" */
-        pre code .swift-comment { color: #7f858e; } /* // comment or /* comment */ */
-        pre code .swift-number { color: #c9d1d9; } /* Numbers */
-        pre code .swift-operator { color: #f0f6fc; } /* +, -, =, ==, etc. */
-        pre code .swift-function-call { color: #d2a8ff; } /* functionName() */
-        pre code .swift-preprocessor { color: #7f858e; font-style: italic; } /* #if, #warning */
-        pre code .swift-property { color: #add8e6; } /* propertyName */
+       
+        pre code .swift-keyword { color: #fc5fa3; font-weight: bold; } 
+        pre code .swift-type { color: #79c0ff; } 
+        pre code .swift-string { color: #a5d6ff; } 
+        pre code .swift-comment { color: #7f858e; } 
+        pre code .swift-number { color: #c9d1d9; } 
+        pre code .swift-operator { color: #f0f6fc; } 
+        pre code .swift-function-call { color: #d2a8ff; } 
+        pre code .swift-preprocessor { color: #7f858e; font-style: italic; } 
+        pre code .swift-property { color: #add8e6; } 
         pre code .swift-class-name { color: #79c0ff; font-weight: bold;}
-        pre code .swift-attribute { color: #f69d50; } /* @UIApplicationMain */
+        pre code .swift-attribute { color: #f69d50; } 
 
 
         .warning, .important, .tip {
@@ -1069,7 +1069,7 @@ And so are you!
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+       
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -1077,7 +1077,7 @@ And so are you!
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -1089,7 +1089,7 @@ And so are you!
                 }
             });
         };
-        // Activate the first link by default or based on hash
+        
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -1102,11 +1102,11 @@ And so are you!
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active'); 
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink); 
     </script>
 
 </body>

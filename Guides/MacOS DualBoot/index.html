@@ -46,7 +46,7 @@
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -116,7 +116,7 @@
             font-style: italic;
             color: #555;
         }
-        /* Responsive adjustments */
+       
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -449,7 +449,7 @@
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -457,7 +457,7 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });

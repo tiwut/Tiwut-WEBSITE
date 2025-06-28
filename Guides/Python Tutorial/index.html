@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active, as in example */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -91,7 +91,7 @@
         a:hover {
             text-decoration: underline;
         }
-        code.inline-code { /* Renamed from just 'code' to avoid conflict with pre>code */
+        code.inline-code { 
             background-color: #e9ecef;
             padding: 2px 6px;
             border-radius: 4px;
@@ -105,12 +105,12 @@
             font-family: "Courier New", Courier, monospace;
             font-size: 0.9em;
         }
-        pre code { /* Specific styling for code within pre tags */
+        pre code { 
             padding: 0;
             background-color: transparent;
             border-radius: 0;
         }
-        .warning, .important { /* Removed .sketch-idea from this group */
+        .warning, .important { 
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 5px;
@@ -125,8 +125,8 @@
             border-left: 5px solid #bee5eb;
             color: #0c5460;
         }
-        /* Removed .sketch-idea CSS rule as the class is no longer used */
-        .path { /* Using this for file paths or console commands */
+        
+        .path { 
             font-style: italic;
             color: #555;
             background-color: #e9ecef;
@@ -134,7 +134,7 @@
             border-radius: 4px;
             font-family: "Courier New", Courier, monospace;
         }
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -1074,7 +1074,7 @@ print(my_poodle.haircut_style) # Output: fancy
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+        
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -1082,7 +1082,7 @@ print(my_poodle.haircut_style) # Output: fancy
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -1094,7 +1094,7 @@ print(my_poodle.haircut_style) # Output: fancy
                 }
             });
         };
-        // Activate the first link by default or based on hash
+        
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -1107,11 +1107,11 @@ print(my_poodle.haircut_style) # Output: fancy
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active'); 
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink); 
     </script>
 
 </body>
