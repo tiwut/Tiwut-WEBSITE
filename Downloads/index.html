@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Downloads on GitHub</title>
     
-    <!-- Importiert eine moderne Schriftart von Google Fonts -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Grundlegende Resets und Stile */
+        
         * {
             margin: 0;
             padding: 0;
@@ -22,10 +22,10 @@
             font-family: 'Poppins', sans-serif;
             background-color: #111;
             color: #fff;
-            overflow: hidden; /* Verhindert Scrollen, da die Seite 100vh hoch ist */
+            overflow: hidden; 
         }
 
-        /* Hauptcontainer mit Hintergrundbild und Effekten */
+       
         .hero-container {
             position: relative;
             height: 100vh;
@@ -33,10 +33,10 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow: hidden; /* Wichtig für den Zoom-Effekt */
+            overflow: hidden; 
         }
 
-        /* Kreativer Hintergrund mit animiertem Zoom */
+        
         .background-image {
             position: absolute;
             top: 0;
@@ -59,7 +59,7 @@
             }
         }
 
-        /* Overlay für besseren Kontrast und modernen Look */
+       
         .hero-container::before {
             content: '';
             position: absolute;
@@ -71,7 +71,7 @@
             z-index: -1;
         }
 
-        /* Glassmorphism-Effekt für die Inhaltsbox */
+        
         .content-box {
             background: rgba(255, 255, 255, 0.1);
             padding: 40px 60px;
@@ -83,7 +83,7 @@
             max-width: 90%;
             width: 600px;
             
-            /* Animation beim Laden */
+           
             transform: translateY(30px);
             opacity: 0;
             animation: fadeIn 1s 0.5s forwards ease-out;
@@ -96,7 +96,7 @@
             }
         }
 
-        /* Titel und Untertitel */
+        
         .main-title {
             font-size: 3.5rem;
             font-weight: 700;
@@ -112,7 +112,7 @@
             opacity: 0.9;
         }
 
-        /* Button-Container */
+       
         .button-container {
             display: flex;
             gap: 20px;
@@ -120,7 +120,7 @@
             flex-wrap: wrap;
         }
 
-        /* Allgemeiner Button-Stil */
+       
         .btn {
             display: inline-block;
             padding: 12px 30px;
@@ -134,9 +134,9 @@
             z-index: 1;
         }
         
-        /* Primärer Button (GitHub) */
+        
         .btn-primary {
-            background-color: #8A2BE2; /* Ein moderner Lilaton */
+            background-color: #8A2BE2; 
             color: #fff;
             border: 2px solid transparent;
         }
@@ -146,7 +146,7 @@
             box-shadow: 0 10px 20px rgba(138, 43, 226, 0.4);
         }
         
-        /* Sekundärer Button (Main Page) */
+        
         .btn-secondary {
             background-color: transparent;
             color: #fff;
@@ -159,7 +159,7 @@
             transform: translateY(-5px);
         }
         
-        /* Sprachauswahl-Menü */
+        
         .language-switcher {
             position: absolute;
             top: 25px;
@@ -193,7 +193,7 @@
             opacity: 1;
         }
 
-        /* Responsive Anpassungen für kleinere Bildschirme */
+        
         @media (max-width: 768px) {
             .content-box {
                 padding: 30px 20px;
@@ -220,7 +220,7 @@
     <div class="hero-container">
         <div class="background-image"></div>
         
-        <!-- Sprachauswahl -->
+        
         <div class="language-switcher">
             <button class="lang-btn" data-lang="de">DE</button>
             <button class="lang-btn" data-lang="en">EN</button>
@@ -244,7 +244,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Übersetzungsdaten -- HIER SIND DIE ÄNDERUNGEN --
+            
             const translations = {
                 'de': {
                     'title': 'Downloads auf GitHub',
@@ -263,12 +263,12 @@
                 }
             };
 
-            // 2. Elemente auswählen
+            
             const languageSwitcher = document.querySelector('.language-switcher');
             const langButtons = document.querySelectorAll('.lang-btn');
             const githubLink = document.getElementById('github-link');
 
-            // 3. GitHub-Link aus der Textdatei laden
+            
             fetch('link.txt')
                 .then(response => {
                     if (!response.ok) {
@@ -277,30 +277,30 @@
                     return response.text();
                 })
                 .then(url => {
-                    // Setzt den href des GitHub-Buttons, entfernt dabei eventuelle Leerzeichen
+                    
                     githubLink.href = url.trim();
                 })
                 .catch(error => {
                     console.error('Fehler beim Laden der link.txt:', error);
-                    githubLink.href = '#'; // Fallback-Link
+                    githubLink.href = '#'; 
                     githubLink.textContent = 'GitHub Link fehlt';
                 });
 
-            // 4. Funktion zum Setzen der Sprache
+           
             const setLanguage = (lang) => {
-                // Überprüfen, ob die Sprache unterstützt wird, sonst Englisch als Fallback
+                
                 const currentLang = translations[lang] ? lang : 'en';
 
-                // Textelemente aktualisieren
+               
                 document.querySelectorAll('[data-key]').forEach(element => {
                     const key = element.getAttribute('data-key');
                     element.textContent = translations[currentLang][key];
                 });
 
-                // HTML lang Attribut aktualisieren
+                
                 document.documentElement.lang = currentLang;
 
-                // Aktiven Button im Menü markieren
+                
                 langButtons.forEach(btn => {
                     btn.classList.remove('active');
                     if (btn.getAttribute('data-lang') === currentLang) {
@@ -308,11 +308,11 @@
                     }
                 });
 
-                // Auswahl im Local Storage speichern, damit sie beim nächsten Besuch erhalten bleibt
+                
                 localStorage.setItem('language', currentLang);
             };
 
-            // 5. Event Listener für das manuelle Umschalten
+           
             languageSwitcher.addEventListener('click', (event) => {
                 const selectedLang = event.target.getAttribute('data-lang');
                 if (selectedLang) {
@@ -320,14 +320,13 @@
                 }
             });
 
-            // 6. Automatische Spracherkennung beim ersten Laden
-            // Zuerst prüfen, ob eine Sprache im Local Storage gespeichert ist
+           
             const savedLang = localStorage.getItem('language');
             
-            // Sonst die Browsersprache nehmen (z.B. aus 'de-DE' wird 'de')
+            
             const userLang = savedLang || navigator.language.split('-')[0];
 
-            // Initiale Sprache setzen
+            
             setLanguage(userLang);
         });
     </script>

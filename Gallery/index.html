@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Standard-Sprache auf Englisch setzen -->
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
-    <!-- === KOMPLETTES CSS DIREKT HIER EINGEBETTET === -->
+    
     <style>
         :root {
             --bg-color: #1a1a1a; --card-color: #2a2a2a; --text-color: #e0e0e0;
@@ -104,14 +104,14 @@
         <p id="no-images-message" style="display: none;"></p>
     </main>
     
-    <!-- 1. Lade die externe Bildliste -->
+   
     <script src="file-list.js"></script>
 
-    <!-- 2. Führe die komplette Anwendungslogik direkt hier aus -->
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // 1. ÜBERSETZUNGEN SPEICHERN
+            
             const translations = {
                 en: {
                     title: "My Gallery", searchPlaceholder: "Search all images...", loading: "Loading images...",
@@ -127,7 +127,7 @@
                 }
             };
 
-            // 2. ELEMENTE AUSWÄHLEN
+            
             const gallery = document.getElementById('gallery');
             const searchInput = document.getElementById('searchInput');
             const loadingIndicator = document.getElementById('loading-indicator');
@@ -137,7 +137,7 @@
             const mainPageBtn = document.getElementById('main-page-btn');
             const langButtons = document.querySelectorAll('.language-switcher button');
             
-            // 3. FUNKTION ZUM SETZEN DER SPRACHE
+            
             function setLanguage(langCode) {
                 const lang = translations[langCode] ? langCode : 'en';
                 const t = translations[lang];
@@ -157,7 +157,7 @@
                 localStorage.setItem('preferredLanguage', lang);
             }
 
-            // 4. SPRACHE BEIM START AUTOMATISCH ERKENNEN
+          
             function initializeLanguage() {
                 const savedLang = localStorage.getItem('preferredLanguage');
                 const browserLang = navigator.language.split('-')[0];
@@ -166,12 +166,12 @@
                 else { setLanguage('en'); }
             }
 
-            // 5. EVENT LISTENER FÜR MANUELLE SPRACHWAHL
+            
             langButtons.forEach(button => {
                 button.addEventListener('click', () => setLanguage(button.dataset.lang));
             });
 
-            // 6. GALERIE AUFBAUEN
+            
             function buildGallery() {
                 if (typeof imagePaths === 'undefined' || imagePaths.length === 0) {
                     loadingIndicator.style.display = 'none';
@@ -197,7 +197,7 @@
                 loadingIndicator.style.display = 'none';
             }
 
-            // 7. SUCHE EINRICHTEN
+            
             function setupSearch() {
                 searchInput.addEventListener('input', () => {
                     const searchTerm = searchInput.value.toLowerCase().trim();
@@ -207,7 +207,7 @@
                 });
             }
 
-            // ALLES INITIALISIEREN
+            
             initializeLanguage();
             buildGallery();
             setupSearch();

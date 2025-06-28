@@ -43,8 +43,7 @@
             try {
                 const dirHandle = await window.showDirectoryPicker();
                 const imagePaths = [];
-                // *** WICHTIGE ÄNDERUNG HIER ***
-                // Diese Dateien sollen nicht in der Galerie erscheinen
+               
                 const excludedFiles = ['index.html', 'generator.html', 'style.css', 'script.js', 'file-list.js'];
 
                 async function processDirectory(directoryHandle, currentPath) {
@@ -52,7 +51,7 @@
                         const newPath = currentPath ? `${currentPath}/${entry.name}` : entry.name;
                         
                         if (entry.kind === 'file') {
-                            // Prüfen, ob es eine Bilddatei ist UND nicht ausgeschlossen ist
+                           
                             if (/\.(jpe?g|png|webp)$/i.test(entry.name) && !excludedFiles.includes(entry.name)) {
                                 imagePaths.push(newPath);
                             }
@@ -62,7 +61,7 @@
                     }
                 }
 
-                // Starte den Prozess direkt im Hauptordner
+                
                 await processDirectory(dirHandle, '');
                 
                 imagePaths.sort();
