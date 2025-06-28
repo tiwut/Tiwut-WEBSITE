@@ -1,4 +1,3 @@
-/* --- GRUNDEINSTELLUNGEN & FARBPALETTE --- */
 :root {
     --color-black: #0a0a0a;
     --color-dark-gray: #1a1a1a;
@@ -10,9 +9,6 @@
     --font-main: 'Roboto', sans-serif;
 }
 
-/* --- KEYFRAME-ANIMATIONEN --- */
-
-/* Lebendiger Hintergrund (Ken Burns Effekt) */
 @keyframes ken-burns {
     0% {
         background-size: 100% 100%;
@@ -24,7 +20,6 @@
     }
 }
 
-/* Einblenden des Containers */
 @keyframes fadeInContainer {
     from {
         opacity: 0;
@@ -36,7 +31,6 @@
     }
 }
 
-/* Gestaffeltes Einblenden der Listeneinträge */
 @keyframes slideInFromLeft {
     from {
         opacity: 0;
@@ -48,7 +42,6 @@
     }
 }
 
-/* Glüheffekt für die Überschrift */
 @keyframes glow {
     0%, 100% {
         text-shadow: 0 0 5px var(--color-accent-orange), 0 0 10px var(--color-accent-orange), 0 0 15px var(--color-accent-orange-dark);
@@ -58,7 +51,6 @@
     }
 }
 
-/* Shimmer-Effekt für den Button */
 @keyframes shimmer {
     0% {
         transform: translateX(-100%);
@@ -68,44 +60,40 @@
     }
 }
 
-
-/* --- BODY & HINTERGRUND --- */
 body {
     font-family: var(--font-main);
     margin: 0;
     background-color: var(--color-black);
     background-image: url('main.avif');
-    background-size: 100% 100%; /* Startgröße für Animation */
+    background-size: 100% 100%;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: var(--color-light-gray);
     line-height: 1.6;
     min-height: 100vh;
-    overflow-x: hidden; /* Verhindert horizontales Scrollen durch Animationen */
-    animation: ken-burns 30s infinite alternate ease-in-out; /* Animiert den Hintergrund */
+    overflow-x: hidden;
+    animation: ken-burns 30s infinite alternate ease-in-out;
 }
 
-/* --- HAUPTCONTAINER (Glassmorphism) --- */
 .container {
     max-width: 900px;
     margin: 40px auto;
     padding: 30px 35px;
-    background-color: rgba(26, 26, 26, 0.7); /* Dunkler, halbtransparenter Hintergrund */
-    backdrop-filter: blur(12px) saturate(150%); /* Der "Glas"-Effekt */
-    -webkit-backdrop-filter: blur(12px) saturate(150%); /* Für Safari */
+    background-color: rgba(26, 26, 26, 0.7);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--color-accent-orange), 0.1);
     animation: fadeInContainer 0.8s ease-out forwards;
 }
 
-/* --- HEADER BEREICH --- */
 header {
     text-align: center;
     margin-bottom: 35px;
     padding-bottom: 25px;
-    border-bottom: 1px solid rgba(255, 102, 0, 0.2); /* Subtile orange Linie */
+    border-bottom: 1px solid rgba(255, 102, 0, 0.2);
 }
 
 .header-top {
@@ -124,7 +112,7 @@ header h1 {
     flex-grow: 1;
     text-align: left;
     padding-left: 15px;
-    animation: glow 4s infinite ease-in-out; /* Glühanimation */
+    animation: glow 4s infinite ease-in-out;
 }
 
 .header-controls {
@@ -133,7 +121,6 @@ header h1 {
     gap: 20px;
 }
 
-/* Shimmer-Button */
 .main-page-button {
     position: relative;
     overflow: hidden;
@@ -192,7 +179,6 @@ header h1 {
     box-shadow: 0 0 10px rgba(var(--color-accent-orange), 0.5);
 }
 
-/* --- SUCHLEISTE --- */
 #searchInput {
     width: 100%;
     max-width: 600px;
@@ -217,14 +203,12 @@ header h1 {
     box-shadow: 0 0 15px rgba(255, 102, 0, 0.6), inset 0 2px 5px rgba(0,0,0,0.3);
 }
 
-/* --- GUIDE LISTE & ANIMATIONEN --- */
 #guideList {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-/* Basis-Styling für Listeneinträge */
 #guideList li {
     background-color: #252525;
     margin-bottom: 15px;
@@ -234,10 +218,9 @@ header h1 {
     overflow: hidden;
 }
 
-/* Animations-Klasse, die per JS hinzugefügt wird */
 .list-item-animate {
-    opacity: 0; /* Startet unsichtbar */
-    animation: slideInFromLeft 0.5s ease-out forwards; /* Animation anwenden */
+    opacity: 0;
+    animation: slideInFromLeft 0.5s ease-out forwards;
 }
 
 #guideList li:hover {
@@ -282,7 +265,6 @@ header h1 {
     font-weight: 400;
 }
 
-/* --- SONSTIGES --- */
 #statusMessage {
     color: var(--color-text-muted);
     font-size: 1.1em;
@@ -297,10 +279,9 @@ footer {
     color: var(--color-text-muted);
 }
 
-/* --- RESPONSIVE ANPASSUNGEN --- */
 @media (max-width: 600px) {
     body {
-        animation: none; /* Deaktiviert die Ken-Burns-Animation auf kleinen Geräten zur Performance-Schonung */
+        animation: none;
     }
     .container {
         margin: 15px;

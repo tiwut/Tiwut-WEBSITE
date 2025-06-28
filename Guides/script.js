@@ -3,23 +3,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     const searchInputElement = document.getElementById('searchInput');
     const statusMessageElement = document.getElementById('statusMessage');
     const languageSelector = document.getElementById('languageSelector');
-    // NEU: Diese Variable speichert nun Objekte statt nur Strings
     let allGuidesData = [];
 
-    // --- i18next Initialization ---
-    // Initialize translation library
     await i18next
-        .use(i18nextBrowserLanguageDetector) // Detect user's language
-        .use(i18nextHttpBackend) // Load translations from server
+        .use(i18nextBrowserLanguageDetector)
+        .use(i18nextHttpBackend)
         .init({
-            fallbackLng: 'en', // Fallback language if detection fails
-            debug: true, // Set to false in production
+            fallbackLng: 'en',
+            debug: true,
             backend: {
-                loadPath: 'locales/{{lng}}/translation.json' // Path to translation files
+                loadPath: 'locales/{{lng}}/translation.json'
             }
         });
 
-    // Function to update all text content on the page
     const updateContent = () => {
         document.querySelectorAll('[data-i18n]').forEach(element => {
             const key = element.getAttribute('data-i18n');
@@ -31,25 +27,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     };
 
-    // Update content on initial load
     updateContent();
-    // Set language selector to the current language
-    languageSelector.value = i18next.language.split('-')[0]; // Use 'de' instead of 'de-DE'
+    languageSelector.value = i18next.language.split('-')[0];
 
-    // Listen for language changes from the selector
     languageSelector.addEventListener('change', (e) => {
         i18next.changeLanguage(e.target.value, () => {
             updateContent();
-            // NEU: Zeigt die Guides nach Sprachwechsel sofort in der neuen Sprache an.
-            // handleSearch() sorgt für die korrekte Neu-Anzeige.
-            handleSearch(); 
+            handleSearch();
         });
     });
-    // --- End of i18next ---
 
-
-    // --- IMPORTANT ---
-    // For this 'fetch' to work, serve your 'index.html' file through a web server.
     async function loadGuides() {
         try {
             const response = await fetch('guides.txt');
@@ -58,7 +45,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             const text = await response.text();
             
-            // NEU: Verarbeitet das neue Format der guides.txt
             allGuidesData = text.split('\n')
                 .map(line => line.trim())
                 .filter(line => line)
@@ -75,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         es: parts[3].trim()
                     };
                 })
-                .filter(guide => guide !== null); // Entfernt ungültige Einträge
+                .filter(guide => guide !== null);
 
             if (allGuidesData.length > 0) {
                 displayGuides(allGuidesData);
@@ -102,7 +88,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             statusMessageElement.style.display = 'block';
             return;
         } else if (guidesToDisplay.length === 0 && allGuidesData.length > 0) {
-            // This case might not be needed anymore, but we keep it for safety
             statusMessageElement.textContent = i18next.t('statusNoGuidesFound');
             statusMessageElement.style.display = 'block';
             return;
@@ -110,15 +95,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         statusMessageElement.style.display = 'none';
 
-        // NEU: Verarbeitet die Guide-Objekte
         guidesToDisplay.forEach((guideData, index) => {
             const listItem = document.createElement('li');
             const link = document.createElement('a');
-            // Verwendet den Ordnernamen für den Link
             link.href = `./${guideData.folder}/`;
 
             const icon = document.createElement('img');
-            // Verwendet den Ordnernamen für das Icon
             icon.src = `./${guideData.folder}/main.avif`;
             icon.alt = `${guideData.folder} icon`;
             icon.onerror = function() {
@@ -130,9 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const nameSpan = document.createElement('span');
             nameSpan.className = 'guide-name';
             
-            // Wählt den Titel in der richtigen Sprache aus
-            const currentLang = i18next.language.split('-')[0]; // z.B. 'de'
-            // Fallback: Aktuelle Sprache -> Englisch -> Ordnername
+            const currentLang = i18next.language.split('-')[0];
             nameSpan.textContent = guideData[currentLang] || guideData.en || guideData.folder;
 
             link.appendChild(icon);
@@ -156,7 +136,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
         
-        // NEU: Filtert durch alle Sprachen im Guide-Objekt
         const filteredGuides = allGuidesData.filter(guide => {
             return guide.en.toLowerCase().includes(searchTerm) ||
                    guide.de.toLowerCase().includes(searchTerm) ||
@@ -166,9 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         displayGuides(filteredGuides);
     }
 
-    // Initial load
     await loadGuides();
 
-    // Event listener for search input
     searchInputElement.addEventListener('input', handleSearch);
 });

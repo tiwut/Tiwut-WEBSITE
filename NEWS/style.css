@@ -1,10 +1,9 @@
-/* --- GRUNDEINSTELLUNGEN & FARBPALETTE --- */
 :root {
-    --color-bg: #0d0d0d; /* Tiefes Schwarz/Grau */
-    --color-container-bg: #1a1a1a; /* Dunkelgrauer Container */
+    --color-bg: #0d0d0d;
+    --color-container-bg: #1a1a1a;
     --color-text: #e0e0e0;
     --color-text-muted: #888;
-    --color-accent: #ff6700; /* Leuchtendes Orange */
+    --color-accent: #ff6700;
     --color-accent-dark: #cc5200;
     --glow-color: rgba(255, 103, 0, 0.7);
 }
@@ -58,7 +57,7 @@ body {
     align-items: center;
     min-height: 100vh;
     box-sizing: border-box;
-    overflow: hidden; /* Verhindert Scrollen während Animationen */
+    overflow: hidden;
 }
 
 .news-container {
@@ -75,7 +74,6 @@ body {
     animation: fadeInScaleUp 0.8s ease-out forwards;
 }
 
-/* --- HEADER BEREICH --- */
 .main-header {
     display: flex;
     justify-content: space-between;
@@ -135,7 +133,6 @@ h1 {
     background-position: right 15px center;
 }
 
-/* --- MEDIEN-ANZEIGE --- */
 .media-viewer {
     position: relative;
     width: 100%;
@@ -156,7 +153,6 @@ h1 {
     position: relative;
 }
 
-/* Klassen für die JS-gesteuerte Animation */
 .media-item {
     position: absolute;
     top: 0;
@@ -174,11 +170,11 @@ h1 {
     opacity: 1;
     z-index: 1;
 }
-.media-item.prev { /* Position für ausgehende/vorherige Elemente */
+.media-item.prev {
     transform: translateX(-100%) scale(0.8);
     opacity: 0;
 }
-.media-item.next { /* Position für eingehende/nächste Elemente */
+.media-item.next {
     transform: translateX(100%) scale(0.8);
     opacity: 0;
 }
@@ -189,10 +185,9 @@ h1 {
     max-height: 100%;
     object-fit: contain;
     display: block;
-    border-radius: 8px; /* Für den unwahrscheinlichen Fall, dass es überläuft */
+    border-radius: 8px;
 }
 
-/* Ken Burns Effekt für Bilder */
 .media-item.active img {
     animation: kenburns 10s ease-in-out infinite alternate;
 }
@@ -206,7 +201,6 @@ h1 {
     width: 100%;
 }
 
-/* --- NAVIGATION --- */
 .nav-button {
     position: absolute;
     top: 50%;
@@ -227,11 +221,11 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0; /* Standardmäßig unsichtbar */
+    opacity: 0;
 }
 
 .media-viewer:hover .nav-button {
-    opacity: 1; /* Sichtbar bei Hover über den Viewer */
+    opacity: 1;
     transform: translateY(-50%) scale(1);
 }
 
@@ -245,7 +239,7 @@ h1 {
 
 .nav-button.prev {
     left: 20px;
-    transition-delay: 0.1s; /* Leichte Verzögerung für den Effekt */
+    transition-delay: 0.1s;
 }
 
 .nav-button.next {
@@ -258,10 +252,10 @@ h1 {
     color: var(--color-text-muted);
     text-align: center;
     flex-shrink: 0;
-    height: 1.5em; /* Feste Höhe, um Springen zu verhindern */
+    height: 1.5em;
     transition: opacity 0.5s ease;
 }
 
 .single-item .nav-button {
-    display: none !important; /* Wichtig, um Hover-Effekt zu überschreiben */
+    display: none !important;
 }

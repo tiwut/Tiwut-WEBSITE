@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM-Elemente ---
     const mediaDisplay = document.getElementById('mediaDisplay');
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
@@ -7,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const newsContainer = document.querySelector('.news-container');
     const langSelector = document.getElementById('langSelector');
 
-    // --- Übersetzungen ---
     const translations = {
         de: {
             pageTitle: "NACHRICHTEN",
@@ -50,14 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- Anwendungsstatus ---
     let mediaItems = [];
     let currentIndex = 0;
     let imageTimeoutId = null;
-    let currentLanguage = 'en'; // WIRD SOFORT ÜBERSCHRIEBEN, DIENT NUR ALS ABSOLUTER FALLBACK
+    let currentLanguage = 'en';
     let isTransitioning = false;
 
-    // --- Sprachfunktionen ---
     function applyTranslations() {
         const lang = currentLanguage;
         const dict = translations[lang];
@@ -81,45 +77,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setLanguage(lang) {
-        // Stellt sicher, dass die Sprache gültig ist, sonst Fallback auf 'en'
         currentLanguage = translations[lang] ? lang : 'en';
-        langSelector.value = currentLanguage; // Aktualisiert das Dropdown-Menü
+        langSelector.value = currentLanguage;
         applyTranslations();
     }
 
-    // --- GEÄNDERT: Robuste Sprachinitialisierung ---
     function initI18n() {
-        // Helferfunktion, um die beste Startsprache zu ermitteln
         const getInitialLanguage = () => {
-            // 1. Priorität: Eine vom Benutzer manuell gespeicherte Sprache
             const savedLang = localStorage.getItem('userLanguage');
             if (savedLang && translations[savedLang]) {
                 return savedLang;
             }
 
-            // 2. Priorität: Die Sprache des Browsers
-            const browserLang = navigator.language.split('-')[0]; // 'de' aus 'de-DE'
+            const browserLang = navigator.language.split('-')[0];
             if (translations[browserLang]) {
                 return browserLang;
             }
 
-            // 3. Priorität: Fallback auf Englisch
             return 'en';
         };
 
         const initialLang = getInitialLanguage();
         setLanguage(initialLang);
 
-        // Event Listener für manuelle Sprachänderung
         langSelector.addEventListener('change', (e) => {
             const selectedLang = e.target.value;
             setLanguage(selectedLang);
-            // WICHTIG: Speichere die manuelle Auswahl für zukünftige Besuche
             localStorage.setItem('userLanguage', selectedLang);
         });
     }
 
-    // --- Kernfunktionalität (bleibt wie in der "krasse Animationen"-Version) ---
     async function fetchMediaSources() {
         try {
             const response = await fetch('source.txt');
@@ -131,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 displayMedia(currentIndex, 'next');
                 updateNavigation();
             } else {
-                // Hier wird die bereits übersetzte Nachricht verwendet
                 mediaDisplay.innerHTML = `<p class="empty-message">${translations[currentLanguage].noSources}</p>`;
                 newsContainer.classList.add('single-item');
                 currentItemInfo.textContent = '';
@@ -252,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
-    // --- Event Listeners für Steuerung ---
     prevButton.addEventListener('click', () => { if (mediaItems.length > 1) prevMedia(); });
     nextButton.addEventListener('click', () => { if (mediaItems.length > 1) nextMedia(); });
 
@@ -263,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Initialisierung ---
-    initI18n(); // Sprache einstellen und UI übersetzen (JETZT ROBUST)
-    fetchMediaSources(); // Medieninhalte laden
+    initI18n();
+    fetchMediaSources();
 });

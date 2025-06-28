@@ -6,7 +6,6 @@
     <title data-lang-de="x86 Computer Guide" data-lang-en="x86 Computer Guide" data-lang-es="Guía de Ordenadores x86"></title>
     
     <style>
-        /* --- GRUNDEINSTELLUNGEN & FARBVARIABLEN --- */
         :root {
             --bg-color: #f8f9fa;
             --text-color: #343a40;
@@ -36,7 +35,6 @@
             }
         }
 
-        /* --- ALLGEMEINE STYLES --- */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -61,7 +59,6 @@
             padding: 2rem 1.5rem 6rem 1.5rem;
         }
         
-        /* --- HEADER & TITEL --- */
         header {
             text-align: center;
             margin-top: 4rem;
@@ -84,7 +81,6 @@
             margin: 0 auto;
         }
 
-        /* --- GRID-LAYOUT FÜR KOMPONENTEN --- */
         .component-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -141,7 +137,6 @@
             font-size: 1.2rem;
         }
         
-        /* --- ZEICHNUNGEN --- */
         .drawing-container {
             display: flex;
             justify-content: center;
@@ -168,8 +163,6 @@
         svg .svg-flow { stroke: var(--svg-accent); stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
         svg .svg-flow-text { fill: var(--text-color); font-family: -apple-system, sans-serif; font-size: 16px; font-weight: bold; }
 
-
-        /* --- "HOW IT WORKS" SPEZIAL-STILE --- */
         .how-it-works-layout {
             display: flex;
             flex-direction: column;
@@ -204,7 +197,6 @@
             }
         }
 
-        /* --- NAVIGATIONS-MENU (aus V1 übernommen & leicht angepasst) --- */
         .menu-toggle {
             position: fixed; top: 20px; left: 20px; z-index: 1001; width: 50px; height: 50px;
             background-color: var(--card-bg-color); border: 1px solid var(--border-color);
@@ -269,7 +261,6 @@
                         <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" aria-labelledby="howitworks-title" role="img">
                             <title id="howitworks-title" data-lang-de="Flussdiagramm der Computerprozesse" data-lang-en="Flowchart of computer processes" data-lang-es="Diagrama de flujo de los procesos del ordenador"></title>
                             <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="var(--svg-accent)" /></marker></defs>
-                            <!-- Icons -->
                             <g id="user-icon" transform="translate(30, 100)">
                                 <circle class="svg-bg" cx="15" cy="15" r="15"/>
                                 <path class="svg-stroke" d="M15,9 a6,6 0 1,1 0,12 a6,6 0 1,1 0,-12 M5,26 a10,12 0 0,1 20,0"/>
@@ -300,7 +291,6 @@
                                 <rect class="svg-bg" x="0" y="0" width="50" height="30" rx="2"/>
                                 <path class="svg-stroke" d="M25,30 v10 M15,40 h20"/>
                             </g>
-                            <!-- Flow lines -->
                             <path class="svg-flow" d="M50,115 C 80,115 80,40 100,40"/> <text class="svg-flow-text" x="75" y="90">1</text>
                             <path class="svg-flow" d="M120,65 C 120,100 120,150 120,160"/> <text class="svg-flow-text" x="125" y="120">2</text>
                             <path class="svg-flow" d="M140,180 C 160,180 160,60 180,60"/> <text class="svg-flow-text" x="150" y="120">3</text>
@@ -464,7 +454,7 @@
 
             function setLanguage(lang) {
                 if (!supportedLangs.includes(lang)) {
-                    lang = 'en'; // Default fallback
+                    lang = 'en';
                 }
 
                 elementsToTranslate.forEach(el => {
@@ -506,7 +496,7 @@
                     return browserLang;
                 }
 
-                return 'en'; // Default language
+                return 'en';
             }
             
             document.querySelectorAll('.lang-switcher button').forEach(button => {

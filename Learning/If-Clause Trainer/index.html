@@ -6,14 +6,14 @@
     <title>English If-Clause Trainer</title>
     <style>
         :root {
-            --primary-color: #ff8c00; /* Lebhaftes Orange */
-            --secondary-color: #4a4a4a; /* Mittelgrau */
-            --bg-color: #1e1e1e; /* Sehr dunkles Grau für den Body */
-            --container-bg-color: #2c2c2c; /* Etwas helleres Grau für den Container */
-            --text-color: #f1f1f1; /* Helles Grau / fast Weiß für Text */
+            --primary-color: #ff8c00;
+            --secondary-color: #4a4a4a;
+            --bg-color: #1e1e1e;
+            --container-bg-color: #2c2c2c;
+            --text-color: #f1f1f1;
             --border-color: #444444;
-            --correct-color: #28a745; /* Grün */
-            --incorrect-color: #dc3545; /* Rot */
+            --correct-color: #28a745;
+            --incorrect-color: #dc3545;
             --border-radius: 8px;
         }
 
@@ -92,11 +92,11 @@
         }
 
         #quiz-menu button:hover {
-            background-color: #d97700; /* Dunkleres Orange */
+            background-color: #d97700;
         }
 
         #quiz-container {
-            display: none; /* Initially hidden */
+            display: none;
         }
         
         #progress-container {
@@ -110,7 +110,7 @@
         #progress-bar {
             height: 10px;
             width: 0%;
-            background-color: var(--primary-color); /* Fortschrittsbalken in Hauptfarbe */
+            background-color: var(--primary-color);
             border-radius: var(--border-radius);
             transition: width 0.3s ease-in-out;
         }
@@ -177,7 +177,7 @@
             color: white;
             border-radius: var(--border-radius);
             margin-top: 15px;
-            display: none; /* Initially hidden */
+            display: none;
         }
         
         #next-btn:hover, #back-to-menu-btn:hover {
@@ -236,10 +236,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        // --- DATA: QUESTIONS & TRANSLATIONS (KEINE ÄNDERUNG HIER) ---
-
         const questions = [
-            // --- Type 1 ---
             { type: 1, question: "If it rains, we ________ inside.", options: ["will stay", "would stay", "stayed", "had stayed"], answer: "will stay" },
             { type: 1, question: "She will pass the exam if she ________ hard.", options: ["studies", "studied", "will study", "would study"], answer: "studies" },
             { type: 1, question: "If I see John, I ________ him the news.", options: ["will tell", "would tell", "told", "am telling"], answer: "will tell" },
@@ -251,8 +248,6 @@
             { type: 1, question: "If you ________ water to 100 degrees, it boils.", options: ["heat", "heated", "will heat", "would heat"], answer: "heat" },
             { type: 1, question: "He will be late for work if the train ________.", options: ["is delayed", "was delayed", "would be delayed", "will be delayed"], answer: "is delayed" },
             { type: 1, question: "We ________ to the beach tomorrow if the weather is good.", options: ["will go", "go", "went", "would go"], answer: "will go"},
-
-            // --- Type 2 ---
             { type: 2, question: "If I were you, I ________ that job.", options: ["would take", "will take", "took", "had taken"], answer: "would take" },
             { type: 2, question: "He would travel the world if he ________ more money.", options: ["had", "has", "would have", "will have"], answer: "had" },
             { type: 2, question: "If they ________ closer, we would visit them more often.", options: ["lived", "live", "would live", "had lived"], answer: "lived" },
@@ -264,8 +259,6 @@
             { type: 2, question: "If he ________ taller, he could be a basketball player.", options: ["were", "was", "is", "would be"], answer: "were" },
             { type: 2, question: "If you ________ a superpower, what would it be?", options: ["had", "have", "would have", "could have"], answer: "had" },
             { type: 2, question: "I ________ that if I were in your position.", options: ["wouldn't do", "won't do", "didn't do", "don't do"], answer: "wouldn't do" },
-
-            // --- Type 3 ---
             { type: 3, question: "If she had studied, she ________ the exam.", options: ["would have passed", "would pass", "will pass", "passed"], answer: "would have passed" },
             { type: 3, question: "We wouldn't have been late if we ________ a taxi.", options: ["had taken", "took", "would take", "have taken"], answer: "had taken" },
             { type: 3, question: "If I had known you were coming, I ________ a cake.", options: ["would have baked", "would bake", "baked", "will bake"], answer: "would have baked" },
@@ -324,7 +317,6 @@
             }
         };
 
-        // --- DOM Elements ---
         const mainTitleEl = document.getElementById('main-title');
         const menuTitleEl = document.getElementById('menu-title');
         const startType1Btn = document.getElementById('start-type1');
@@ -344,13 +336,10 @@
         const backToMenuBtn = document.getElementById('back-to-menu-btn');
         const langButtons = document.querySelectorAll('#language-selector button');
 
-        // --- State ---
         let currentQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
         let currentLang = 'de';
-
-        // --- Functions ---
 
         function setLanguage(lang) {
             currentLang = lang;
@@ -375,7 +364,6 @@
             document.documentElement.lang = lang;
         }
 
-        // Fisher-Yates shuffle
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -414,7 +402,6 @@
             const question = currentQuestions[currentQuestionIndex];
             questionTextEl.textContent = question.question;
             
-            // Shuffle options as well for more variety
             const shuffledOptions = shuffleArray([...question.options]);
 
             shuffledOptions.forEach(option => {
@@ -481,7 +468,6 @@
             quizMenu.style.display = 'block';
         }
 
-        // --- Event Listeners ---
         startType1Btn.addEventListener('click', () => startQuiz(1));
         startType2Btn.addEventListener('click', () => startQuiz(2));
         startType3Btn.addEventListener('click', () => startQuiz(3));
@@ -497,8 +483,7 @@
             });
         });
 
-        // --- Initial Setup ---
-        setLanguage('de'); // Set initial language
+        setLanguage('de');
     });
     </script>
 </body>

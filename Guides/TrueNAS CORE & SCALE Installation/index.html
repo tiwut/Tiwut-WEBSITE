@@ -16,7 +16,7 @@
         }
         #sidebar {
             width: 280px;
-            background-color: #333; /* Dark gray for sidebar */
+            background-color: #333; 
             color: #fff;
             padding: 20px;
             height: 100vh;
@@ -42,21 +42,21 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #0092D1; /* TrueNAS Blue */
+            background-color: #0092D1; 
             color: #fff;
         }
         #sidebar ul li.sub-header a {
             font-weight: bold;
             color: #fff;
-            background-color: #555; /* Slightly lighter gray for sub-headers */
-            pointer-events: none; /* Not clickable */
+            background-color: #555; 
+            pointer-events: none; 
         }
         #sidebar ul li.sub-item a {
-            padding-left: 30px; /* Indent sub-items */
+            padding-left: 30px; 
         }
 
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -80,13 +80,13 @@
             border-bottom: none;
         }
         h2 {
-            color: #0073AA; /* Slightly darker TrueNAS blue */
+            color: #0073AA; 
             border-bottom: 2px solid #0073AA;
             padding-bottom: 10px;
             margin-top: 0;
         }
         h3 {
-            color: #005A8C; /* Even darker TrueNAS blue */
+            color: #005A8C; 
         }
         ul, ol {
             margin-bottom: 15px;
@@ -134,7 +134,7 @@
             margin-bottom: 15px;
             color: #495057;
         }
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -460,7 +460,7 @@ https://192.168.1.105 (em0)</pre>
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+       
         const sections = document.querySelectorAll('#main-content section, #main-content div[id]');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -476,14 +476,14 @@ https://192.168.1.105 (em0)</pre>
                 const distance = Math.abs(viewportCenter - sectionCenter);
 
                 if (pageYOffset >= sectionTop - 70 && pageYOffset < sectionTop + sectionHeight - 70) {
-                     // Prioritize sections directly in view near the top
-                    if (section.offsetTop < (pageYOffset + 100)) { // A bit of offset
+                     
+                    if (section.offsetTop < (pageYOffset + 100)) { 
                         current = section.getAttribute('id');
-                        // If a direct match for top of viewport is found, break early
+                        
                         if (section.offsetTop >= pageYOffset && section.offsetTop < pageYOffset + 70) return;
                     }
                 }
-                // Fallback to closest to center if no direct top match
+               
                 if (distance < minDistance) {
                     minDistance = distance;
                     if (!current) current = section.getAttribute('id');
@@ -499,14 +499,14 @@ https://192.168.1.105 (em0)</pre>
                 }
             });
 
-             // Ensure first link is active if at top of page or no section is "current"
+             
             if (!current && navLinks.length > 0 && sections.length > 0 && pageYOffset < sections[0].offsetTop - 70) {
                 if (!navLinks[0].parentNode.classList.contains('sub-header')) {
                     navLinks[0].classList.add('active');
                 } else if (navLinks.length > 1) {
-                     navLinks[1].classList.add('active'); // Skip sub-header itself
+                     navLinks[1].classList.add('active'); 
                 }
-            } else if (!current && navLinks.length > 0 && sections.length === 0) { // Case for very short page
+            } else if (!current && navLinks.length > 0 && sections.length === 0) { 
                  if (!navLinks[0].parentNode.classList.contains('sub-header')) {
                     navLinks[0].classList.add('active');
                 }  else if (navLinks.length > 1) {
@@ -514,7 +514,7 @@ https://192.168.1.105 (em0)</pre>
                 }
             }
         };
-        // Initial call to set active link on page load
+        
         window.dispatchEvent(new Event('scroll'));
     </script>
 

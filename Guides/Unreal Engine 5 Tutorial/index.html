@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Green for active */
+            background-color: #5cb85c;
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -114,7 +114,7 @@
             border-radius: 0;
             color: inherit;
         }
-        /* Basic C++ syntax highlighting (can be expanded) */
+       
         pre code .cpp-keyword { color: #66d9ef; font-weight: bold; }
         pre code .cpp-comment { color: #75715e; }
         pre code .cpp-string { color: #e6db74; }
@@ -673,7 +673,7 @@ UCLASS()
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+       
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -681,7 +681,7 @@ UCLASS()
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -693,7 +693,7 @@ UCLASS()
                 }
             });
         };
-        // Activate the first link by default or based on hash
+       
         function activateInitialLink() {
             const hash = window.location.hash;
             let activeLinkFound = false;
@@ -706,11 +706,11 @@ UCLASS()
                 });
             }
             if (!activeLinkFound && navLinks.length > 0) {
-                navLinks[0].classList.add('active'); // Default to first if no hash or match
+                navLinks[0].classList.add('active'); 
             }
         }
         activateInitialLink();
-        window.addEventListener('hashchange', activateInitialLink); // For when user clicks links
+        window.addEventListener('hashchange', activateInitialLink); 
     </script>
 
 </body>

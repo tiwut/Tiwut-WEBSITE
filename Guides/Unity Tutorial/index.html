@@ -42,11 +42,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
         #sidebar ul li a:hover, #sidebar ul li a.active {
-            background-color: #5cb85c; /* Unity-like color */
+            background-color: #5cb85c; 
             color: #fff;
         }
         #main-content {
-            margin-left: 300px; /* Same as sidebar width + some padding */
+            margin-left: 300px; 
             padding: 20px 40px;
             width: calc(100% - 300px);
             background-color: #fff;
@@ -70,13 +70,13 @@
             border-bottom: none;
         }
         h2 {
-            color: #007bff; /* Standard blue for titles */
+            color: #007bff; 
             border-bottom: 2px solid #007bff;
             padding-bottom: 10px;
             margin-top: 0;
         }
         h3 {
-            color: #17a2b8; /* Slightly lighter blue for subtitles */
+            color: #17a2b8; 
         }
         ul, ol {
             margin-bottom: 15px;
@@ -96,7 +96,7 @@
             padding: 2px 6px;
             border-radius: 4px;
             font-family: "Courier New", Courier, monospace;
-            color: #c7254e; /* Color for code blocks */
+            color: #c7254e; 
         }
         pre code {
             display: block;
@@ -126,7 +126,7 @@
             padding: 1px 4px;
             border-radius: 3px;
         }
-        /* Responsive adjustments */
+        
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -549,7 +549,7 @@ public class UIManager : MonoBehaviour
     </div>
 
     <script>
-        // Simple script for active link highlighting in sidebar
+       
         const sections = document.querySelectorAll('#main-content section');
         const navLinks = document.querySelectorAll('#sidebar ul li a');
 
@@ -557,7 +557,7 @@ public class UIManager : MonoBehaviour
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) { // 60px offset for better UX
+                if (pageYOffset >= sectionTop - 60) { 
                     current = section.getAttribute('id');
                 }
             });
@@ -569,7 +569,7 @@ public class UIManager : MonoBehaviour
                 }
             });
         };
-        // Initial check in case the page loads scrolled
+      
         if(sections.length > 0 && navLinks.length > 0) {
              window.dispatchEvent(new Event('scroll'));
         }
