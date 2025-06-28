@@ -147,7 +147,7 @@
         
         let sourceVideo = document.createElement('video');
         sourceVideo.preload = 'auto';
-        sourceVideo.muted = true; // Important for programmatic control
+        sourceVideo.muted = true;
         
         videoInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
@@ -175,7 +175,6 @@
             speedValue.textContent = `${speed.toFixed(2)}x`;
         });
         
-        // --- NEW, ROBUST EXPORT LOGIC ---
         exportButton.addEventListener('click', async () => {
             if (!sourceVideo.src) return;
 
@@ -227,23 +226,19 @@
             };
             recorder.start();
 
-            // The frame-by-frame processing function
             const processFrames = async () => {
                 let frameCount = 0;
                 for (let currentTime = startTime; currentTime < endTime; currentTime += frameInterval) {
-                    // This promise waits for the video to seek to the correct time
                     const seekPromise = new Promise(resolve => {
                         sourceVideo.onseeked = () => resolve();
                     });
                     sourceVideo.currentTime = currentTime;
                     await seekPromise;
 
-                    // Draw the frame
                     ctx.filter = filterSelect.value;
                     ctx.drawImage(sourceVideo, 0, 0, canvas.width, canvas.height);
                     ctx.filter = 'none';
 
-                    // Draw text
                     const text = textOverlayInput.value;
                     if (text) {
                         const fontSize = textSizeInput.value;
@@ -258,7 +253,6 @@
                         ctx.fillText(text, x, y);
                     }
                     
-                    // Update progress
                     frameCount++;
                     const progress = (frameCount / totalFrames) * 100;
                     progressBar.style.width = `${Math.min(100, progress)}%`;
@@ -274,7 +268,6 @@
             }
         });
 
-        // Initial setup
         setLanguage(detectLanguage());
     });
     </script>

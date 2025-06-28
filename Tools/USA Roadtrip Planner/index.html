@@ -5,19 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USA Roadtrip Planner</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         :root {
             --bg-color: #121212;
             --surface-color: #1e1e1e;
-            --primary-color: #0d6efd; /* A slightly more vibrant blue */
+            --primary-color: #0d6efd;
             --primary-hover-color: #0b5ed7;
             --secondary-color: #343a40;
             --text-color: #e0e0e0;
@@ -35,7 +33,6 @@
             font-size: 16px;
         }
 
-        /* --- NEW: Side Navigation --- */
         .side-nav {
             position: fixed;
             top: 50%;
@@ -65,14 +62,14 @@
         .side-nav li a .fa-solid { width: 20px; text-align: center; }
 
         .main-content {
-            margin-left: 100px; /* Space for the side nav */
+            margin-left: 100px;
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
             padding: 0 2rem 2rem 2rem;
-            opacity: 0; /* For fade-in animation */
+            opacity: 0;
             animation: fadeIn 1s ease-out forwards;
         }
 
@@ -81,7 +78,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- NEW: Hero Header --- */
         .hero-header {
             position: relative;
             text-align: center;
@@ -130,7 +126,7 @@
             padding: 2rem;
             margin-bottom: 2.5rem;
             background-color: var(--surface-color);
-            scroll-margin-top: 2rem; /* Offset for smooth scroll */
+            scroll-margin-top: 2rem;
         }
         form legend { 
             padding: 0 0.75rem; 
@@ -189,7 +185,6 @@
         #exportBtn { background-color: var(--primary-color); color: white; }
         #exportBtn:hover { background-color: var(--primary-hover-color); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4); }
         
-        /* NEW: Text Export Button Style */
         #exportTxtBtn { background-color: var(--success-color); color: white; }
         #exportTxtBtn:hover { background-color: #157347; transform: translateY(-3px); box-shadow: 0 4px 12px rgba(25, 135, 84, 0.4); }
         
@@ -218,7 +213,6 @@
 
     <script id="tripData" type="application/json"></script>
 
-    <!-- NEW: Side Navigation -->
     <nav class="side-nav">
         <ul>
             <li><a href="#s1" class="active"><i class="fa-solid fa-map-pin"></i></a></li>
@@ -314,7 +308,6 @@
                 }
             };
             
-            // --- DOM Elements ---
             const form = document.getElementById('roadtripForm');
             const langButtons = { de: document.getElementById('lang-de'), en: document.getElementById('lang-en'), es: document.getElementById('lang-es') };
             const exportBtn = document.getElementById('exportBtn');
@@ -324,7 +317,6 @@
             const sections = document.querySelectorAll('form fieldset');
             let autoSaveInterval;
 
-            // --- Functions ---
             function translatePage(lang) {
                 document.documentElement.lang = lang;
                 const langTranslations = translations[lang] || translations.en;
@@ -333,7 +325,7 @@
 
                 document.querySelectorAll('[data-translate-key]').forEach(el => {
                     const key = el.getAttribute('data-translate-key');
-                    const span = el.querySelector('span'); // For legends with icons
+                    const span = el.querySelector('span');
                     const targetEl = span || el;
                     if (langTranslations[key]) { targetEl.textContent = langTranslations[key]; }
                 });
@@ -359,15 +351,12 @@
                 }
             }
 
-            // NEW: Save to localStorage
             function saveToLocalStorage() {
                 const data = getFormData();
-                // Don't save if form is empty
                 if(Object.values(data).every(val => val === '' || val === '1')) return;
                 localStorage.setItem('roadtrip_formData', JSON.stringify(data));
             }
 
-            // NEW: Load from localStorage
             function loadFromLocalStorage() {
                 const savedData = localStorage.getItem('roadtrip_formData');
                 if (savedData) {
@@ -394,7 +383,6 @@
                 URL.revokeObjectURL(url);
             }
 
-            // NEW: Export as Text
             function exportConfigText() {
                 const data = getFormData();
                 const currentLang = document.documentElement.lang || 'en';
@@ -438,7 +426,6 @@
                 }
             }
 
-            // NEW: Update side nav based on scroll position
             function updateSideNav() {
                 let current = '';
                 sections.forEach(section => {
@@ -455,19 +442,15 @@
                 });
             }
 
-            // --- Initializer Function ---
             function init() {
-                // 1. Load data: localStorage first, then embedded script tag
                 loadFromLocalStorage();
                 loadConfigFromScript();
 
-                // 2. Set language
                 const savedLang = localStorage.getItem('roadtrip_lang');
                 const browserLang = navigator.language.split('-')[0];
                 const langToUse = savedLang || (translations[browserLang] ? browserLang : 'en');
                 translatePage(langToUse);
 
-                // 3. Set up event listeners
                 Object.keys(langButtons).forEach(lang => {
                     langButtons[lang].addEventListener('click', () => translatePage(lang));
                 });
@@ -483,19 +466,15 @@
                     }
                 });
 
-                // Date validation
                 document.getElementById('startDate').addEventListener('change', (e) => {
                     document.getElementById('endDate').min = e.target.value;
                 });
 
-                // Side nav scroll listener
                 window.addEventListener('scroll', updateSideNav);
 
-                // Start auto-saving
-                autoSaveInterval = setInterval(saveToLocalStorage, 5000); // Save every 5 seconds
+                autoSaveInterval = setInterval(saveToLocalStorage, 5000);
             }
 
-            // --- Run Initialization ---
             init();
         });
     </script>

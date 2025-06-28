@@ -5,34 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Text Editor</title>
     <style>
-        /* CSS Variables for Theming */
         :root {
-            --bg-color: #f4f7f9; /* Kept for potential future use, body itself is transparent */
+            --bg-color: #f4f7f9;
             --text-color: #333;
             --primary-color: #007bff;
             --primary-hover-color: #0056b3;
-            /* Updated for transparency */
-            --secondary-bg-color: rgba(233, 236, 239, 0.85); /* Was #e9ecef - Toolbar, Search panel */
+            --secondary-bg-color: rgba(233, 236, 239, 0.85);
             --border-color: #ced4da;
-            --textarea-bg: rgba(255, 255, 255, 0.85);      /* Was #fff - Editor, Inputs */
+            --textarea-bg: rgba(255, 255, 255, 0.85);
             --button-text-color: #fff;
             --icon-filter: invert(0%);
         }
 
         body.dark-mode {
-            --bg-color: #2c3e50; /* Kept for potential future use, body itself is transparent */
+            --bg-color: #2c3e50;
             --text-color: #ecf0f1;
             --primary-color: #3498db;
             --primary-hover-color: #2980b9;
-            /* Updated for transparency */
-            --secondary-bg-color: rgba(52, 73, 94, 0.85);  /* Was #34495e - Toolbar, Search panel */
+            --secondary-bg-color: rgba(52, 73, 94, 0.85);
             --border-color: #566573;
-            --textarea-bg: rgba(30, 39, 46, 0.85);       /* Was #1e272e - Editor, Inputs */
+            --textarea-bg: rgba(30, 39, 46, 0.85);
             --button-text-color: #fff;
             --icon-filter: invert(100%);
         }
 
-        /* Basic Reset & Body Styling */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -65,8 +61,6 @@
             z-index: -1; 
         }
 
-
-        /* Toolbar */
         .toolbar {
             background-color: var(--secondary-bg-color); 
             padding: 10px 15px;
@@ -80,7 +74,7 @@
 
         .toolbar button, .toolbar input[type="text"], .toolbar label {
             padding: 8px 12px;
-            background-color: var(--primary-color); /* Buttons remain opaque by default, can be changed if needed */
+            background-color: var(--primary-color);
             color: var(--button-text-color);
             border: none;
             border-radius: 5px;
@@ -97,11 +91,11 @@
         }
 
         .toolbar input[type="text"] {
-            background-color: var(--textarea-bg); /* Will use transparent background */
+            background-color: var(--textarea-bg);
             color: var(--text-color);
             border: 1px solid var(--border-color);
             min-width: 100px;
-            border-radius: 5px; /* Added for consistency */
+            border-radius: 5px;
         }
         
         .toolbar .file-name-display {
@@ -109,10 +103,6 @@
             font-style: italic;
             color: var(--text-color);
             font-size: 0.9em;
-            /* To make filename more readable against potentially complex background: */
-            /* background-color: rgba(0,0,0,0.1); 
-            padding: 2px 5px;
-            border-radius: 3px; */
         }
 
         .toolbar-icon {
@@ -124,8 +114,6 @@
              filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(200%) contrast(100%);
         }
 
-
-        /* Editor Area */
         .editor-container {
             flex-grow: 1;
             display: flex;
@@ -142,15 +130,14 @@
             font-family: "Consolas", "Monaco", monospace;
             font-size: 16px;
             line-height: 1.6;
-            background-color: var(--textarea-bg); /* Will use transparent background */
+            background-color: var(--textarea-bg);
             color: var(--text-color);
             resize: none; 
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Search/Replace Panel */
         #search-replace-panel {
-            background-color: var(--secondary-bg-color); /* Will use transparent background */
+            background-color: var(--secondary-bg-color);
             padding: 10px;
             border-top: 1px solid var(--border-color);
             display: none; 
@@ -167,22 +154,20 @@
         #search-replace-panel input[type="text"] {
             flex-grow: 1;
             min-width: 150px;
-            padding: 8px 12px;                 /* Added for consistency */
-            background-color: var(--textarea-bg); /* Added for consistency & transparency */
-            color: var(--text-color);             /* Added for consistency */
-            border: 1px solid var(--border-color);/* Added for consistency */
-            border-radius: 5px;                 /* Added for consistency */
+            padding: 8px 12px;
+            background-color: var(--textarea-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
         }
          #search-replace-panel button {
-            background-color: var(--primary-color); /* Buttons remain opaque by default */
+            background-color: var(--primary-color);
             color: var(--button-text-color);
          }
          #search-replace-panel button:hover {
             background-color: var(--primary-hover-color);
          }
 
-
-        /* Hidden file input */
         #file-input {
             display: none;
         }
@@ -244,10 +229,9 @@
         const btnReplaceAll = document.getElementById('btn-replace-all');
 
         let currentFileName = 'untitled.txt';
-        let isDirty = false; // To track unsaved changes
+        let isDirty = false;
         let lastSearchIndex = 0;
 
-        // --- Dark Mode ---
         function applyDarkMode(isDark) {
             if (isDark) {
                 document.body.classList.add('dark-mode');
@@ -260,7 +244,6 @@
         applyDarkMode(darkModeMatcher.matches);
         darkModeMatcher.addEventListener('change', (e) => applyDarkMode(e.matches));
 
-        // --- File Operations ---
         btnNew.addEventListener('click', () => {
             if (isDirty && !confirm("You have unsaved changes. Are you sure you want to create a new file?")) {
                 return;
@@ -310,7 +293,6 @@
             document.title = `Editor - ${currentFileName}`;
         });
 
-        // --- Track Unsaved Changes ---
         editor.addEventListener('input', () => {
             if (!isDirty) {
                 isDirty = true;
@@ -326,7 +308,6 @@
             }
         });
 
-        // --- Search and Replace ---
         btnToggleSearch.addEventListener('click', () => {
             searchReplacePanel.style.display = searchReplacePanel.style.display === 'none' ? 'flex' : 'none';
             if (searchReplacePanel.style.display === 'flex') {
@@ -336,7 +317,7 @@
 
         btnCloseSearch.addEventListener('click', () => {
             searchReplacePanel.style.display = 'none';
-            editor.focus(); // Return focus to editor
+            editor.focus();
         });
 
         function findNext(term, caseSensitive = false) {
@@ -357,8 +338,7 @@
             } else {
                 lastSearchIndex = 0; 
                 alert("Search term not found.");
-                // Optionally, you might want to focus the editor or search term input here
-                searchTermInput.focus(); // Keep focus on search input if not found
+                searchTermInput.focus();
                 return false;
             }
         }
@@ -375,7 +355,6 @@
         searchTermInput.addEventListener('input', () => {
             lastSearchIndex = 0; 
         });
-
 
         btnReplace.addEventListener('click', () => {
             const term = searchTermInput.value;
@@ -423,7 +402,6 @@
             }
         });
 
-        // Keyboard shortcuts
         editor.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 's') {
                 e.preventDefault();
@@ -452,7 +430,7 @@
                     btnFindNext.click();
                 } else if (document.activeElement === replaceTermInput) {
                     e.preventDefault();
-                    btnReplace.click(); // Or perhaps btnReplaceAll if Enter on replace field is desired for that
+                    btnReplace.click();
                 }
             }
             if (e.key === 'Escape') {
@@ -461,8 +439,6 @@
             }
         });
 
-
-        // Initialize
         fileNameDisplay.textContent = currentFileName;
         document.title = `Editor - ${currentFileName}`;
 

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadJsonButton = document.getElementById('downloadJsonButton');
     const lastLoadedFileDisplay = document.getElementById('lastLoadedFile');
 
-    // Modal elements
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('modalTitle');
     const productForm = document.getElementById('productForm');
@@ -21,20 +20,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelModalButton = document.getElementById('cancelModalButton');
 
     const productIdInput = document.getElementById('productId');
-    const productNameInput = document.getElementById('productName'); // Changed from produktname
-    const locationCodeInput = document.getElementById('locationCode'); // Changed from lagerplatz
-    const quantityInput = document.getElementById('quantity'); // Changed from stueckzahl
-    const conditionInput = document.getElementById('condition'); // Changed from zustand
-    const brandInput = document.getElementById('brand'); // Changed from marke
-    const featuresInput = document.getElementById('features'); // Changed from eigenschaften
-    const hashtagsInput = document.getElementById('hashtags'); // Kept as is, common term
+    const productNameInput = document.getElementById('productName');
+    const locationCodeInput = document.getElementById('locationCode');
+    const quantityInput = document.getElementById('quantity');
+    const conditionInput = document.getElementById('condition');
+    const brandInput = document.getElementById('brand');
+    const featuresInput = document.getElementById('features');
+    const hashtagsInput = document.getElementById('hashtags');
 
-    let inventoryData = []; // Holds the data
+    let inventoryData = [];
     let selectedProductId = null;
     let currentEditProduct = null;
     let unsavedChanges = false;
 
-    // --- Helper Functions ---
     function generateUUID() {
         return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -55,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setUnsavedChanges(status) {
         unsavedChanges = status;
         if (status) {
-            downloadJsonButton.classList.add('unsaved'); // You might want a CSS class for this
+            downloadJsonButton.classList.add('unsaved');
             downloadJsonButton.textContent = "Download Changes as JSON*";
         } else {
             downloadJsonButton.classList.remove('unsaved');
@@ -63,13 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- File Load/Save (Download) ---
     jsonFileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
             if (unsavedChanges) {
                 if (!confirm("There are unsaved changes. Do you want to load a new file anyway? Unsaved changes will be lost.")) {
-                    jsonFileInput.value = ""; // Reset input
+                    jsonFileInput.value = "";
                     return;
                 }
             }
@@ -103,12 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("There is no data to download.");
             return;
         }
-        const jsonDataStr = JSON.stringify(inventoryData, null, 4); // 4 for pretty print
+        const jsonDataStr = JSON.stringify(inventoryData, null, 4);
         const blob = new Blob([jsonDataStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'inventory_data.json'; // Suggested filename
+        a.download = 'inventory_data.json';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -117,8 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("The 'inventory_data.json' file is being downloaded. Please save it to a suitable location (e.g., overwrite the old file).");
     });
 
-
-    // --- Table Rendering ---
     function renderTable(filterFn = null) {
         productTableBody.innerHTML = '';
         const dataToRender = filterFn ? inventoryData.filter(filterFn) : inventoryData;
@@ -127,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = productTableBody.insertRow();
             row.setAttribute('data-id', product.id);
 
-            // Using English keys from JSON
             row.insertCell().textContent = product.productName || '';
             row.insertCell().textContent = product.locationCode || '';
             row.insertCell().textContent = product.quantity !== undefined ? product.quantity : '';
@@ -167,13 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Modal Open/Close ---
     function openModal(title, product = null) {
         modalTitle.textContent = title;
         currentEditProduct = product;
         productForm.reset();
 
-        if (product) { // Edit mode
+        if (product) {
             productIdInput.value = product.id;
             productNameInput.value = product.productName || '';
             locationCodeInput.value = product.locationCode || '';
@@ -182,13 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
             brandInput.value = product.brand || '';
             featuresInput.value = product.features || '';
             hashtagsInput.value = product.hashtags || '';
-        } else { // Add mode
+        } else {
             productIdInput.value = '';
-            conditionInput.value = 'New'; // Default
+            conditionInput.value = 'New';
             quantityInput.value = 0;
         }
         modal.style.display = 'block';
-        productNameInput.focus(); // Focus on the first field
+        productNameInput.focus();
     }
 
     function closeModal() {
@@ -196,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentEditProduct = null;
     }
 
-    // --- CRUD Operations (Client-side) ---
     function handleFormSubmit(event) {
         event.preventDefault();
         const product = {
@@ -220,12 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (currentEditProduct) { // Editing existing product
+        if (currentEditProduct) {
             const index = inventoryData.findIndex(p => p.id === product.id);
             if (index > -1) {
                 inventoryData[index] = product;
             }
-        } else { // Adding new product
+        } else {
             inventoryData.push(product);
         }
         setUnsavedChanges(true);
@@ -254,16 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const productToDelete = inventoryData.find(p => p.id === selectedProductId);
         if (confirm(`Are you sure you want to delete "${productToDelete.productName}"?`)) {
             inventoryData = inventoryData.filter(p => p.id !== selectedProductId);
-            selectedProductId = null; // Deselect
+            selectedProductId = null;
             setUnsavedChanges(true);
             renderTable();
         }
     }
 
-    // --- Search ---
     function performSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
-        const category = searchCategorySelect.value; // This will be productName, locationCode, etc.
+        const category = searchCategorySelect.value;
 
         if (!searchTerm) {
             renderTable();
@@ -280,16 +271,14 @@ document.addEventListener('DOMContentLoaded', () => {
                        checkValue(product.features) ||
                        checkValue(product.hashtags) ||
                        checkValue(product.condition);
-            } else if (category === 'quantity') { // Not in select, but as an example
+            } else if (category === 'quantity') {
                  return product.quantity !== undefined && String(product.quantity).includes(searchTerm);
             }
-            // For specific category search, use bracket notation
             return checkValue(product[category]);
         };
         renderTable(filterFn);
     }
 
-    // --- Event Listeners ---
     addButton.addEventListener('click', addProduct);
     editButton.addEventListener('click', () => openEditModal());
     deleteButton.addEventListener('click', deleteProduct);
@@ -304,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable();
     });
 
-    // Modal events
     closeButton.addEventListener('click', closeModal);
     cancelModalButton.addEventListener('click', closeModal);
     window.addEventListener('click', (event) => {
@@ -314,16 +302,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     productForm.addEventListener('submit', handleFormSubmit);
 
-    // Warn on unsaved changes when leaving the page
     window.addEventListener('beforeunload', (event) => {
         if (unsavedChanges) {
-            event.preventDefault(); // Standard in many browsers
-            event.returnValue = ''; // For older browsers / Chrome
+            event.preventDefault();
+            event.returnValue = '';
             return "There are unsaved changes. Are you sure you want to leave?";
         }
     });
 
-    // Initial rendering (table will be empty until data is loaded)
     renderTable();
     lastLoadedFileDisplay.textContent = "No file loaded yet. Please select 'inventory_data.json'.";
 });
