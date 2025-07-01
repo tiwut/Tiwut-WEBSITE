@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const langSwitcher = document.getElementById('lang-switcher');
     const cursorDot = document.getElementById('cursor-dot');
     const cursorCircle = document.getElementById('cursor-circle');
+    const contentLayout = document.getElementById('content-layout');
 
     let searchData = [];
     let currentLanguage = 'en';
@@ -39,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
-        cursorDot.style.transform = `translate(${clientX}px, ${clientY}px)`;
-        cursorCircle.style.transform = `translate(${clientX}px, ${clientY}px)`;
+        cursorDot.style.transform = `translate(${clientX - cursorDot.offsetWidth / 2}px, ${clientY - cursorDot.offsetHeight / 2}px)`;
+        cursorCircle.style.transform = `translate(${clientX - cursorCircle.offsetWidth / 2}px, ${clientY - cursorCircle.offsetHeight / 2}px)`;
     });
 
     const setupCursorInteraction = () => {
@@ -65,7 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
-            if (translations[lang][key]) elem.textContent = translations[lang][key];
+            if (translations[lang][key]) {
+                 // Check if there is a child span to update, otherwise update the element itself
+                const childSpan = elem.querySelector('span[data-key]');
+                if(childSpan) {
+                    childSpan.textContent = translations[lang][key];
+                } else {
+                    elem.textContent = translations[lang][key];
+                }
+            }
         });
         document.querySelectorAll('[data-key-placeholder]').forEach(elem => {
             const key = elem.dataset.keyPlaceholder;
@@ -75,6 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
         langSwitcher.querySelectorAll('button').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
+
+        // Update main page link text if it's structured with an icon
+        const mainPageLink = document.querySelector('.main-page-link span');
+        if (mainPageLink) {
+             mainPageLink.textContent = translations[lang].mainPage;
+        }
+
         performSearch();
     }
 
@@ -110,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 resultElement.innerHTML = `
-                    <a href="${item.url}">${title}</a>
+                    <a href="${item.url}" rel="noopener noreferrer">${title}</a>
                     <p>${contentSnippet}...</p>
                     ${tagsHTML}
                 `;
@@ -122,10 +138,24 @@ document.addEventListener('DOMContentLoaded', () => {
         setupCursorInteraction(); 
     }
 
+    function initDesktopInteractions() { 
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.body.style.perspective = '1500px';
+            document.addEventListener('mousemove', e => {
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+                if(contentLayout) {
+                    contentLayout.style.transform = `rotateY(calc(${x} * 6deg)) rotateX(calc(${y} * -6deg))`;
+                }
+            });
+        }
+    }
+
     function initialize() {
         currentLanguage = getInitialLanguage();
         setLanguage(currentLanguage);
         setupCursorInteraction();
+        initDesktopInteractions();
 
         resultsContainer.innerHTML = `<p class="feedback-message">${translations[currentLanguage].loading}</p>`;
 
