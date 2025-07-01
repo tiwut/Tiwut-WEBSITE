@@ -40,8 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
-        cursorDot.style.transform = `translate(${clientX - cursorDot.offsetWidth / 2}px, ${clientY - cursorDot.offsetHeight / 2}px)`;
-        cursorCircle.style.transform = `translate(${clientX - cursorCircle.offsetWidth / 2}px, ${clientY - cursorCircle.offsetHeight / 2}px)`;
+        cursorDot.style.left = `${clientX}px`;
+        cursorDot.style.top = `${clientY}px`;
+        cursorCircle.style.left = `${clientX}px`;
+        cursorCircle.style.top = `${clientY}px`;
     });
 
     const setupCursorInteraction = () => {
@@ -67,8 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-key]').forEach(elem => {
             const key = elem.dataset.key;
             if (translations[lang][key]) {
-                 // Check if there is a child span to update, otherwise update the element itself
-                const childSpan = elem.querySelector('span[data-key]');
+                 const childSpan = elem.querySelector('span[data-key]');
                 if(childSpan) {
                     childSpan.textContent = translations[lang][key];
                 } else {
@@ -85,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('active', btn.dataset.lang === lang);
         });
 
-        // Update main page link text if it's structured with an icon
         const mainPageLink = document.querySelector('.main-page-link span');
         if (mainPageLink) {
              mainPageLink.textContent = translations[lang].mainPage;
