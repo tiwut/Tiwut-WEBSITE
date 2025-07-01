@@ -234,7 +234,7 @@ function updateChatAppUI(user) {
 
     avatarWrapper.innerHTML = `<span class="avatar-initial">${initial}</span>`;
 
-    const tiwutLink = `<a href="https://tiwut.de/" target="_blank" rel="noopener noreferrer" data-translate="tiwutHomepageLink"></a>`;
+    const tiwutLink = `<a href="https://tiwut.de/" rel="noopener noreferrer" data-translate="tiwutHomepageLink"></a>`;
 
     if (user) {
         document.querySelectorAll('.logged-in').forEach(el => el.style.display = 'block');
