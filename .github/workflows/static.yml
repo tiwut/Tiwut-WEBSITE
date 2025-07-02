@@ -1,8 +1,7 @@
-name: Build and Deploy
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
+<<<<<<< HEAD
+// Hier steht dein GUTER, KORREKTER YAML-Code
+=======
+version https://git-lfs.github.com/spec/v1
+oid sha256:...
+size 1293
+>>>>>>> origin/main
